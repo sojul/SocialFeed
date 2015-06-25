@@ -4,7 +4,8 @@
     "require": {
         "guzzlehttp/guzzle": "^6.0",
         "facebook/php-sdk-v4": "^4.0",
-        "cosenary/instagram": "^2.3"
+        "cosenary/instagram": "^2.3",
+        "phpcollection/phpcollection": "^0.4.0"
     },
     "require-dev": {
         "phpspec/phpspec": "^2.2",
