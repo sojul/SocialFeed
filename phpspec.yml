@@ -1,0 +1,7 @@
+suites:
+    lns_suite:
+        namespace: Lns\SocialFeed
+        psr4_prefix: Lns\SocialFeed
+
+extensions:
+  - Memio\SpecGen\MemioSpecGenExtension
