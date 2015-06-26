@@ -9,8 +9,7 @@ interface SourceInterface
     /**
      * getFeed
      *
-     * @param string $query
      * @return Feed
      */
-    public function getFeed($query);
+    public function getFeed();
 }
