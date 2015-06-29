@@ -4,6 +4,7 @@ namespace Lns\SocialFeed\Factory;
 
 use Facebook\GraphObject;
 use Lns\SocialFeed\Model\FacebookPost;
+use Lns\SocialFeed\Model\InstagramPost;
 use Lns\SocialFeed\Model\Author;
 use Lns\SocialFeed\Model\Tweet;
 
@@ -39,5 +40,24 @@ class PostFactory
         ;
 
         return $tweet;
+    }
+
+    public function createFromInstagramApiData(array $data)
+    {
+        $instagramPost = new InstagramPost();
+
+        $author = new Author();
+        $author
+            ->setName($data['caption']['from']['username'])
+            ->setIdentifier($data['caption']['from']['id'])
+        ;
+
+        $instagramPost
+            ->setIdentifier($data['caption']['id'])
+            ->setMessage($data['caption']['text'])
+            ->setCreatedAt(new \DateTime($data['caption']['created_time']))
+        ;
+
+        return $instagramPost;
     }
 }
