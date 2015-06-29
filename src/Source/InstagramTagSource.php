@@ -3,7 +3,7 @@
 namespace Lns\SocialFeed\Source;
 
 use Lns\SocialFeed\Client\InstagramApiClient;
-use Lns\SocialFeed\Factory\PostFactory;
+use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\Feed;
 
 class InstagramTagSource implements SourceInterface
@@ -14,7 +14,7 @@ class InstagramTagSource implements SourceInterface
 
     private $tagName;
 
-    public function __construct(InstagramApiClient $client, PostFactory $postFactory, $tagName)
+    public function __construct(InstagramApiClient $client, PostFactoryInterface $postFactory, $tagName)
     {
         $this->client = $client;
         $this->postFactory = $postFactory;
@@ -27,7 +27,7 @@ class InstagramTagSource implements SourceInterface
         $response = $this->client->get(sprintf('/v1/tags/%s/media/recent', $this->tagName));
 
         foreach($response['data'] as $data) {
-            $feed->addPost($this->postFactory->createFromInstagramApiData($data));
+            $feed->addPost($this->postFactory->createInstagramPostFromApiData($data));
         };
 
         return $feed;

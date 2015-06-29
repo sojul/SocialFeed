@@ -4,14 +4,14 @@ namespace Lns\SocialFeed\Source;
 
 use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Client\TwitterApiClient;
-use Lns\SocialFeed\Factory\PostFactory;
+use Lns\SocialFeed\Factory\PostFactoryInterface;
 
 class TwitterSearchApiSource implements SourceInterface
 {
     private $twitterApiClient;
     private $query;
 
-    public function __construct(TwitterApiClient $twitterApiClient, PostFactory $postFactory, $query)
+    public function __construct(TwitterApiClient $twitterApiClient, PostFactoryInterface $postFactory, $query)
     {
         $this->twitterApiClient = $twitterApiClient;
         $this->postFactory = $postFactory;
@@ -28,7 +28,7 @@ class TwitterSearchApiSource implements SourceInterface
         $feed = new Feed();
 
         foreach($result['statuses'] as $status) {
-            $feed->addPost($this->postFactory->createFromTwitterApiData($status));
+            $feed->addPost($this->postFactory->createTweetFromApiData($status));
         }
 
         return $feed;

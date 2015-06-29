@@ -6,7 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 use Lns\SocialFeed\Client\TwitterApiClient;
-use Lns\SocialFeed\Factory\PostFactory;
+use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\PostInterface;
 
 class TwitterSearchApiSourceSpec extends ObjectBehavior
@@ -14,7 +14,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
     protected $client;
     protected $factory;
 
-    function let(TwitterApiClient $client, PostFactory $factory) {
+    function let(TwitterApiClient $client, PostFactoryInterface $factory) {
         $this->client = $client;
         $this->factory = $factory;
         $this->client->get('foo')->willReturn($this->getTwitterApiSampleData());
@@ -29,7 +29,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
 
     function it_should_return_feed(PostInterface $post1, PostInterface $post2) {
 
-        $this->factory->createFromTwitterApiData(Argument::any())->willReturn($post1);
+        $this->factory->createTweetFromApiData(Argument::any())->willReturn($post1);
 
         $this->getFeed()->shouldHaveType('Lns\SocialFeed\Model\Feed');
     }

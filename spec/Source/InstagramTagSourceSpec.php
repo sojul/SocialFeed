@@ -5,11 +5,11 @@ namespace spec\Lns\SocialFeed\Source;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Lns\SocialFeed\Client\InstagramApiClient;
-use Lns\SocialFeed\Factory\PostFactory;
+use Lns\SocialFeed\Factory\PostFactoryInterface;
 
 class InstagramTagSourceSpec extends ObjectBehavior
 {
-    function let(InstagramApiClient $client, PostFactory $postFactory) {
+    function let(InstagramApiClient $client, PostFactoryInterface $postFactory) {
         $this->beConstructedWith($client, $postFactory, 'tagname');
     }
 

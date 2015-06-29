@@ -13,6 +13,11 @@ class PostFactorySpec extends ObjectBehavior
         $this->shouldHaveType('Lns\SocialFeed\Factory\PostFactory');
     }
 
+    function it_should_implement_post_factory_interface()
+    {
+        $this->shouldImplement('Lns\SocialFeed\Factory\PostFactoryInterface');
+    }
+
     function it_should_create_facebook_post_from_graph_object(GraphObject $graphObject, GraphObject $author) {
         $author->getProperty('id')->willReturn('user_1_id');
         $author->getProperty('name')->willReturn('John doe');
@@ -22,15 +27,15 @@ class PostFactorySpec extends ObjectBehavior
         $graphObject->getProperty('from')->willReturn($author);
         $graphObject->getProperty('created_time')->willReturn('2015-06-27T10:05:11+0000');
 
-        $this->createFromGraphObject($graphObject)->shouldImplement('Lns\SocialFeed\Model\PostInterface');
+        $this->createFacebookPostFromOpenGraphObject($graphObject)->shouldImplement('Lns\SocialFeed\Model\PostInterface');
     }
 
     function it_should_create_twitter_tweet_from_twitter_api_data() {
-        $this->createFromTwitterApiData($this->getSampleTweetData())->shouldImplement('Lns\SocialFeed\Model\PostInterface');
+        $this->createTweetFromApiData($this->getSampleTweetData())->shouldImplement('Lns\SocialFeed\Model\PostInterface');
     }
 
     function it_should_create_a_post_from_instagram_api_date() {
-        $this->createFromInstagramApiData($this->getSampleInstagramPostData())->shouldImplement('Lns\SocialFeed\Model\PostInterface');
+        $this->createInstagramPostFromApiData($this->getSampleInstagramPostData())->shouldImplement('Lns\SocialFeed\Model\PostInterface');
     }
 
     private function getSampleInstagramPostData() {

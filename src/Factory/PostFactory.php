@@ -8,9 +8,15 @@ use Lns\SocialFeed\Model\InstagramPost;
 use Lns\SocialFeed\Model\Author;
 use Lns\SocialFeed\Model\Tweet;
 
-class PostFactory
+class PostFactory implements PostFactoryInterface
 {
-    public function createFromGraphObject(GraphObject $graphObject)
+    /**
+     * createFacebookPostFromOpenGraphObject
+     *
+     * @param GraphObject $graphObject
+     * @return FacebookPost $post
+     */
+    public function createFacebookPostFromOpenGraphObject(GraphObject $graphObject)
     {
         $from = $graphObject->getProperty('from');
 
@@ -29,7 +35,13 @@ class PostFactory
         return $post;
     }
 
-    public function createFromTwitterApiData(array $data)
+    /**
+     * createTweetFromApiData
+     *
+     * @param array $data
+     * @return Tweet $post
+     */
+    public function createTweetFromApiData(array $data)
     {
         $tweet = new Tweet();
 
@@ -42,7 +54,13 @@ class PostFactory
         return $tweet;
     }
 
-    public function createFromInstagramApiData(array $data)
+    /**
+     * createInstagramPostFromApiData
+     *
+     * @param array $data
+     * @return InstagramPost $post
+     */
+    public function createInstagramPostFromApiData(array $data)
     {
         $instagramPost = new InstagramPost();
 

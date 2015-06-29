@@ -7,7 +7,7 @@ use Facebook\FacebookSession;
 use Lns\SocialFeed\Client\FacebookOgClient;
 use Lns\SocialFeed\Adapter\GraphObjectToPostAdapter;
 
-use Lns\SocialFeed\Factory\PostFactory;
+use Lns\SocialFeed\Factory\PostFactoryInterface;
 
 class FacebookPagePostsSource implements SourceInterface
 {
@@ -15,7 +15,7 @@ class FacebookPagePostsSource implements SourceInterface
     private $pageId;
     private $postFactory;
 
-    public function __construct(FacebookOgClient $facebookOgClient, PostFactory $postFactory, $pageId)
+    public function __construct(FacebookOgClient $facebookOgClient, PostFactoryInterface $postFactory, $pageId)
     {
         $this->facebookOgClient = $facebookOgClient;
         $this->postFactory = $postFactory;
@@ -32,7 +32,7 @@ class FacebookPagePostsSource implements SourceInterface
             ->getGraphObjectList();
 
         foreach($objectList as $object) {
-            $feed->addPost($this->postFactory->createFromGraphObject($object));
+            $feed->addPost($this->postFactory->createFacebookPostFromOpenGraphObject($object));
         }
 
         return $feed;
