@@ -20,7 +20,7 @@ class TwitterApiClient
     public function get($search) {
         $client = $this->createGuzzleClient($this->consumerKey, $this->consumerSecret);
 
-        return $client->get('/1.1/search/tweets.json?q=test');
+        return $client->get('/1.1/search/tweets.json?q=' . $search)->json();
     }
 
     protected function createGuzzleClient($consumerKey, $consumerSecret) {

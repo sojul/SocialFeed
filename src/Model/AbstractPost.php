@@ -7,6 +7,7 @@ class AbstractPost implements PostInterface
     protected $identifier;
     protected $message;
     protected $author;
+    protected $createdAt;
 
     public function getIdentifier()
     {
@@ -35,9 +36,20 @@ class AbstractPost implements PostInterface
         return $this->author;
     }
 
-    public function setAuthor(Author $author)
+    public function setAuthor(AuthorInterface $author)
     {
         $this->author = $author;
+        return $this;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
         return $this;
     }
 }

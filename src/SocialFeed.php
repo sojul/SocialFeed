@@ -13,4 +13,5 @@ class SocialFeed
         $this->sources[] = $source;
         return $this;
     }
+
 }

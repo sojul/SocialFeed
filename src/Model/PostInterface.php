@@ -4,10 +4,11 @@ namespace Lns\SocialFeed\Model;
 
 interface PostInterface
 {
-    /**
-     * getIdentifier
-     * @return string|int $identifier
-     */
     public function getIdentifier();
+    public function getMessage();
     public function getAuthor();
+    public function getCreatedAt();
+    public function setMessage($message);
+    public function setCreatedAt(\DateTime $dateTime);
+    public function setAuthor(AuthorInterface $author);
 }

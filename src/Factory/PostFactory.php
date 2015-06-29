@@ -18,9 +18,12 @@ class PostFactory
         $author->setName($from->getProperty('name'));
 
         $post = new FacebookPost();
-        $post->setIdentifier($graphObject->getProperty('id'));
-        $post->setMessage($graphObject->getProperty('message'));
-        $post->setAuthor($author);
+        $post
+            ->setIdentifier($graphObject->getProperty('id'))
+            ->setMessage($graphObject->getProperty('message'))
+            ->setAuthor($author)
+            ->setCreatedAt(new \DateTime($graphObject->getProperty('created_time')))
+        ;
 
         return $post;
     }
@@ -29,8 +32,11 @@ class PostFactory
     {
         $tweet = new Tweet();
 
-        $tweet->setIdentifier($data['id']);
-        $tweet->setMessage($data['text']);
+        $tweet
+            ->setIdentifier($data['id'])
+            ->setMessage($data['text'])
+            ->setCreatedAt(new \DateTime($data['created_at']))
+        ;
 
         return $tweet;
     }

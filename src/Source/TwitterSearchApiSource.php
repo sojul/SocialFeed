@@ -11,29 +11,26 @@ class TwitterSearchApiSource implements SourceInterface
     private $twitterApiClient;
     private $query;
 
-    public function __construct(TwitterApiClient $twitterApiClient, PostFactory $postFactory)
+    public function __construct(TwitterApiClient $twitterApiClient, PostFactory $postFactory, $query)
     {
         $this->twitterApiClient = $twitterApiClient;
         $this->postFactory = $postFactory;
-    }
-
-    public function setQuery() {
         $this->query = $query;
     }
 
     public function getFeed() {
 
-        $getFields = http_build_query([
-            'q' => $this->query
-        ]);
-
         $response = $this->twitterApiClient
-            ->get('test');
+            ->get($this->query);
 
-        $result = $response->json();
+        $result = $response;
+
+        $feed = new Feed();
 
         foreach($result['statuses'] as $status) {
-            var_export($status); die();
+            $feed->addPost($this->postFactory->createFromTwitterApiData($status));
         }
+
+        return $feed;
     }
 }

@@ -8,42 +8,40 @@
 
 ## Usage
 
-### Add Facebook Source
-
 ```php
-use Lns\SocialFeed\SocialFeed;
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
 use Lns\SocialFeed\Source\FacebookPagePostsSource;
+use Lns\SocialFeed\Source\TwitterSearchApiSource;
+use Lns\SocialFeed\Source\MixedSource;
+use Lns\SocialFeed\Client\TwitterApiClient;
 use Lns\SocialFeed\Client\FacebookOgClient;
 use Lns\SocialFeed\Client\FacebookRequestFactory;
-use Lns\SocialFeed\Factory\FacebookPostFactory;
+use Lns\SocialFeed\Factory\PostFactory;
 use Facebook\FacebookSession;
 
-FacebookSession::setDefaultApplication('app-id', 'app-secret');
+FacebookSession::setDefaultApplication('app_id', 'app_secret');
 
+$mixedSource = new MixedSource();
+$postFactory = new PostFactory();
+
+// add Facebook source
 $session = FacebookSession::newAppSession();
 
 $requestFactory = new FacebookRequestFactory($session);
 $client = new FacebookOgClient($requestFactory);
 
-$source = new FacebookPagePostsSource($client, new FacebookPostFactory(), 'page-id');
-```
+$mixedSource->addSource(new FacebookPagePostsSource($client, $postFactory, 'page_id'));
 
-### Add Twitter Source
+// add twitter source
+$twitterClient = new TwitterApiClient('app_id', 'app_secret');
 
-```php
-use Lns\SocialFeed\SocialFeed;
-use Lns\SocialFeed\Source\TwitterSearchApiSource;
+$mixedSource->addSource(new TwitterSearchApiSource($twitterClient, $postFactory, 'lanetscouade'));
 
-$settings = array(
-    'oauth_access_token' => "YOUR_OAUTH_ACCESS_TOKEN",
-    'oauth_access_token_secret' => "YOUR_OAUTH_ACCESS_TOKEN_SECRET",
-    'consumer_key' => "YOUR_CONSUMER_KEY",
-    'consumer_secret' => "YOUR_CONSUMER_SECRET"
-);
+$feed = $mixedSource->getFeed()->sort();
 
-$twitterClient = new TwitterAPIExchange($settings);
-
-$source = new TwitterSearchApiSource($twitterClient, 'search');
 ```
 
 ## Tests

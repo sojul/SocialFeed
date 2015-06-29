@@ -2,7 +2,7 @@
 
 namespace Lns\SocialFeed\Model;
 
-class Author
+class Author implements AuthorInterface
 {
     protected $identifier;
     protected $name;
