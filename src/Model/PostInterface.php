@@ -11,4 +11,7 @@ interface PostInterface
     public function setMessage($message);
     public function setCreatedAt(\DateTime $dateTime);
     public function setAuthor(AuthorInterface $author);
+    public function addMedia(MediaInterface $media);
+    public function getMedias();
+
 }

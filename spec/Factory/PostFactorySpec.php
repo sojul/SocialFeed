@@ -118,7 +118,7 @@ class PostFactorySpec extends ObjectBehavior
             ),
             'caption' => 
             array (
-                'created_time' => '1435594208',
+                'created_time' => '1435614461',
                 'text' => '#fashion #style #stylish #love #TagsForLikes.com #me #cute #photooftheday #nails #hair #beauty #beautiful #instagood #pretty #swag #pink #girl #girls #eyes #design #model #dress #shoes #heels #styles #outfit #purse #jewelry #shopping #glam',
                 'from' => 
                 array (

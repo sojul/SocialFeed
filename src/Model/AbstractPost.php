@@ -8,6 +8,7 @@ class AbstractPost implements PostInterface
     protected $message;
     protected $author;
     protected $createdAt;
+    protected $medias;
 
     public function getIdentifier()
     {
@@ -52,4 +53,15 @@ class AbstractPost implements PostInterface
         $this->createdAt = $createdAt;
         return $this;
     }
+
+    public function addMedia(MediaInterface $media)
+    {
+        $this->medias[] = $media;
+        return $this;
+    }
+
+    public function getMedias() {
+        return $this->medias;
+    }
+
 }

@@ -7,6 +7,7 @@ use Lns\SocialFeed\Model\FacebookPost;
 use Lns\SocialFeed\Model\InstagramPost;
 use Lns\SocialFeed\Model\Author;
 use Lns\SocialFeed\Model\Tweet;
+use Lns\SocialFeed\Model\Media;
 
 class PostFactory implements PostFactoryInterface
 {
@@ -51,6 +52,15 @@ class PostFactory implements PostFactoryInterface
             ->setCreatedAt(new \DateTime($data['created_at']))
         ;
 
+        // add medias
+        if(isset($data['entities']['media'])) {
+            foreach($data['entities']['media'] as $mediaData) {
+                $media = new Media();
+                $media->setUrl($mediaData['media_url']);
+                $tweet->addMedia($media);
+            }
+        }
+
         return $tweet;
     }
 
@@ -73,9 +83,20 @@ class PostFactory implements PostFactoryInterface
         $instagramPost
             ->setIdentifier($data['caption']['id'])
             ->setMessage($data['caption']['text'])
-            ->setCreatedAt(new \DateTime($data['caption']['created_time']))
+            ->setCreatedAt(\DateTime::createFromFormat('U', $data['caption']['created_time']))
             ->setAuthor($author)
         ;
+
+        // add medias
+        if(isset($data['images'])) {
+            foreach($data['images'] as $imageData) {
+                $media = new Media();
+                $media->setUrl($imageData['url']);
+                $media->setWidth($imageData['width']);
+                $media->setHeight($imageData['height']);
+                $instagramPost->addMedia($media);
+            }
+        }
 
         return $instagramPost;
     }
