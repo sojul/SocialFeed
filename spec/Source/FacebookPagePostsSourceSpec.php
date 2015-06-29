@@ -9,8 +9,8 @@ use Facebook\FacebookResponse;
 use Facebook\GraphObject;
 
 use Lns\SocialFeed\Model\Feed;
+use Lns\SocialFeed\Factory\PostFactory;
 use Lns\SocialFeed\Model\PostInterface;
-use Lns\SocialFeed\Factory\FacebookPostFactory;
 
 use Lns\SocialFeed\Client\FacebookOgClient;
 
@@ -19,9 +19,9 @@ class FacebookPagePostsSourceSpec extends ObjectBehavior
     protected $client;
     protected $factory;
 
-    function let(FacebookOgClient $client, FacebookPostFactory $factory) {
-        $this->factory = $factory;
+    function let(FacebookOgClient $client, PostFactory $factory) {
         $this->client = $client;
+        $this->factory = $factory;
         $this->beConstructedWith($this->client, $this->factory, 'page_id');
     }
 
@@ -38,15 +38,10 @@ class FacebookPagePostsSourceSpec extends ObjectBehavior
             $object2
         ];
 
+        $this->factory->createFromGraphObject($object1)->willReturn($post1);
+        $this->factory->createFromGraphObject($object2)->willReturn($post2);
+
         $response->getGraphObjectList()->willReturn($objectList);
-
-        $this->factory
-            ->createFromGraphObject($object1)
-            ->willReturn($post1);
-
-        $this->factory
-            ->createFromGraphObject($object2)
-            ->willReturn($post2);
 
         $this->client->get('/page_id/posts')->willReturn($response);
         $this->getFeed('page_id')->shouldHaveType('Lns\SocialFeed\Model\Feed');
