@@ -56,6 +56,7 @@ class PostFactory
             ->setIdentifier($data['caption']['id'])
             ->setMessage($data['caption']['text'])
             ->setCreatedAt(new \DateTime($data['caption']['created_time']))
+            ->setAuthor($author)
         ;
 
         return $instagramPost;
