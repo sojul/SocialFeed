@@ -9,6 +9,7 @@ class AbstractPost implements PostInterface
     protected $author;
     protected $createdAt;
     protected $medias;
+    protected $url;
 
     public function getIdentifier()
     {
@@ -63,5 +64,4 @@ class AbstractPost implements PostInterface
     public function getMedias() {
         return $this->medias;
     }
-
 }

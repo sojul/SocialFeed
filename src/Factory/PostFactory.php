@@ -25,6 +25,10 @@ class PostFactory implements PostFactoryInterface
         $author->setIdentifier($from['id']);
         $author->setName($from['name']);
 
+        $media = new Media();
+        $media->setUrl($from['picture']['data']['url']);
+        $author->setProfilePicture($media);
+
         $post = new FacebookPost();
         $post
             ->setIdentifier($data['id'])
@@ -32,6 +36,12 @@ class PostFactory implements PostFactoryInterface
             ->setAuthor($author)
             ->setCreatedAt(new \DateTime($data['created_time']))
         ;
+
+        if(isset($data['picture'])) {
+            $media = new Media();
+            $media->setUrl($data['picture']);
+            $post->addMedia($media);
+        }
 
         return $post;
     }
@@ -46,19 +56,35 @@ class PostFactory implements PostFactoryInterface
     {
         $tweet = new Tweet();
 
+        $media = new Media();
+        $media->setUrl($data['user']['profile_image_url']);
+
+        $author = new Author();
+        $author->setProfilePicture($media);
+        $author->setIdentifier($data['user']['id']);
+        $author->setName($data['user']['name']);
+
         $tweet
             ->setIdentifier($data['id'])
             ->setMessage($data['text'])
             ->setCreatedAt(new \DateTime($data['created_at']))
+            ->setAuthor($author);
         ;
 
-        // add medias
+        $mediaDatas = array();
+
         if(isset($data['entities']['media'])) {
-            foreach($data['entities']['media'] as $mediaData) {
-                $media = new Media();
-                $media->setUrl($mediaData['media_url']);
-                $tweet->addMedia($media);
-            }
+            $mediaDatas += $data['entities']['media'];
+        }
+
+        if(isset($data['extended_entities']['media'])) {
+            $mediaDatas += $data['extended_entities']['media'];
+        }
+
+        foreach($mediaDatas as $mediaData) {
+            $media = new Media();
+            $media->setUrl($mediaData['media_url']);
+            $tweet->addMedia($media);
         }
 
         return $tweet;

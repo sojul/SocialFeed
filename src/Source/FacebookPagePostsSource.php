@@ -24,16 +24,44 @@ class FacebookPagePostsSource implements SourceInterface
 
     public function getFeed() {
 
+        $fieldsString = $this->generateFieldsQueryString(array(
+            'actions',
+            'caption',
+            'created_time',
+            'id',
+            'likes',
+            'message',
+            'message_tags',
+            'picture',
+            'shares',
+            'type',
+            'from' => array(
+                'name',
+                'id',
+                'picture'
+            )
+        ));
+
         $feed = new Feed();
 
         $data = $this
             ->client
-            ->get('/' . $this->pageId . '/posts');
+            ->get('/' . $this->pageId . '/posts?fields=' . $fieldsString);
 
         foreach($data['data'] as $postData) {
             $feed->addPost($this->postFactory->createFacebookPostFromApiData($postData));
         }
 
         return $feed;
+    }
+
+    private function generateFieldsQueryString($fields) {
+        $parts = array();
+
+        foreach($fields as $fieldKey => $fieldValue) {
+            $parts[] = is_array($fieldValue) ? $fieldKey . '.fields(' . $this->generateFieldsQueryString($fieldValue) . ')' : $fieldValue;
+        }
+
+        return join($parts, ',');
     }
 }

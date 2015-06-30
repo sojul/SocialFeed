@@ -38,9 +38,14 @@ class PostFactorySpec extends ObjectBehavior
                 'name' => 'vmix.fm',
                 'category' => 'Radio Station',
                 'id' => '31176228436',
+                'picture' => array(
+                    'data' => array(
+                        'is_silhouette' => false,
+                        'url' => 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/p50x50/190613_10150118491598437_6747387_n.jpg?oh=4cdb4b131b580befd80d725539cf2be4&oe=56264EDA&__gda__=1446287155_b6c8912fa8b92b62eb76fdd0dbaff8bf'
+                    )
+                )
             ),
-            'message' => 'Record Store Day! Music is love, keep on searchin!
-            ',
+            'message' => 'Record Store Day! Music is love, keep on searchin!',
             'picture' => 'https://fbexternal-a.akamaihd.net/safe_image.php?d=AQCXuaVPm8KlMl-2&w=130&h=130&url=http%3A%2F%2Fi1.ytimg.com%2Fvi%2F9hkszD-5y70%2Fhqdefault.jpg&cfs=1',
             'link' => 'https://www.youtube.com/watch?v=9hkszD-5y70',
             'name' => 'Underground Sound of Argentina - Untitled 1',
