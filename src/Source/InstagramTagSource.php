@@ -2,7 +2,7 @@
 
 namespace Lns\SocialFeed\Source;
 
-use Lns\SocialFeed\Client\InstagramApiClient;
+use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\Feed;
 
@@ -14,7 +14,7 @@ class InstagramTagSource implements SourceInterface
 
     private $tagName;
 
-    public function __construct(InstagramApiClient $client, PostFactoryInterface $postFactory, $tagName)
+    public function __construct(ClientInterface $client, PostFactoryInterface $postFactory, $tagName)
     {
         $this->client = $client;
         $this->postFactory = $postFactory;

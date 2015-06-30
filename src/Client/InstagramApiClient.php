@@ -4,7 +4,7 @@ namespace Lns\SocialFeed\Client;
 
 use GuzzleHttp\Client;
 
-class InstagramApiClient
+class InstagramApiClient implements ClientInterface
 {
     private $clientId;
     private $clientSecret;

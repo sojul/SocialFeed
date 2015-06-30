@@ -5,7 +5,7 @@ namespace spec\Lns\SocialFeed\Source;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-use Lns\SocialFeed\Client\TwitterApiClient;
+use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\PostInterface;
 
@@ -14,7 +14,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
     protected $client;
     protected $factory;
 
-    function let(TwitterApiClient $client, PostFactoryInterface $factory) {
+    function let(ClientInterface $client, PostFactoryInterface $factory) {
         $this->client = $client;
         $this->factory = $factory;
         $this->client->get('foo')->willReturn($this->getTwitterApiSampleData());

@@ -4,20 +4,20 @@ namespace Lns\SocialFeed\Source;
 
 use Lns\SocialFeed\Model\Feed;
 use Facebook\FacebookSession;
-use Lns\SocialFeed\Client\FacebookOgClient;
+use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Adapter\GraphObjectToPostAdapter;
 
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 
 class FacebookPagePostsSource implements SourceInterface
 {
-    private $facebookOgClient;
+    private $client;
     private $pageId;
     private $postFactory;
 
-    public function __construct(FacebookOgClient $facebookOgClient, PostFactoryInterface $postFactory, $pageId)
+    public function __construct(ClientInterface $client, PostFactoryInterface $postFactory, $pageId)
     {
-        $this->facebookOgClient = $facebookOgClient;
+        $this->client = $client;
         $this->postFactory = $postFactory;
         $this->pageId = $pageId;
     }
@@ -26,13 +26,12 @@ class FacebookPagePostsSource implements SourceInterface
 
         $feed = new Feed();
 
-        $objectList = $this
-            ->facebookOgClient
-            ->get('/' . $this->pageId . '/posts')
-            ->getGraphObjectList();
+        $data = $this
+            ->client
+            ->get('/' . $this->pageId . '/posts');
 
-        foreach($objectList as $object) {
-            $feed->addPost($this->postFactory->createFacebookPostFromOpenGraphObject($object));
+        foreach($data['data'] as $postData) {
+            $feed->addPost($this->postFactory->createFacebookPostFromApiData($postData));
         }
 
         return $feed;

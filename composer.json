@@ -3,10 +3,7 @@
     "description": "A PHP lib to fetch and mix content from various social networks",
     "require": {
         "guzzlehttp/guzzle": "^5.0",
-        "facebook/php-sdk-v4": "^4.0",
-        "cosenary/instagram": "^2.3",
         "phpcollection/phpcollection": "^0.4.0",
-        "j7mbo/twitter-api-php": "^1.0",
         "guzzlehttp/oauth-subscriber": "^0.2.0"
     },
     "require-dev": {

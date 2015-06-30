@@ -12,25 +12,25 @@ use Lns\SocialFeed\Model\Media;
 class PostFactory implements PostFactoryInterface
 {
     /**
-     * createFacebookPostFromOpenGraphObject
+     * createFacebookPostFromApiData
      *
-     * @param GraphObject $graphObject
+     * @param array $data
      * @return FacebookPost $post
      */
-    public function createFacebookPostFromOpenGraphObject(GraphObject $graphObject)
+    public function createFacebookPostFromApiData(array $data)
     {
-        $from = $graphObject->getProperty('from');
+        $from = $data['from'];
 
         $author = new Author();
-        $author->setIdentifier($from->getProperty('id'));
-        $author->setName($from->getProperty('name'));
+        $author->setIdentifier($from['id']);
+        $author->setName($from['name']);
 
         $post = new FacebookPost();
         $post
-            ->setIdentifier($graphObject->getProperty('id'))
-            ->setMessage($graphObject->getProperty('message'))
+            ->setIdentifier($data['id'])
+            ->setMessage($data['message'])
             ->setAuthor($author)
-            ->setCreatedAt(new \DateTime($graphObject->getProperty('created_time')))
+            ->setCreatedAt(new \DateTime($data['created_time']))
         ;
 
         return $post;

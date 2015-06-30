@@ -5,7 +5,7 @@ namespace Lns\SocialFeed\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
-class TwitterApiClient
+class TwitterApiClient implements ClientInterface
 {
     private $client;
     private $consumerKey;
