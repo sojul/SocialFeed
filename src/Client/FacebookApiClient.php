@@ -4,6 +4,8 @@ namespace Lns\SocialFeed\Client;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
+use Lns\SocialFeed\Exception\RequestException;
+use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 
 class FacebookApiClient implements ClientInterface
 {
@@ -20,7 +22,18 @@ class FacebookApiClient implements ClientInterface
     public function get($path) {
         $client = $this->createGuzzleClient($this->clientKey, $this->clientSecret);
 
-        return $client->get('/v2.3' . $path)->json();
+        try {
+            $response = $client->get('/v2.3' . $path);
+        } catch(GuzzleRequestException $e) {
+            $message = $e->getMessage();
+
+            if ($e->hasResponse()) {
+                $responseData = $e->getResponse()->json();
+                $message = $responseData['error']['code'] . ' - ' . $responseData['error']['message'];
+            }
+
+            throw new RequestException($message);
+        }
     }
 
     protected function createGuzzleClient($clientKey, $clientSecret) {
