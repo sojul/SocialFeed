@@ -7,7 +7,7 @@ use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TwitterSearchApiSource extends AbstractSource
+class TwitterStatusesLookupApiSource extends AbstractSource
 {
     private $twitterApiClient;
 
@@ -22,13 +22,13 @@ class TwitterSearchApiSource extends AbstractSource
         $options = $this->resolveOptions($options);
 
         $response = $this->twitterApiClient
-            ->get('/1.1/search/tweets.json?q=' . $options['query']);
+            ->get('/1.1/statuses/lookup.json?id=' . join($options['ids'], ','));
 
         $result = $response;
 
         $feed = new Feed();
 
-        foreach($result['statuses'] as $status) {
+        foreach($result as $status) {
             $feed->addPost($this->postFactory->createTweetFromApiData($status));
         }
 
@@ -36,6 +36,6 @@ class TwitterSearchApiSource extends AbstractSource
     }
 
     protected function configureOptionResolver(OptionsResolver &$resolver) {
-        $resolver->setRequired('query');
+        $resolver->setRequired('ids');
     }
 }

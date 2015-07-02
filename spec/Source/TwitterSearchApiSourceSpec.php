@@ -35,7 +35,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
         $postData1 = ['foo' => 'bar'];
         $postData2 = ['foo' => 'baz'];
 
-        $this->client->get(Argument::any())->willReturn([
+        $this->client->get('/1.1/search/tweets.json?q=foo')->willReturn([
             'statuses' => array(
                 0 => $postData1,
                 1 => $postData2
