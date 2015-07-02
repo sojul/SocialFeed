@@ -1,12 +1,12 @@
 <?php
 
-namespace Lns\SocialFeed\Source;
+namespace Lns\SocialFeed\Provider;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Exception as OptionsResolverException;
 use Lns\SocialFeed\Exception as SocialFeedException;
 
-abstract class AbstractSource implements SourceInterface
+abstract class AbstractProvider implements ProviderInterface
 {
     protected function resolveOptions($options) {
         $resolver = new OptionsResolver();

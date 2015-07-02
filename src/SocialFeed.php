@@ -2,15 +2,15 @@
 
 namespace Lns\SocialFeed;
 
-use Lns\SocialFeed\Source\SourceInterface;
+use Lns\SocialFeed\Provider\ProviderInterface;
 
 class SocialFeed
 {
-    protected $sources;
+    protected $providers;
 
-    public function addSource(SourceInterface $source)
+    public function addProvider(ProviderInterface $provider)
     {
-        $this->sources[] = $source;
+        $this->providers[] = $provider;
         return $this;
     }
 

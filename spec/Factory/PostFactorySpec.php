@@ -267,7 +267,7 @@ class PostFactorySpec extends ObjectBehavior
             'id' => 615460559203405824,
             'id_str' => '615460559203405824',
             'text' => '「3DMark」の新テスト「API Overhead feature test」を動かし，DX12への期待を高めてみた   http://t.co/hc9WPYKhqW',
-            'source' => '<a href="http://twittbot.net/" rel="nofollow">twittbot.net</a>',
+            'provider' => '<a href="http://twittbot.net/" rel="nofollow">twittbot.net</a>',
             'truncated' => false,
             'in_reply_to_status_id' => NULL,
             'in_reply_to_status_id_str' => NULL,

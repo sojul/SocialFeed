@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Lns\SocialFeed\Source;
+namespace spec\Lns\SocialFeed\Provider;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -12,7 +12,7 @@ use Lns\SocialFeed\Exception\UndefinedOptionsException;
 
 use Lns\SocialFeed\Client\ClientInterface;
 
-class FacebookPagePostsSourceSpec extends ObjectBehavior
+class FacebookPagePostsProviderSpec extends ObjectBehavior
 {
     protected $client;
     protected $factory;
@@ -25,8 +25,8 @@ class FacebookPagePostsSourceSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Lns\SocialFeed\Source\FacebookPagePostsSource');
-        $this->shouldImplement('Lns\SocialFeed\Source\SourceInterface');
+        $this->shouldHaveType('Lns\SocialFeed\Provider\FacebookPagePostsProvider');
+        $this->shouldImplement('Lns\SocialFeed\Provider\ProviderInterface');
     }
 
     function it_should_return_an_exection_if_page_id_option_is_not_set() {

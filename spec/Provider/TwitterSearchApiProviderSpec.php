@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Lns\SocialFeed\Source;
+namespace spec\Lns\SocialFeed\Provider;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,7 +9,7 @@ use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\PostInterface;
 
-class TwitterSearchApiSourceSpec extends ObjectBehavior
+class TwitterSearchApiProviderSpec extends ObjectBehavior
 {
     protected $client;
     protected $factory;
@@ -22,8 +22,8 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Lns\SocialFeed\Source\TwitterSearchApiSource');
-        $this->shouldImplement('Lns\SocialFeed\Source\SourceInterface');
+        $this->shouldHaveType('Lns\SocialFeed\Provider\TwitterSearchApiProvider');
+        $this->shouldImplement('Lns\SocialFeed\Provider\ProviderInterface');
     }
 
     function it_should_return_an_exection_if_query_option_is_not_set() {
@@ -67,7 +67,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460559203405824,
                     'id_str' => '615460559203405824',
                     'text' => '「3DMark」の新テスト「API Overhead feature test」を動かし，DX12への期待を高めてみた   http://t.co/hc9WPYKhqW',
-                    'source' => '<a href="http://twittbot.net/" rel="nofollow">twittbot.net</a>',
+                    'provider' => '<a href="http://twittbot.net/" rel="nofollow">twittbot.net</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -174,7 +174,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460556716277760,
                     'id_str' => '615460556716277760',
                     'text' => 'I have one yardstick by which I test every major problem - &amp; that yardstick is: Is it good for America?  -Eisenhower',
-                    'source' => '<a href="https://www.socialoomph.com" rel="nofollow">SocialOomph</a>',
+                    'provider' => '<a href="https://www.socialoomph.com" rel="nofollow">SocialOomph</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -287,7 +287,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460556611301376,
                     'id_str' => '615460556611301376',
                     'text' => 'How about a quick grammar test? http://t.co/0Cr4fZItV5 #Grammar #Exercise',
-                    'source' => '<a href="http://twitterfeed.com" rel="nofollow">twitterfeed</a>',
+                    'provider' => '<a href="http://twitterfeed.com" rel="nofollow">twitterfeed</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -446,7 +446,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     http://t.co/5P53dwZLrH
 
                     #ネプリーグ #2ch #ネプチューン #林修 #fujitv',
-                    'source' => '<a href="http://twitter.com/#!/download/ipad" rel="nofollow">Twitter for iPad</a>',
+                    'provider' => '<a href="http://twitter.com/#!/download/ipad" rel="nofollow">Twitter for iPad</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -654,7 +654,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460554497327104,
                     'id_str' => '615460554497327104',
                     'text' => 'Dub Acid Test Ptn.04 #tt303 #strymon #elektron #analogrytm http://t.co/rCqyJpA5BA',
-                    'source' => '<a href="http://www.apple.com" rel="nofollow">iOS</a>',
+                    'provider' => '<a href="http://www.apple.com" rel="nofollow">iOS</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -848,7 +848,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460553897541632,
                     'id_str' => '615460553897541632',
                     'text' => 'Really thinking about just staying up and studying for my options test tomorrow',
-                    'source' => '<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>',
+                    'provider' => '<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -944,7 +944,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460551586631680,
                     'id_str' => '615460551586631680',
                     'text' => 'Test Sismic http://t.co/fJNmS24SJd #TestSismic Questa � una prova.. http://t.co/CAZ6ir3Wmz',
-                    'source' => '<a href="http://www.sismic.it/tweet/home.php" rel="nofollow">SismicTest</a>',
+                    'provider' => '<a href="http://www.sismic.it/tweet/home.php" rel="nofollow">SismicTest</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -1114,7 +1114,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     I forget what I learned.
 
                     Whats the point?',
-                    'source' => '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>',
+                    'provider' => '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -1196,7 +1196,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                         I forget what I learned.
 
                         Whats the point?',
-                        'source' => '<a href="https://about.twitter.com/products/tweetdeck" rel="nofollow">TweetDeck</a>',
+                        'provider' => '<a href="https://about.twitter.com/products/tweetdeck" rel="nofollow">TweetDeck</a>',
                         'truncated' => false,
                         'in_reply_to_status_id' => NULL,
                         'in_reply_to_status_id_str' => NULL,
@@ -1334,7 +1334,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     I forget what I learned.
 
                     Whats the point?',
-                    'source' => '<a href="http://twitter.com" rel="nofollow">Twitter Web Client</a>',
+                    'provider' => '<a href="http://twitter.com" rel="nofollow">Twitter Web Client</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -1433,7 +1433,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                         I forget what I learned.
 
                         Whats the point?',
-                        'source' => '<a href="https://about.twitter.com/products/tweetdeck" rel="nofollow">TweetDeck</a>',
+                        'provider' => '<a href="https://about.twitter.com/products/tweetdeck" rel="nofollow">TweetDeck</a>',
                         'truncated' => false,
                         'in_reply_to_status_id' => NULL,
                         'in_reply_to_status_id_str' => NULL,
@@ -1563,7 +1563,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460547941634049,
                     'id_str' => '615460547941634049',
                     'text' => 'http://t.co/hWs3fvn12y',
-                    'source' => '<a href="http://mobile.twitter.com" rel="nofollow">Mobile Web</a>',
+                    'provider' => '<a href="http://mobile.twitter.com" rel="nofollow">Mobile Web</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -1671,7 +1671,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460546972749824,
                     'id_str' => '615460546972749824',
                     'text' => 'Did you pass this Alzheimer test? --This is Gold. http://t.co/IkkdVSKGQQ http://t.co/QGAYbuz1uT',
-                    'source' => '<a href="https://twitter.com" rel="nofollow">storkpinkie_new</a>',
+                    'provider' => '<a href="https://twitter.com" rel="nofollow">storkpinkie_new</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -1825,7 +1825,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460546523992066,
                     'id_str' => '615460546523992066',
                     'text' => '[당신의 몸값은?] 류엘님님님의 몸값은 [공짜] 입니다. http://t.co/cSb2zubQCD',
-                    'source' => '<a href="http://twitter.com" rel="nofollow">Twitter Web Client</a>',
+                    'provider' => '<a href="http://twitter.com" rel="nofollow">Twitter Web Client</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -1932,7 +1932,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460542589743104,
                     'id_str' => '615460542589743104',
                     'text' => 'Nay nag pa test po ako! #MMSParaKayAnton',
-                    'source' => '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>',
+                    'provider' => '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -2037,7 +2037,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460542006853632,
                     'id_str' => '615460542006853632',
                     'text' => 'TASC is hiring a #Test #Engineer, apply now! #SanAntonio #jobs http://t.co/45NEaTR9yQ',
-                    'source' => '<a href="http://neuvoo.ca" rel="nofollow">mi.primer.app.con.plaxy.t00</a>',
+                    'provider' => '<a href="http://neuvoo.ca" rel="nofollow">mi.primer.app.con.plaxy.t00</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,
@@ -2183,7 +2183,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                             0 => 
                             array (
                                 'url' => 'http://t.co/45NEaTR9yQ',
-                                'expanded_url' => 'http://neuvoo.com/job.php?id=0myjvewiv8&source=twitter&lang=en&client_id=760&l=San+Antonio%2C+Texas%2C+US&k=Test+Engineer',
+                                'expanded_url' => 'http://neuvoo.com/job.php?id=0myjvewiv8&provider=twitter&lang=en&client_id=760&l=San+Antonio%2C+Texas%2C+US&k=Test+Engineer',
                                 'display_url' => 'neuvoo.com/job.php?id=0my…',
                                 'indices' => 
                                 array (
@@ -2209,7 +2209,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
                     'id' => 615460541000126464,
                     'id_str' => '615460541000126464',
                     'text' => '[당신의 몸값은?] 엔알키노님의 몸값은 [머리카락 한가닥] 입니다. http://t.co/Uen3AftsoI',
-                    'source' => '<a href="http://mobile.twitter.com" rel="nofollow">Mobile Web</a>',
+                    'provider' => '<a href="http://mobile.twitter.com" rel="nofollow">Mobile Web</a>',
                     'truncated' => false,
                     'in_reply_to_status_id' => NULL,
                     'in_reply_to_status_id_str' => NULL,

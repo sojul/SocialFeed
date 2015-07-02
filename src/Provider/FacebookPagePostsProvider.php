@@ -1,6 +1,6 @@
 <?php
 
-namespace Lns\SocialFeed\Source;
+namespace Lns\SocialFeed\Provider;
 
 use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Client\ClientInterface;
@@ -8,7 +8,7 @@ use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FacebookPagePostsSource extends AbstractSource
+class FacebookPagePostsProvider extends AbstractProvider
 {
     private $client;
     private $postFactory;

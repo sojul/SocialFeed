@@ -1,10 +1,10 @@
 <?php
 
-namespace Lns\SocialFeed\Source;
+namespace Lns\SocialFeed\Provider;
 
 use Lns\SocialFeed\Model\Feed;
 
-interface SourceInterface
+interface ProviderInterface
 {
     /**
      * getFeed

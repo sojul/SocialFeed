@@ -1,13 +1,13 @@
 <?php
 
-namespace Lns\SocialFeed\Source;
+namespace Lns\SocialFeed\Provider;
 
 use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\Feed;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class InstagramTagSource extends AbstractSource
+class InstagramTagProvider extends AbstractProvider
 {
     private $client;
 

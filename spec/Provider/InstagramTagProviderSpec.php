@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Lns\SocialFeed\Source;
+namespace spec\Lns\SocialFeed\Provider;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -8,25 +8,24 @@ use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\PostInterface;
 
-class TwitterStatusesLookupApiSourceSpec extends ObjectBehavior
+class InstagramTagProviderSpec extends ObjectBehavior
 {
     protected $client;
     protected $factory;
 
     function let(ClientInterface $client, PostFactoryInterface $factory) {
-        $this->client = $client;
         $this->factory = $factory;
+        $this->client = $client;
         $this->beConstructedWith($client, $factory);
     }
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Lns\SocialFeed\Source\TwitterStatusesLookupApiSource');
+        $this->shouldHaveType('Lns\SocialFeed\Provider\InstagramTagProvider');
     }
 
-    function it_should_implement_source_interface()
-    {
-        $this->shouldImplement('Lns\SocialFeed\Source\SourceInterface');
+    function it_should_implement_provider_interface() {
+        $this->shouldHaveType('Lns\SocialFeed\Provider\ProviderInterface');
     }
 
     function it_should_return_feed(PostInterface $post1, PostInterface $post2) {
@@ -34,16 +33,18 @@ class TwitterStatusesLookupApiSourceSpec extends ObjectBehavior
         $postData1 = ['foo' => 'bar'];
         $postData2 = ['foo' => 'baz'];
 
-        $this->client->get('/1.1/statuses/lookup.json?id=id1,id2')->willReturn([
-            0 => $postData1,
-            1 => $postData2
+        $this->client->get(Argument::any())->willReturn([
+            'data' => array(
+                0 => $postData1,
+                1 => $postData2
+            )
         ]);
 
-        $this->factory->createTweetFromApiData($postData1)->willReturn($post1);
-        $this->factory->createTweetFromApiData($postData2)->willReturn($post2);
+        $this->factory->createInstagramPostFromApiData($postData1)->willReturn($post1);
+        $this->factory->createInstagramPostFromApiData($postData2)->willReturn($post2);
 
         $this->getFeed(array(
-            'ids' => array('id1', 'id2')
+            'tag_name' => 'foo'
         ))->shouldHaveType('Lns\SocialFeed\Model\Feed');
     }
 }

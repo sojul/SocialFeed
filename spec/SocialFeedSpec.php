@@ -5,7 +5,7 @@ namespace spec\Lns\SocialFeed;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-use Lns\SocialFeed\Source\SourceInterface;
+use Lns\SocialFeed\Provider\ProviderInterface;
 
 class SocialFeedSpec extends ObjectBehavior
 {
@@ -14,7 +14,7 @@ class SocialFeedSpec extends ObjectBehavior
         $this->shouldHaveType('Lns\SocialFeed\SocialFeed');
     }
 
-    function it_shoud_be_possible_to_add_a_new_source(SourceInterface $source) {
-        $this->addSource($source)->shouldReturn($this);
+    function it_shoud_be_possible_to_add_a_new_provider(ProviderInterface $provider) {
+        $this->addProvider($provider)->shouldReturn($this);
     }
 }
