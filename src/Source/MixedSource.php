@@ -3,24 +3,39 @@
 namespace Lns\SocialFeed\Source;
 
 use Lns\SocialFeed\Model\Feed;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MixedSource implements SourceInterface
+class MixedSource extends AbstractSource
 {
-    protected $sources;
+    protected $sources = array();
 
-    public function addSource(SourceInterface $source)
+    /**
+     * addSource
+     *
+     * @param string $sourceId
+     * @param SourceInterface $source
+     */
+    public function addSource($sourceId, SourceInterface $source)
     {
-        $this->sources[] = $source;
+        $this->sources[$sourceId] = $source;
         return $this;
     }
 
     public function getFeed(array $options = array()) {
         $feed = new Feed();
 
-        foreach($this->sources as $source) {
-            $feed->merge($source->getFeed());
+        $this->options = $this->resolveOptions($options);
+
+        foreach($this->sources as $sourceId => $source) {
+            $feed->merge($source->getFeed($options[$sourceId]));
         }
 
-        return $feed;
+        return $feed->sort();
+    }
+
+    protected function configureOptionResolver(OptionsResolver &$resolver) {
+        foreach($this->sources as $sourceId => $source) {
+            $resolver->setRequired($sourceId);
+        }
     }
 }
