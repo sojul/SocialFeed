@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "da7ffcd800dc2ffb69ad2429bc0b32b3",
+    "hash": "02dcee31ac6dd3acda2f470606416ae8",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -358,6 +358,60 @@
             ],
             "description": "A lightweight implementation of CommonJS Promises/A for PHP",
             "time": "2014-12-30 13:32:42"
+        },
+        {
+            "name": "symfony/options-resolver",
+            "version": "v2.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/OptionsResolver.git",
+                "reference": "00aad418f1dcfca84260a63b6876211a443ed072"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/OptionsResolver/zipball/00aad418f1dcfca84260a63b6876211a443ed072",
+                "reference": "00aad418f1dcfca84260a63b6876211a443ed072",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\OptionsResolver\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony OptionsResolver Component",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "config",
+                "configuration",
+                "options"
+            ],
+            "time": "2015-06-08 09:37:21"
         }
     ],
     "packages-dev": [
@@ -734,16 +788,16 @@
         },
         {
             "name": "memio/twig-template-engine",
-            "version": "v1.2.3",
+            "version": "v1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/memio/twig-template-engine.git",
-                "reference": "021b9010ba29e5a0d01343aa13dc57851d66eab6"
+                "reference": "c42964ca4cba99d7ff8c85f867275988d9a640ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/memio/twig-template-engine/zipball/021b9010ba29e5a0d01343aa13dc57851d66eab6",
-                "reference": "021b9010ba29e5a0d01343aa13dc57851d66eab6",
+                "url": "https://api.github.com/repos/memio/twig-template-engine/zipball/c42964ca4cba99d7ff8c85f867275988d9a640ed",
+                "reference": "c42964ca4cba99d7ff8c85f867275988d9a640ed",
                 "shasum": ""
             },
             "require": {
@@ -784,7 +838,7 @@
                 "templates",
                 "twig"
             ],
-            "time": "2015-06-04 17:47:09"
+            "time": "2015-06-30 11:32:27"
         },
         {
             "name": "memio/validator",
