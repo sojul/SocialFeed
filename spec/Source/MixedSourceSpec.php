@@ -34,8 +34,8 @@ class MixedSourceSpec extends ObjectBehavior
         $this->addSource('source2', $source2);
 
         $this->getFeed(array(
-            'source1' => ['option1' => 'value1'],
-            'source2' => ['option2' => 'value2']
+            'source1' => $source1Options,
+            'source2' => $source2Options
         ))->shouldHaveType('Lns\SocialFeed\Model\Feed');
     }
 }
