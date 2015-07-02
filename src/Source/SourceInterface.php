@@ -11,5 +11,5 @@ interface SourceInterface
      *
      * @return Feed
      */
-    public function getFeed();
+    public function getFeed(array $options = array());
 }

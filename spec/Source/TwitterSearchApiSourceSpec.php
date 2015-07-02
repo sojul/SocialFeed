@@ -17,8 +17,7 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
     function let(ClientInterface $client, PostFactoryInterface $factory) {
         $this->client = $client;
         $this->factory = $factory;
-        $this->client->get('foo')->willReturn($this->getTwitterApiSampleData());
-        $this->beConstructedWith($client, $factory, 'foo');
+        $this->beConstructedWith($client, $factory);
     }
 
     function it_is_initializable()
@@ -27,12 +26,30 @@ class TwitterSearchApiSourceSpec extends ObjectBehavior
         $this->shouldImplement('Lns\SocialFeed\Source\SourceInterface');
     }
 
+    function it_should_return_an_exection_if_query_option_is_not_set() {
+        $this->shouldThrow('Lns\SocialFeed\Exception\MissingOptionsException')->duringGetFeed();
+    }
+
     function it_should_return_feed(PostInterface $post1, PostInterface $post2) {
 
-        $this->factory->createTweetFromApiData(Argument::any())->willReturn($post1);
+        $postData1 = ['foo' => 'bar'];
+        $postData2 = ['foo' => 'baz'];
 
-        $this->getFeed()->shouldHaveType('Lns\SocialFeed\Model\Feed');
+        $this->client->get(Argument::any())->willReturn([
+            'statuses' => array(
+                0 => $postData1,
+                1 => $postData2
+            )
+        ]);
+
+        $this->factory->createTweetFromApiData($postData1)->willReturn($post1);
+        $this->factory->createTweetFromApiData($postData2)->willReturn($post2);
+
+        $this->getFeed(array(
+            'query' => 'foo'
+        ))->shouldHaveType('Lns\SocialFeed\Model\Feed');
     }
+
 
     private function getTwitterApiSampleData()
     {

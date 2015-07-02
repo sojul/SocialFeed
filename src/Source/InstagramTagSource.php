@@ -21,7 +21,7 @@ class InstagramTagSource implements SourceInterface
         $this->tagName = $tagName;
     }
 
-    public function getFeed() {
+    public function getFeed(array $options = array()) {
         $feed = new Feed();
 
         $response = $this->client->get(sprintf('/v1/tags/%s/media/recent', $this->tagName));

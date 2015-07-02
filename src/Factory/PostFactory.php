@@ -106,6 +106,10 @@ class PostFactory implements PostFactoryInterface
             ->setIdentifier($data['caption']['from']['id'])
         ;
 
+        $media = new Media();
+        $media->setUrl($data['user']['profile_picture']);
+        $author->setProfilePicture($media);
+
         $instagramPost
             ->setIdentifier($data['caption']['id'])
             ->setMessage($data['caption']['text'])

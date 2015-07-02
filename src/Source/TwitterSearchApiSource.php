@@ -5,23 +5,24 @@ namespace Lns\SocialFeed\Source;
 use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TwitterSearchApiSource implements SourceInterface
+class TwitterSearchApiSource extends AbstractSource
 {
     private $twitterApiClient;
-    private $query;
 
-    public function __construct(ClientInterface $twitterApiClient, PostFactoryInterface $postFactory, $query)
+    public function __construct(ClientInterface $twitterApiClient, PostFactoryInterface $postFactory)
     {
         $this->twitterApiClient = $twitterApiClient;
         $this->postFactory = $postFactory;
-        $this->query = $query;
     }
 
-    public function getFeed() {
+    public function getFeed(array $options = array()) {
+
+        $options = $this->resolveOptions($options);
 
         $response = $this->twitterApiClient
-            ->get($this->query);
+            ->get($options['query']);
 
         $result = $response;
 
@@ -32,5 +33,9 @@ class TwitterSearchApiSource implements SourceInterface
         }
 
         return $feed;
+    }
+
+    protected function configureOptionResolver(OptionsResolver &$resolver) {
+        $resolver->setRequired('query');
     }
 }

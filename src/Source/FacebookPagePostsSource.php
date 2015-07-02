@@ -3,26 +3,31 @@
 namespace Lns\SocialFeed\Source;
 
 use Lns\SocialFeed\Model\Feed;
-use Facebook\FacebookSession;
 use Lns\SocialFeed\Client\ClientInterface;
-use Lns\SocialFeed\Adapter\GraphObjectToPostAdapter;
 
 use Lns\SocialFeed\Factory\PostFactoryInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FacebookPagePostsSource implements SourceInterface
+class FacebookPagePostsSource extends AbstractSource
 {
     private $client;
-    private $pageId;
     private $postFactory;
 
-    public function __construct(ClientInterface $client, PostFactoryInterface $postFactory, $pageId)
+    public function __construct(ClientInterface $client, PostFactoryInterface $postFactory)
     {
         $this->client = $client;
         $this->postFactory = $postFactory;
-        $this->pageId = $pageId;
     }
 
-    public function getFeed() {
+    /**
+     * getFeed
+     *
+     * @param array $options
+     * @return Feed
+     */
+    public function getFeed(array $options = array()) {
+
+        $options = $this->resolveOptions($options);
 
         $fieldsString = $this->generateFieldsQueryString(array(
             'actions',
@@ -46,13 +51,17 @@ class FacebookPagePostsSource implements SourceInterface
 
         $data = $this
             ->client
-            ->get('/' . $this->pageId . '/posts?fields=' . $fieldsString);
+            ->get('/' . $options['page_id'] . '/posts?fields=' . $fieldsString);
 
         foreach($data['data'] as $postData) {
             $feed->addPost($this->postFactory->createFacebookPostFromApiData($postData));
         }
 
         return $feed;
+    }
+
+    protected function configureOptionResolver(OptionsResolver &$resolver) {
+        $resolver->setRequired('page_id');
     }
 
     private function generateFieldsQueryString($fields) {

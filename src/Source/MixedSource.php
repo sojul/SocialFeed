@@ -14,7 +14,7 @@ class MixedSource implements SourceInterface
         return $this;
     }
 
-    public function getFeed() {
+    public function getFeed(array $options = array()) {
         $feed = new Feed();
 
         foreach($this->sources as $source) {
