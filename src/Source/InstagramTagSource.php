@@ -5,8 +5,9 @@ namespace Lns\SocialFeed\Source;
 use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\Feed;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class InstagramTagSource implements SourceInterface
+class InstagramTagSource extends AbstractSource
 {
     private $client;
 
@@ -14,22 +15,27 @@ class InstagramTagSource implements SourceInterface
 
     private $tagName;
 
-    public function __construct(ClientInterface $client, PostFactoryInterface $postFactory, $tagName)
+    public function __construct(ClientInterface $client, PostFactoryInterface $postFactory)
     {
         $this->client = $client;
         $this->postFactory = $postFactory;
-        $this->tagName = $tagName;
     }
 
     public function getFeed(array $options = array()) {
+        $options = $this->resolveOptions($options);
+
         $feed = new Feed();
 
-        $response = $this->client->get(sprintf('/v1/tags/%s/media/recent', $this->tagName));
+        $response = $this->client->get(sprintf('/v1/tags/%s/media/recent', $options['tag_name']));
 
         foreach($response['data'] as $data) {
             $feed->addPost($this->postFactory->createInstagramPostFromApiData($data));
         };
 
         return $feed;
+    }
+
+    public function configureOptionResolver(OptionsResolver &$resolver) {
+        $resolver->setRequired('tag_name');
     }
 }
