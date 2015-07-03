@@ -15,25 +15,25 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Lns\SocialFeed\Provider\FacebookPagePostsProvider;
 use Lns\SocialFeed\Provider\TwitterSearchApiProvider;
-use Lns\SocialFeed\Provider\MixedProvider;
+use Lns\SocialFeed\Provider\ProviderChain;
 use Lns\SocialFeed\Client\TwitterApiClient;
 use Lns\SocialFeed\Client\FacebookApiClient;
 use Lns\SocialFeed\Client\FacebookRequestFactory;
 use Lns\SocialFeed\Factory\PostFactory;
 
-$mixedProvider = new MixedProvider();
+$providerChain = new ProviderChain();
 $postFactory = new PostFactory();
 
 $client = new FacebookApiClient('681945715271604', 'e6f5472a5f159d8f235d9cfc14084b36');
 
-$mixedProvider->addProvider('fb', new FacebookPagePostsProvider($client, $postFactory));
+$providerChain->addProvider('fb', new FacebookPagePostsProvider($client, $postFactory));
 
 // add twitter provider
 $twitterClient = new TwitterApiClient('HqSutv9oOk64BqyAn474g', 'EdAzOS0RTuMnIQgQPPIM4gv66fwRlyzx2yfqjz9nHtA');
 
-$mixedProvider->addProvider('tw', new TwitterSearchApiProvider($twitterClient, $postFactory));
+$providerChain->addProvider('tw', new TwitterSearchApiProvider($twitterClient, $postFactory));
 
-$feed = $mixedProvider->getFeed([
+$feed = $providerChain->getFeed([
     'fb' => ['page_id' => '110483805633200'],
     'tw' => ['query' => 'lanetscouade'],
 ]);
