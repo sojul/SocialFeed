@@ -23,7 +23,7 @@ class FacebookApiClient implements ClientInterface
         $client = $this->createGuzzleClient($this->clientKey, $this->clientSecret);
 
         try {
-            $response = $client->get('/v2.3' . $path);
+            return $response = $client->get('/v2.3' . $path)->json();
         } catch(GuzzleRequestException $e) {
             $message = $e->getMessage();
 
