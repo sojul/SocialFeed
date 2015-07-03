@@ -19,11 +19,11 @@ class TwitterApiClient implements ClientInterface
         $this->consumerSecret = $consumerSecret;
     }
 
-    public function get($search) {
+    public function get($path) {
         $client = $this->createGuzzleClient($this->consumerKey, $this->consumerSecret);
 
         try {
-            return $client->get('/1.1/search/tweets.json?q=' . $search)->json();
+            return $client->get($path)->json();
         } catch(GuzzleRequestException $e) {
             $message = $e->getMessage();
 
