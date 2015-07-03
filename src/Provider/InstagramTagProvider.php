@@ -35,6 +35,11 @@ class InstagramTagProvider extends AbstractProvider
         return $feed;
     }
 
+    public function getName()
+    {
+        return 'instagram';
+    }
+
     public function configureOptionResolver(OptionsResolver &$resolver) {
         $resolver->setRequired('tag_name');
     }

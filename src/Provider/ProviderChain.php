@@ -5,7 +5,7 @@ namespace Lns\SocialFeed\Provider;
 use Lns\SocialFeed\Model\Feed;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MixedProvider extends AbstractProvider
+class ProviderChain extends AbstractProvider
 {
     protected $providers = array();
 
@@ -31,6 +31,11 @@ class MixedProvider extends AbstractProvider
         }
 
         return $feed->sort();
+    }
+
+    public function getName()
+    {
+        return 'chain';
     }
 
     protected function configureOptionResolver(OptionsResolver &$resolver) {

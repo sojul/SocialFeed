@@ -3,15 +3,32 @@
 namespace Lns\SocialFeed;
 
 use Lns\SocialFeed\Provider\ProviderInterface;
+use Lns\SocialFeed\Model\Feed;
 
-class SocialFeed
+class SocialFeed implements ProviderInterface
 {
-    protected $providers;
+    protected $sources;
 
-    public function addProvider(ProviderInterface $provider)
+    public function addSource(SourceInterface $source)
     {
-        $this->providers[] = $provider;
+        $this->sources[] = $source;
         return $this;
+    }
+
+    public function getFeed(array $options = array()) {
+        $feed = new Feed();
+
+        foreach($this->sources as $source) {
+            $provider = $source->getProvider();
+            $feed->merge($provider->getFeed($source->getOptions()));
+        }
+
+        return $feed->sort();
+    }
+
+    public function getName()
+    {
+        return 'social_feed';
     }
 
 }

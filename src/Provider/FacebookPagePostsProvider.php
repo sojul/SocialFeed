@@ -60,6 +60,11 @@ class FacebookPagePostsProvider extends AbstractProvider
         return $feed;
     }
 
+    public function getName()
+    {
+        return 'facebook_page';
+    }
+
     protected function configureOptionResolver(OptionsResolver &$resolver) {
         $resolver->setRequired('page_id');
     }

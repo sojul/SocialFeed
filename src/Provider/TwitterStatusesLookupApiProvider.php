@@ -35,6 +35,11 @@ class TwitterStatusesLookupApiProvider extends AbstractProvider
         return $feed;
     }
 
+    public function getName()
+    {
+        return 'twitter_status_lookup_api';
+    }
+
     protected function configureOptionResolver(OptionsResolver &$resolver) {
         $resolver->setRequired('ids');
     }

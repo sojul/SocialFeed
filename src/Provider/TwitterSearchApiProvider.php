@@ -35,6 +35,11 @@ class TwitterSearchApiProvider extends AbstractProvider
         return $feed;
     }
 
+    public function getName()
+    {
+        return 'twitter_search_api';
+    }
+
     protected function configureOptionResolver(OptionsResolver &$resolver) {
         $resolver->setRequired('query');
     }

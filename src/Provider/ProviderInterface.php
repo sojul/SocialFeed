@@ -12,4 +12,5 @@ interface ProviderInterface
      * @return Feed
      */
     public function getFeed(array $options = array());
+    public function getName();
 }

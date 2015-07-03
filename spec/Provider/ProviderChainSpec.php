@@ -7,11 +7,11 @@ use Prophecy\Argument;
 use Lns\SocialFeed\Provider\ProviderInterface;
 use Lns\SocialFeed\Model\FeedInterface;
 
-class MixedProviderSpec extends ObjectBehavior
+class ProviderChainSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Lns\SocialFeed\Provider\MixedProvider');
+        $this->shouldHaveType('Lns\SocialFeed\Provider\ProviderChain');
     }
 
     function it_should_implement_provider_interface()
