@@ -37,9 +37,9 @@ class PostFactory implements PostFactoryInterface
             ->setCreatedAt(new \DateTime($data['created_time']))
         ;
 
-        if(isset($data['picture'])) {
+        if(isset($data['full_picture'])) {
             $media = new Media();
-            $media->setUrl($data['picture']);
+            $media->setUrl($data['full_picture']);
             $post->addMedia($media);
         }
 

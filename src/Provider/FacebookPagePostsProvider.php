@@ -37,13 +37,13 @@ class FacebookPagePostsProvider extends AbstractProvider
             'likes',
             'message',
             'message_tags',
-            'picture',
+            'full_picture',
             'shares',
             'type',
             'from' => array(
                 'name',
                 'id',
-                'picture'
+                'picture.type(large)'
             )
         ));
 
