@@ -112,6 +112,7 @@ class PostFactory implements PostFactoryInterface
         $author
             ->setName($data['caption']['from']['username'])
             ->setIdentifier($data['caption']['from']['id'])
+            ->setLink('https://instagram.com/' . $data['caption']['from']['username'])
         ;
 
         $media = new Media();
@@ -125,16 +126,18 @@ class PostFactory implements PostFactoryInterface
             ->setAuthor($author)
         ;
 
-        // add medias
-        if(isset($data['images'])) {
-            foreach($data['images'] as $imageData) {
-                $media = new Media();
-                $media->setUrl($imageData['url']);
-                $media->setWidth($imageData['width']);
-                $media->setHeight($imageData['height']);
-                $instagramPost->addMedia($media);
-            }
-        }
+        // we fetch standard_resolution image
+        $imageData = $data['images']['standard_resolution'];
+        $media = new Media();
+
+        $media
+            ->setUrl($imageData['url'])
+            ->setLink($data['link'])
+            ->setWidth($imageData['width'])
+            ->setHeight($imageData['height'])
+        ;
+
+        $instagramPost->addMedia($media);
 
         return $instagramPost;
     }
