@@ -35,6 +35,7 @@ class FacebookPagePostsProvider extends AbstractProvider
             'created_time',
             'id',
             'likes',
+            'link',
             'message',
             'message_tags',
             'full_picture',
