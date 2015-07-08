@@ -6,6 +6,7 @@ class Author implements AuthorInterface
 {
     protected $identifier;
     protected $name;
+    protected $username;
     protected $profilePicture;
     protected $link;
     protected $properties = array();
@@ -29,6 +30,17 @@ class Author implements AuthorInterface
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function setUsername($username)
+    {
+        $this->username = $username;
         return $this;
     }
 

@@ -6,6 +6,8 @@ interface AuthorInterface
 {
     public function getName();
     public function setName($name);
+    public function getUsername();
+    public function setUsername($username);
     public function getIdentifier();
     public function setIdentifier($identifier);
     public function getProfilePicture();

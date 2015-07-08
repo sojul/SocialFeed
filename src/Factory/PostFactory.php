@@ -69,7 +69,7 @@ class PostFactory implements PostFactoryInterface
         $author->setIdentifier($data['user']['id']);
         $author->setName($data['user']['name']);
         $author->setLink('https://twitter.com/' . $data['user']['screen_name']);
-        $author->setProperty('screen_name', $data['user']['screen_name']);
+        $author->setUsername($data['user']['screen_name']);
 
         $tweet
             ->setIdentifier($data['id'])
@@ -113,6 +113,7 @@ class PostFactory implements PostFactoryInterface
             ->setName($data['caption']['from']['username'])
             ->setIdentifier($data['caption']['from']['id'])
             ->setLink('https://instagram.com/' . $data['caption']['from']['username'])
+            ->setUsername($data['caption']['from']['username'])
         ;
 
         $media = new Media();
