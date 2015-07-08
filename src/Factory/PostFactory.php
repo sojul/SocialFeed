@@ -110,7 +110,7 @@ class PostFactory implements PostFactoryInterface
 
         $author = new Author();
         $author
-            ->setName($data['caption']['from']['username'])
+            ->setName($data['caption']['from']['full_name'])
             ->setIdentifier($data['caption']['from']['id'])
             ->setLink('https://instagram.com/' . $data['caption']['from']['username'])
             ->setUsername($data['caption']['from']['username'])
