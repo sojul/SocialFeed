@@ -90,7 +90,7 @@ class PostFactory implements PostFactoryInterface
         foreach($mediaDatas as $mediaData) {
             $media = new Media();
             $media->setUrl($mediaData['media_url']);
-            $media->setLink($mediaData['display_url']);
+            $media->setLink($mediaData['expanded_url']);
             $tweet->addMedia($media);
         }
 
