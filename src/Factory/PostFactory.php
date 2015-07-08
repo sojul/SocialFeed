@@ -68,7 +68,8 @@ class PostFactory implements PostFactoryInterface
         $author->setProfilePicture($media);
         $author->setIdentifier($data['user']['id']);
         $author->setName($data['user']['name']);
-        $author->setLink($data['user']['url']);
+        $author->setLink('https://twitter.com/' . $data['user']['screen_name']);
+        $author->setProperty('screen_name', $data['user']['screen_name']);
 
         $tweet
             ->setIdentifier($data['id'])

@@ -12,5 +12,7 @@ interface AuthorInterface
     public function setProfilePicture(MediaInterface $media);
     public function getLink();
     public function setLink($link);
+    public function setProperty($propertyKey, $propertyValue);
+    public function getProperty($propertyKey);
 }
 

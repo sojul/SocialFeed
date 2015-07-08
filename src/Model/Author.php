@@ -8,6 +8,7 @@ class Author implements AuthorInterface
     protected $name;
     protected $profilePicture;
     protected $link;
+    protected $properties = array();
 
     public function getIdentifier()
     {
@@ -50,6 +51,17 @@ class Author implements AuthorInterface
     public function setLink($link)
     {
         $this->link = $link;
+        return $this;
+    }
+
+    public function getProperty($propertyKey)
+    {
+        return isset($this->properties[$propertyKey]) ? $this->properties[$propertyKey] : null;
+    }
+
+    public function setProperty($propertyKey, $propertyValue)
+    {
+        $this->properties[$propertyKey] = $propertyValue;
         return $this;
     }
 }
