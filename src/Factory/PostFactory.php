@@ -24,10 +24,14 @@ class PostFactory implements PostFactoryInterface
         $author = new Author();
         $author->setIdentifier($from['id']);
         $author->setName($from['name']);
+        $author->setLink($from['link']);
 
         $media = new Media();
         $media->setUrl($from['picture']['data']['url']);
+        $media->setLink($from['link']);
         $author->setProfilePicture($media);
+
+        $data['message'] = isset($data['message']) ? $data['message'] : '';
 
         $post = new FacebookPost();
         $post
@@ -40,6 +44,7 @@ class PostFactory implements PostFactoryInterface
         if(isset($data['full_picture'])) {
             $media = new Media();
             $media->setUrl($data['full_picture']);
+            $media->setLink($data['link']);
             $post->addMedia($media);
         }
 
@@ -63,6 +68,7 @@ class PostFactory implements PostFactoryInterface
         $author->setProfilePicture($media);
         $author->setIdentifier($data['user']['id']);
         $author->setName($data['user']['name']);
+        $author->setLink($data['user']['url']);
 
         $tweet
             ->setIdentifier($data['id'])
@@ -84,6 +90,7 @@ class PostFactory implements PostFactoryInterface
         foreach($mediaDatas as $mediaData) {
             $media = new Media();
             $media->setUrl($mediaData['media_url']);
+            $media->setLink($mediaData['display_url']);
             $tweet->addMedia($media);
         }
 

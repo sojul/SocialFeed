@@ -7,6 +7,7 @@ class Author implements AuthorInterface
     protected $identifier;
     protected $name;
     protected $profilePicture;
+    protected $link;
 
     public function getIdentifier()
     {
@@ -38,6 +39,17 @@ class Author implements AuthorInterface
     public function setProfilePicture(MediaInterface $profilePicture)
     {
         $this->profilePicture = $profilePicture;
+        return $this;
+    }
+
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    public function setLink($link)
+    {
+        $this->link = $link;
         return $this;
     }
 }

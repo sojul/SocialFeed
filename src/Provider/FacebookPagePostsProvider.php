@@ -43,7 +43,8 @@ class FacebookPagePostsProvider extends AbstractProvider
             'from' => array(
                 'name',
                 'id',
-                'picture.type(large)'
+                'picture.type(large)',
+                'link'
             )
         ));
 

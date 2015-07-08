@@ -10,4 +10,6 @@ interface MediaInterface
     public function setUrl($url);
     public function setWidth($width);
     public function setHeight($height);
+    public function getLink();
+    public function setLink($link);
 }

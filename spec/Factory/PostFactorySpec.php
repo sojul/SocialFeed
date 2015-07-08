@@ -36,6 +36,7 @@ class PostFactorySpec extends ObjectBehavior
             'from' =>
             array (
                 'name' => 'vmix.fm',
+                'link' => 'https://www.facebook.com/vmix.fm',
                 'category' => 'Radio Station',
                 'id' => '31176228436',
                 'picture' => array(

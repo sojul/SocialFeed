@@ -7,6 +7,7 @@ class Media implements MediaInterface
     protected $url;
     protected $width;
     protected $height;
+    protected $link;
 
     public function getUrl()
     {
@@ -38,6 +39,17 @@ class Media implements MediaInterface
     public function setHeight($height)
     {
         $this->height = $height;
+        return $this;
+    }
+
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    public function setLink($link)
+    {
+        $this->link = $link;
         return $this;
     }
 }

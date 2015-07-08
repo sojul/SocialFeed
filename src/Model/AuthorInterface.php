@@ -10,5 +10,7 @@ interface AuthorInterface
     public function setIdentifier($identifier);
     public function getProfilePicture();
     public function setProfilePicture(MediaInterface $media);
+    public function getLink();
+    public function setLink($link);
 }
 
