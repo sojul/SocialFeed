@@ -8,7 +8,7 @@ class AbstractPost implements PostInterface
     protected $message;
     protected $author;
     protected $createdAt;
-    protected $medias;
+    protected $medias = array();
     protected $url;
 
     public function getIdentifier()
