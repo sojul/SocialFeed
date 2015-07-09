@@ -37,7 +37,7 @@ class Reference implements ReferenceInterface
 
     public function getData()
     {
-        return $data;
+        return $this->data;
     }
 
     public function getStartIndice()
