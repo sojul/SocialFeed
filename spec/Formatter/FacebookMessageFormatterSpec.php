@@ -1,0 +1,47 @@
+<?php
+
+namespace spec\Lns\SocialFeed\Formatter;
+
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+use Lns\SocialFeed\Model\ReferenceInterface;
+use Lns\SocialFeed\Model\ReferenceType;
+
+class FacebookMessageFormatterSpec extends ObjectBehavior
+{
+    function it_is_initializable()
+    {
+        $this->shouldHaveType('Lns\SocialFeed\Formatter\FacebookMessageFormatter');
+    }
+
+    function it_should_implement_message_formatter_interface() {
+        $this->shouldImplement('Lns\SocialFeed\Formatter\MessageFormatterInterface');
+    }
+
+    function it_should_replace_input_message_references_by_reference_html_link(ReferenceInterface $reference1, ReferenceInterface $reference2) {
+        $reference1->getStartIndice()->willReturn(5);
+        $reference1->getEndIndice()->willReturn(10);
+        $reference1->getType()->willReturn(ReferenceType::USER);
+        $reference1->getData()->willReturn(array(
+            "id"          => 6844292,
+            "name"        => "John Doe",
+            "type"        => "user",
+            "offset"      => 5,
+            "length"      => 5
+        ));
+
+        $reference2->getStartIndice()->willReturn(12);
+        $reference2->getEndIndice()->willReturn(17);
+        $reference2->getType()->willReturn(ReferenceType::PAGE);
+        $reference2->getData()->willReturn(array(
+            "id"          => 32425,
+            "name"        => "test",
+            "type"        => "page",
+            "offset"      => 5,
+            "length"      => 5
+        ));
+
+        $this->format('test @jdoe, @test', [$reference2, $reference1])
+            ->shouldReturn('test <a href="https://www.facebook.com/6844292" target="_blank">@jdoe</a>, <a href="https://www.facebook.com/32425" target="_blank">@test</a>');
+    }
+}

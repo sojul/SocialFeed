@@ -8,6 +8,8 @@ use Lns\SocialFeed\Model\InstagramPost;
 use Lns\SocialFeed\Model\Author;
 use Lns\SocialFeed\Model\Tweet;
 use Lns\SocialFeed\Model\Media;
+use Lns\SocialFeed\Model\Reference;
+use Lns\SocialFeed\Model\ReferenceType;
 
 class PostFactory implements PostFactoryInterface
 {
@@ -79,6 +81,8 @@ class PostFactory implements PostFactoryInterface
         ;
 
         $mediaDatas = array();
+        $entities = array();
+
 
         if(isset($data['entities']['media'])) {
             $mediaDatas += $data['entities']['media'];
@@ -86,6 +90,44 @@ class PostFactory implements PostFactoryInterface
 
         if(isset($data['extended_entities']['media'])) {
             $mediaDatas += $data['extended_entities']['media'];
+        }
+
+        $replacements = array();
+
+        $typeMap = array(
+            'urls'          => ReferenceType::URL,
+            'user_mentions' => ReferenceType::USER,
+            'hashtags'      => ReferenceType::HASHTAG,
+            'video'         => ReferenceType::VIDEO,
+        );
+
+        foreach($data['entities'] as $entityType => $entities) {
+            foreach($entities as $entity) {
+                $reference = new Reference();
+                $reference
+                    ->setIndices($entity['indices'])
+                    ->setType($typeMap[$entityType])
+                    ->setData($entity);
+
+                $tweet->addReference($reference);
+
+                //$originalValue = mb_substr($data['text'], $start, $length, "UTF-8");
+                //$replacements[$originalValue] = $this->getReplacementValue($originalValue, $entityType, $entity);
+            }
+        }
+
+        if(isset($data['extended_entities'])) {
+            foreach($data['extended_entities'] as $entities) {
+                foreach($entities as $entity) {
+                    $reference = new Reference();
+                    $reference
+                        ->setIndices($entity['indices'])
+                        ->setType($typeMap[$entity['type']])
+                        ->setData($entity);
+
+                    $tweet->addReference($reference);
+                }
+            }
         }
 
         foreach($mediaDatas as $mediaData) {
@@ -96,6 +138,26 @@ class PostFactory implements PostFactoryInterface
         }
 
         return $tweet;
+    }
+
+    protected function getReplacementValue($orginalValue, $entityType, $entity) {
+        switch ($entityType) {
+            case 'urls':
+                return sprintf('<a href="%s" target="_blank">%s</a>', $entity['expanded_url'], $entity['display_url']);
+                break;
+            case 'user_mentions':
+                return sprintf('<a href="https://www.twitter.com/%s" target="_blank">%s</a>', $entity['screen_name'], $orginalValue);
+                break;
+            case 'hashtags':
+                return sprintf('<a href="https://twitter.com/hashtag/%s" target="_blank">%s</a>', $entity['text'], $orginalValue);
+                break;
+            case 'video':
+                return sprintf('<a href="%s" target="_blank">%s</a>', $entity['expanded_url'], $entity['display_url']);
+                break;
+            default:
+                return $orginalValue;
+                break;
+        }
     }
 
     /**

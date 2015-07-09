@@ -9,6 +9,7 @@ class AbstractPost implements PostInterface
     protected $author;
     protected $createdAt;
     protected $medias = array();
+    protected $references = array();
     protected $url;
 
     public function getIdentifier()
@@ -63,5 +64,15 @@ class AbstractPost implements PostInterface
 
     public function getMedias() {
         return $this->medias;
+    }
+
+    public function addReference(ReferenceInterface $reference) {
+        $this->references[] = $reference;
+        return $this;
+    }
+
+    public function getReferences()
+    {
+        return $this->references;
     }
 }

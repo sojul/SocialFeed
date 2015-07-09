@@ -13,4 +13,6 @@ interface PostInterface
     public function setAuthor(AuthorInterface $author);
     public function addMedia(MediaInterface $media);
     public function getMedias();
+    public function addReference(ReferenceInterface $reference);
+    public function getReferences();
 }
