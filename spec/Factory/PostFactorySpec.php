@@ -47,6 +47,17 @@ class PostFactorySpec extends ObjectBehavior
                 )
             ),
             'message' => 'Record Store Day! Music is love, keep on searchin!',
+            "message_tags" => [
+                "18" => [
+                    [
+                        "id"     => "394602367362049",
+                        "name"   => "Syrian Media Incubator I  حاضنة الإعلام السوري",
+                        "type"   => "page",
+                        "offset" => 18,
+                        "length" => 45
+                    ]
+                ]
+            ],
             'picture' => 'https://fbexternal-a.akamaihd.net/safe_image.php?d=AQCXuaVPm8KlMl-2&w=130&h=130&url=http%3A%2F%2Fi1.ytimg.com%2Fvi%2F9hkszD-5y70%2Fhqdefault.jpg&cfs=1',
             'link' => 'https://www.youtube.com/watch?v=9hkszD-5y70',
             'name' => 'Underground Sound of Argentina - Untitled 1',

@@ -50,7 +50,33 @@ class PostFactory implements PostFactoryInterface
             $post->addMedia($media);
         }
 
+        $this->addFacebookPostReferences($post, $data);
+
         return $post;
+    }
+
+    protected function addFacebookPostReferences(&$post, $data) {
+        $typeMap = array(
+            'user'  => ReferenceType::USER,
+            'page'  => ReferenceType::PAGE,
+            'group' => ReferenceType::GROUP,
+        );
+
+        if(!isset($data['message_tags'])) {
+            return;
+        }
+
+        foreach($data['message_tags'] as $messageTagGroup) {
+            foreach($messageTagGroup as $messageTag) {
+                $reference = new Reference();
+                $reference
+                    ->setIndices([$messageTag['offset'], $messageTag['offset'] + $messageTag['length']])
+                    ->setType($typeMap[$messageTag['type']])
+                    ->setData($messageTag);
+
+                $post->addReference($reference);
+            }
+        }
     }
 
     /**
@@ -80,9 +106,14 @@ class PostFactory implements PostFactoryInterface
             ->setAuthor($author);
         ;
 
-        $mediaDatas = array();
-        $entities = array();
+        $this->addTweetReferences($tweet, $data);
+        $this->addTweetMedias($tweet, $data);
 
+        return $tweet;
+    }
+
+    protected function addTweetMedias(&$tweet, $data) {
+        $mediaDatas = array();
 
         if(isset($data['entities']['media'])) {
             $mediaDatas += $data['entities']['media'];
@@ -92,8 +123,16 @@ class PostFactory implements PostFactoryInterface
             $mediaDatas += $data['extended_entities']['media'];
         }
 
-        $replacements = array();
+        // add medias
+        foreach($mediaDatas as $mediaData) {
+            $media = new Media();
+            $media->setUrl($mediaData['media_url']);
+            $media->setLink($mediaData['expanded_url']);
+            $tweet->addMedia($media);
+        }
+    }
 
+    protected function addTweetReferences(&$tweet, $data) {
         $typeMap = array(
             'urls'          => ReferenceType::URL,
             'user_mentions' => ReferenceType::USER,
@@ -110,9 +149,6 @@ class PostFactory implements PostFactoryInterface
                     ->setData($entity);
 
                 $tweet->addReference($reference);
-
-                //$originalValue = mb_substr($data['text'], $start, $length, "UTF-8");
-                //$replacements[$originalValue] = $this->getReplacementValue($originalValue, $entityType, $entity);
             }
         }
 
@@ -128,35 +164,6 @@ class PostFactory implements PostFactoryInterface
                     $tweet->addReference($reference);
                 }
             }
-        }
-
-        foreach($mediaDatas as $mediaData) {
-            $media = new Media();
-            $media->setUrl($mediaData['media_url']);
-            $media->setLink($mediaData['expanded_url']);
-            $tweet->addMedia($media);
-        }
-
-        return $tweet;
-    }
-
-    protected function getReplacementValue($orginalValue, $entityType, $entity) {
-        switch ($entityType) {
-            case 'urls':
-                return sprintf('<a href="%s" target="_blank">%s</a>', $entity['expanded_url'], $entity['display_url']);
-                break;
-            case 'user_mentions':
-                return sprintf('<a href="https://www.twitter.com/%s" target="_blank">%s</a>', $entity['screen_name'], $orginalValue);
-                break;
-            case 'hashtags':
-                return sprintf('<a href="https://twitter.com/hashtag/%s" target="_blank">%s</a>', $entity['text'], $orginalValue);
-                break;
-            case 'video':
-                return sprintf('<a href="%s" target="_blank">%s</a>', $entity['expanded_url'], $entity['display_url']);
-                break;
-            default:
-                return $orginalValue;
-                break;
         }
     }
 
@@ -189,6 +196,13 @@ class PostFactory implements PostFactoryInterface
             ->setAuthor($author)
         ;
 
+        $this->addInstagramPostMedias($instagramPost, $data);
+
+        return $instagramPost;
+    }
+
+    protected function addInstagramPostMedias(&$post, $data) {
+
         // we fetch standard_resolution image
         $imageData = $data['images']['standard_resolution'];
         $media = new Media();
@@ -200,8 +214,6 @@ class PostFactory implements PostFactoryInterface
             ->setHeight($imageData['height'])
         ;
 
-        $instagramPost->addMedia($media);
-
-        return $instagramPost;
+        $post->addMedia($media);
     }
 }
