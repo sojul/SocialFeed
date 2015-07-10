@@ -31,6 +31,14 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
         return join($formattedMessageParts);
     }
 
+    protected function formatMessagePart($messagePart) {
+        $reference = $messagePart['reference'];
+
+        if(!$reference) {
+            return $this->autoLink($messagePart['text']);
+        }
+    }
+
     protected function buildMessageParts($message, $references, $offset = 0) {
 
         $messageParts = [];
