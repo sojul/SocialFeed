@@ -16,9 +16,6 @@ class TweetMessageFormatter extends AbstractMessageFormatter
         $data = $reference->getData();
 
         switch($reference->getType()) {
-        case ReferenceType::URL:
-            return $this->createLinkString($data['expanded_url'], $data['display_url']);
-            break;
         case ReferenceType::USER:
             return $this->createLinkString('https://twitter.com/'. $data['screen_name'], $messagePart['text']);
             break;
@@ -26,6 +23,8 @@ class TweetMessageFormatter extends AbstractMessageFormatter
             return $this->createLinkString('https://twitter.com/hashtag/' . $data['text'], $messagePart['text']);
             break;
         case ReferenceType::VIDEO:
+        case ReferenceType::MEDIA:
+        case ReferenceType::URL:
             return $this->createLinkString($data['expanded_url'], $messagePart['display_url']);
             break;
         default:
