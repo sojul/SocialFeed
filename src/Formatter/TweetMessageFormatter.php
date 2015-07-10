@@ -25,7 +25,7 @@ class TweetMessageFormatter extends AbstractMessageFormatter
         case ReferenceType::VIDEO:
         case ReferenceType::MEDIA:
         case ReferenceType::URL:
-            return $this->createLinkString($data['expanded_url'], $messagePart['display_url']);
+            return $this->createLinkString($data['expanded_url'], $data['display_url']);
             break;
         default:
             return null;
