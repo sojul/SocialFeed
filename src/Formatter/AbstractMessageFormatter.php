@@ -8,10 +8,6 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
 {
     public function format($message, array $references = array())
     {
-        if(empty($references)) {
-            return $message;
-        }
-
         // sort references by start indice
         // for testing issue we need to add @
         // @see https://github.com/phpspec/prophecy/issues/161
@@ -83,5 +79,12 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
 
     protected function createLinkString($href, $display, $target = "_blank") {
         return sprintf('<a href="%s" target="%s">%s</a>', $href, $target, $display);
+    }
+
+    protected function autoLink($message) {
+        $regex = '#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#';
+        return preg_replace_callback($regex, function ($matches) {
+            return $this->createLinkString($matches[0], $matches[0]);
+        }, $message);
     }
 }

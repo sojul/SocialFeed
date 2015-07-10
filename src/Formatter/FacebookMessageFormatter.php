@@ -11,7 +11,7 @@ class FacebookMessageFormatter extends AbstractMessageFormatter
         $reference = $messagePart['reference'];
 
         if(!$reference) {
-            return $messagePart['text'];
+            return $this->autoLink($messagePart['text']);
         }
 
         $data = $reference->getData();
@@ -26,5 +26,13 @@ class FacebookMessageFormatter extends AbstractMessageFormatter
             return null;
             break;
         }
+    }
+
+    protected function autoLink($message) {
+        $message = parent::autoLink($message);
+
+        return preg_replace_callback('/#(\w+)/', function($matches) {
+            return $this->createLinkString('https://www.facebook.com/hashtag/' . $matches[1], $matches[0]);
+        }, $message);
     }
 }
