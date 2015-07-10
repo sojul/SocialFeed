@@ -138,6 +138,7 @@ class PostFactory implements PostFactoryInterface
             'user_mentions' => ReferenceType::USER,
             'hashtags'      => ReferenceType::HASHTAG,
             'video'         => ReferenceType::VIDEO,
+            'media'         => ReferenceType::MEDIA,
         );
 
         foreach($data['entities'] as $entityType => $entities) {
