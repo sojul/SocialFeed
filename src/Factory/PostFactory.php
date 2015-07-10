@@ -113,18 +113,11 @@ class PostFactory implements PostFactoryInterface
     }
 
     protected function addTweetMedias(&$tweet, $data) {
-        $mediaDatas = array();
-
-        if(isset($data['entities']['media'])) {
-            $mediaDatas += $data['entities']['media'];
+        if(!isset($data['entities']['media'])) {
+            return;
         }
 
-        if(isset($data['extended_entities']['media'])) {
-            $mediaDatas += $data['extended_entities']['media'];
-        }
-
-        // add medias
-        foreach($mediaDatas as $mediaData) {
+        foreach($data['entities']['media'] as $mediaData) {
             $media = new Media();
             $media->setUrl($mediaData['media_url']);
             $media->setLink($mediaData['expanded_url']);
