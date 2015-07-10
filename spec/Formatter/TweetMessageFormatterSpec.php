@@ -38,7 +38,7 @@ class TweetMessageFormatterSpec extends ObjectBehavior
             "indices" => [12, 17]
         ));
 
-        $this->format('test @jdoe, #test', [$reference1, $reference2])
-            ->shouldReturn('test <a href="https://twitter.com/jdoe" target="_blank">@jdoe</a>, <a href="https://twitter.com/hashtag/test" target="_blank">#test</a>');
+        $this->format('test @jdoe, #test bar', [$reference1, $reference2])
+            ->shouldReturn('test <a href="https://twitter.com/jdoe" target="_blank">@jdoe</a>, <a href="https://twitter.com/hashtag/test" target="_blank">#test</a> bar');
     }
 }

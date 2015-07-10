@@ -8,7 +8,9 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
 {
     public function format($message, array $references = array())
     {
-        $messageParts = array();
+        if(empty($references)) {
+            return $message;
+        }
 
         // sort references by start indice
         // for testing issue we need to add @
@@ -17,17 +19,7 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
             return ($a->getStartIndice() > $b->getStartIndice());
         });
 
-        $start = 0;
-
-        // build message parts
-        foreach($references as $reference) {
-            $end = $reference->getStartIndice();
-            $messageParts[] = $this->buildMessagePart($message, $start, $end);
-            $start = $end;
-            $end = $reference->getEndIndice();
-            $messageParts[] = $this->buildMessagePart($message, $start, $end, $reference);
-            $start = $end;
-        }
+        $messageParts = $this->buildMessageParts($message, $references);
 
         // build message
         $formattedMessageParts = [];
@@ -41,6 +33,41 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
         }
 
         return join($formattedMessageParts);
+    }
+
+    protected function buildMessageParts($message, $references, $offset = 0) {
+
+        $messageParts = [];
+
+        // get first reference
+        $reference = array_shift($references);
+
+        if(!$reference) {
+            return [
+                $this->buildMessagePart($message, 0, mb_strlen($message))
+            ];
+        }
+
+        $messageParts[] = $this->buildMessagePart(
+            $message,
+            0,
+            $reference->getStartIndice() - $offset
+        );
+
+        $messageParts[] = $this->buildMessagePart(
+            $message,
+            $reference->getStartIndice() - $offset,
+            $reference->getEndIndice() - $offset,
+            $reference
+        );
+
+        $message = mb_substr($message, $reference->getEndIndice() - $offset);
+
+        foreach($this->buildMessageParts($message, $references, $reference->getEndIndice()) as $messagePart) {
+            $messageParts[] = $messagePart;
+        };
+
+        return $messageParts;
     }
 
     protected function buildMessagePart($message, $start, $end, $reference = null) {

@@ -3,6 +3,7 @@
 namespace Lns\SocialFeed\Formatter;
 
 use Lns\SocialFeed\Model\ReferenceType;
+use Lns\SocialFeed\Model\Reference;
 
 class FacebookMessageFormatter extends AbstractMessageFormatter
 {

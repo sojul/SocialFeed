@@ -41,7 +41,7 @@ class FacebookMessageFormatterSpec extends ObjectBehavior
             "length"      => 5
         ));
 
-        $this->format('test @jdoe, @test', [$reference2, $reference1])
-            ->shouldReturn('test <a href="https://www.facebook.com/6844292" target="_blank">@jdoe</a>, <a href="https://www.facebook.com/32425" target="_blank">@test</a>');
+        $this->format('test @jdoe, @test bar', [$reference2, $reference1])
+            ->shouldReturn('test <a href="https://www.facebook.com/6844292" target="_blank">@jdoe</a>, <a href="https://www.facebook.com/32425" target="_blank">@test</a> bar');
     }
 }
