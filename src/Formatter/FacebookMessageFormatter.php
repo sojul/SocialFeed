@@ -31,7 +31,7 @@ class FacebookMessageFormatter extends AbstractMessageFormatter
     protected function autoLink($message) {
         $message = parent::autoLink($message);
 
-        return preg_replace_callback('/#(\w+)/', function($matches) {
+        return preg_replace_callback('/#(\w+)/u', function($matches) {
             return $this->createLinkString('https://www.facebook.com/hashtag/' . $matches[1], $matches[0]);
         }, $message);
     }
