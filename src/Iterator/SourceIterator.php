@@ -35,6 +35,12 @@ class SourceIterator implements \Iterator
 
     public function next()
     {
+        if($this->currentResultSet && !$this->currentResultSet->hasNextResult()) {
+            $this->currentResultSet = false;
+            $this->position++;
+            return;
+        }
+
         $provider = $this->source->getProvider();
 
         $options = $this->source->getOptions();
@@ -51,7 +57,7 @@ class SourceIterator implements \Iterator
 
     public function valid()
     {
-       return $this->position == 0 || $this->currentResultSet != null;
+       return ($this->position == 0) || $this->currentResultSet != false;
     }
 
     public function rewind()

@@ -33,7 +33,10 @@ class SourceIteratorSpec extends ObjectBehavior
         ResultSetInterface $resultSet2
     )
     {
+        $resultSet1->hasNextResult()->willReturn(true);
         $resultSet1->getNextResultOptions()->willReturn(array('page' => 2));
+        $resultSet2->hasNextResult()->willReturn(false);
+        $resultSet2->getNextResultOptions()->willReturn(array('page' => 3));
 
         $provider->getResult(array(
             'foo' => 'bar'
@@ -50,9 +53,15 @@ class SourceIteratorSpec extends ObjectBehavior
         ));
 
         $this->current()->shouldReturn($resultSet1);
+        $this->valid()->shouldReturn(true);
 
         $this->next();
 
         $this->current()->shouldReturn($resultSet2);
+        $this->valid()->shouldReturn(true);
+
+        $this->next();
+
+        $this->valid()->shouldReturn(false);
     }
 }

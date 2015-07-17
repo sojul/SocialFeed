@@ -26,4 +26,9 @@ class ResultSet implements ResultSetInterface
     {
         return $this->nextResultOptions;
     }
+
+    public function hasNextResult()
+    {
+        return !empty($this->nextResultOptions);
+    }
 }
