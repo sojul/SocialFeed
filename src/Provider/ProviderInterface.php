@@ -7,10 +7,10 @@ use Lns\SocialFeed\Model\Feed;
 interface ProviderInterface
 {
     /**
-     * getFeed
+     * getResult
      *
-     * @return Feed
+     * @return ResultSet
      */
-    public function getFeed(array $options = array());
+    public function getResult(array $options = array());
     public function getName();
 }

@@ -6,11 +6,7 @@ use PhpCollection\Map;
 
 class Feed implements \IteratorAggregate, FeedInterface
 {
-    protected $feedArray;
-
-    public function __construct() {
-        $this->feedArray = array();
-    }
+    protected $feedArray = array();
 
     /**
      * addPost
@@ -20,7 +16,7 @@ class Feed implements \IteratorAggregate, FeedInterface
      */
     public function addPost(PostInterface $post)
     {
-        $this->feedArray[$post->getIdentifier()] = $post;
+        $this->feedArray[$post->getUniqueIdentifier()] = $post;
         return $this;
     }
 
@@ -33,6 +29,16 @@ class Feed implements \IteratorAggregate, FeedInterface
     public function getPost($identifier)
     {
         return $this->feedArray[$identifier];
+    }
+
+    /**
+     * contains
+     *
+     * @param PostInterface $item
+     * @return bool
+     */
+    public function contains(PostInterface $item) {
+        return in_array($item->getUniqueIdentifier(), array_keys($this->feedArray));
     }
 
     /**

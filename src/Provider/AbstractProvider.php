@@ -24,4 +24,10 @@ abstract class AbstractProvider implements ProviderInterface
 
     protected function configureOptionResolver(OptionsResolver &$resolver) {
     }
+
+    protected function extractUrlParameters($url) {
+        $query = parse_url($url, PHP_URL_QUERY);
+        parse_str($query, $params);
+        return $params;
+    }
 }

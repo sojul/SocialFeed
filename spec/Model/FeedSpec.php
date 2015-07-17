@@ -30,8 +30,8 @@ class FeedSpec extends ObjectBehavior
 
     function it_should_be_possible_to_add_a_post_to_feed(PostInterface $post1, PostInterface $post2)
     {
-        $post1->getIdentifier()->willReturn('id1');
-        $post2->getIdentifier()->willReturn('id2');
+        $post1->getUniqueIdentifier()->willReturn('id1');
+        $post2->getUniqueIdentifier()->willReturn('id2');
 
         $this->addPost($post1)->shouldReturn($this);
         $this->addPost($post2)->shouldReturn($this);

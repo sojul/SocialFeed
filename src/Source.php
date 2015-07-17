@@ -9,7 +9,7 @@ class Source implements SourceInterface
     private $provider;
     private $options;
 
-    public function __construct(ProviderInterface $provider, array $options)
+    public function __construct(ProviderInterface $provider, array $options = array())
     {
         $this->provider = $provider;
         $this->options = $options;

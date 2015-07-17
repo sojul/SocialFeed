@@ -15,4 +15,6 @@ interface PostInterface
     public function getMedias();
     public function addReference(ReferenceInterface $reference);
     public function getReferences();
+    public function getType();
+    public function getUniqueIdentifier();
 }

@@ -3,6 +3,7 @@
 namespace Lns\SocialFeed\Provider;
 
 use Lns\SocialFeed\Model\Feed;
+use Lns\SocialFeed\Model\ResultSet;
 use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,7 +18,7 @@ class TwitterSearchApiProvider extends AbstractProvider
         $this->postFactory = $postFactory;
     }
 
-    public function getFeed(array $options = array()) {
+    public function getResult(array $options = array()) {
 
         $options = $this->resolveOptions($options);
 
@@ -32,7 +33,15 @@ class TwitterSearchApiProvider extends AbstractProvider
             $feed->addPost($this->postFactory->createTweetFromApiData($status));
         }
 
-        return $feed;
+        $nextResultOptions = array();
+
+        if(isset($result['search_metadata'])) {
+            $nextResultOptions = array(
+                'max_id_str' => $result['search_metadata']['max_id_str']
+            );
+        }
+
+        return new ResultSet($feed, $nextResultOptions);
     }
 
     public function getName()

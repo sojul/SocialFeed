@@ -6,7 +6,8 @@
         "phpcollection/phpcollection": "^0.4.0",
         "guzzlehttp/oauth-subscriber": "^0.2.0",
         "symfony/options-resolver": "^2.7",
-        "commerceguys/enum": "^1.0"
+        "commerceguys/enum": "^1.0",
+        "webmozart/key-value-store": "@beta"
     },
     "require-dev": {
         "phpspec/phpspec": "^2.2",

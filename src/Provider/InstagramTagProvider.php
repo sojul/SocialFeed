@@ -5,6 +5,7 @@ namespace Lns\SocialFeed\Provider;
 use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\Feed;
+use Lns\SocialFeed\Model\ResultSet;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InstagramTagProvider extends AbstractProvider
@@ -21,7 +22,7 @@ class InstagramTagProvider extends AbstractProvider
         $this->postFactory = $postFactory;
     }
 
-    public function getFeed(array $options = array()) {
+    public function getResult(array $options = array()) {
         $options = $this->resolveOptions($options);
 
         $feed = new Feed();
@@ -32,7 +33,16 @@ class InstagramTagProvider extends AbstractProvider
             $feed->addPost($this->postFactory->createInstagramPostFromApiData($data));
         };
 
-        return $feed;
+        $nextResultOptions = array();
+
+        // extract pagination parameters
+        if(isset($data['pagination']['next_max_id'])) {
+            $nextResultOptions = array(
+                'max_tag_id' => $data['pagination']['next_max_id']
+            );
+        }
+
+        return new ResultSet($feed, $nextResultOptions);
     }
 
     public function getName()

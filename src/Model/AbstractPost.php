@@ -2,7 +2,7 @@
 
 namespace Lns\SocialFeed\Model;
 
-class AbstractPost implements PostInterface
+abstract class AbstractPost implements PostInterface
 {
     protected $identifier;
     protected $message;
@@ -11,6 +11,7 @@ class AbstractPost implements PostInterface
     protected $medias = array();
     protected $references = array();
     protected $url;
+    protected $type;
 
     public function getIdentifier()
     {
@@ -74,5 +75,9 @@ class AbstractPost implements PostInterface
     public function getReferences()
     {
         return $this->references;
+    }
+
+    public function getUniqueIdentifier() {
+        return $this->getType() . '_' . $this->getIdentifier();
     }
 }

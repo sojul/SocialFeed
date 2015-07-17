@@ -27,7 +27,7 @@ class TwitterSearchApiProviderSpec extends ObjectBehavior
     }
 
     function it_should_return_an_exection_if_query_option_is_not_set() {
-        $this->shouldThrow('Lns\SocialFeed\Exception\MissingOptionsException')->duringGetFeed();
+        $this->shouldThrow('Lns\SocialFeed\Exception\MissingOptionsException')->duringGetResult();
     }
 
     function it_should_return_feed(PostInterface $post1, PostInterface $post2) {
@@ -39,15 +39,26 @@ class TwitterSearchApiProviderSpec extends ObjectBehavior
             'statuses' => array(
                 0 => $postData1,
                 1 => $postData2
+            ),
+            'search_metadata' => array(
+                'completed_in' => 0.05,
+                'max_id'       => 6220260591523456190,
+                'max_id_str'   => '6220260591523456190',
+                'next_results' => '?max_id=6220260591523456190&q=foo&include_entities=1',
+                'query'        => 'test',
+                'refresh_url'  => '?since_id=6220260591523456190&q=foo&include_entities=1',
+                'count'        => 15,
+                'since_id'     => 0,
+                'since_id_str' => '0'
             )
         ]);
 
         $this->factory->createTweetFromApiData($postData1)->willReturn($post1);
         $this->factory->createTweetFromApiData($postData2)->willReturn($post2);
 
-        $this->getFeed(array(
+        $this->getResult(array(
             'query' => 'foo'
-        ))->shouldHaveType('Lns\SocialFeed\Model\Feed');
+        ))->shouldHaveType('Lns\SocialFeed\Model\ResultSet');
     }
 
 

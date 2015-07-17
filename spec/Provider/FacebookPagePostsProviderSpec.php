@@ -30,7 +30,7 @@ class FacebookPagePostsProviderSpec extends ObjectBehavior
     }
 
     function it_should_return_an_exection_if_page_id_option_is_not_set() {
-        $this->shouldThrow('Lns\SocialFeed\Exception\MissingOptionsException')->duringGetFeed();
+        $this->shouldThrow('Lns\SocialFeed\Exception\MissingOptionsException')->duringGetResult();
     }
 
     function it_should_return_feed(PostInterface $post1, PostInterface $post2) {
@@ -42,14 +42,18 @@ class FacebookPagePostsProviderSpec extends ObjectBehavior
             'data' => array(
                 0 => $postData1,
                 1 => $postData2
+            ),
+            'paging' => array(
+                "previous" => "https://graph.facebook.com/foo",
+                "next" => "https://graph.facebook.com/bar"
             )
         ]);
 
         $this->factory->createFacebookPostFromApiData($postData1)->willReturn($post1);
         $this->factory->createFacebookPostFromApiData($postData2)->willReturn($post2);
 
-        $this->getFeed(array(
+        $this->getResult(array(
             'page_id' => '12334533434'
-        ))->shouldHaveType('Lns\SocialFeed\Model\Feed');
+        ))->shouldHaveType('Lns\SocialFeed\Model\ResultSet');
     }
 }

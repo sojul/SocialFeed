@@ -3,6 +3,7 @@
 namespace Lns\SocialFeed\Provider;
 
 use Lns\SocialFeed\Model\Feed;
+use Lns\SocialFeed\Model\ResultSet;
 use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,7 +18,7 @@ class TwitterStatusesLookupApiProvider extends AbstractProvider
         $this->postFactory = $postFactory;
     }
 
-    public function getFeed(array $options = array()) {
+    public function getResult(array $options = array()) {
 
         $options = $this->resolveOptions($options);
 
@@ -32,7 +33,7 @@ class TwitterStatusesLookupApiProvider extends AbstractProvider
             $feed->addPost($this->postFactory->createTweetFromApiData($status));
         }
 
-        return $feed;
+        return new ResultSet($feed);
     }
 
     public function getName()

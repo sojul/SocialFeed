@@ -7,6 +7,7 @@ use Lns\SocialFeed\Client\ClientInterface;
 
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Lns\SocialFeed\Model\ResultSet;
 
 class FacebookPagePostsProvider extends AbstractProvider
 {
@@ -19,13 +20,7 @@ class FacebookPagePostsProvider extends AbstractProvider
         $this->postFactory = $postFactory;
     }
 
-    /**
-     * getFeed
-     *
-     * @param array $options
-     * @return Feed
-     */
-    public function getFeed(array $options = array()) {
+    public function getResult(array $options = array()) {
 
         $options = $this->resolveOptions($options);
 
@@ -59,7 +54,14 @@ class FacebookPagePostsProvider extends AbstractProvider
             $feed->addPost($this->postFactory->createFacebookPostFromApiData($postData));
         }
 
-        return $feed;
+        $nextResultOptions = array();
+
+        // extract pagination parameters
+        if(isset($data['paging']['next'])) {
+            $nextResultOptions['next'] = $this->extractUrlParameters($data['paging']['next']);
+        }
+
+        return new ResultSet($feed, $nextResultOptions);
     }
 
     public function getName()
