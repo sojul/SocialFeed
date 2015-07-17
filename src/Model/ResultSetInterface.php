@@ -2,7 +2,7 @@
 
 namespace Lns\SocialFeed\Model;
 
-interface ResultSetInterface
+interface ResultSetInterface extends \IteratorAggregate
 {
     public function __construct(FeedInterface $feed, array $nextResultOptions = array());
     public function getResult();

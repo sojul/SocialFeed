@@ -4,6 +4,9 @@ namespace Lns\SocialFeed\Iterator;
 
 use Lns\SocialFeed\SourceInterface;
 
+/**
+ * Iterate over source provider result sets
+ */
 class SourceIterator implements \Iterator
 {
     public $currentResultSet = null;

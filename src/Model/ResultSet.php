@@ -31,4 +31,8 @@ class ResultSet implements ResultSetInterface
     {
         return !empty($this->nextResultOptions);
     }
+
+    public function getIterator() {
+        return $this->feed;
+    }
 }

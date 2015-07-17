@@ -2,9 +2,10 @@
 
 namespace Lns\SocialFeed;
 
-use Lns\SocialFeed\Provider\ProviderInterface;
 use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Model\ResultSet;
+use Lns\SocialFeed\Provider\ProviderInterface;
+use Lns\SocialFeed\Iterator\SourceIterator;
 
 class SocialFeed implements ProviderInterface
 {
@@ -17,14 +18,11 @@ class SocialFeed implements ProviderInterface
     }
 
     public function getResult(array $options = array()) {
-        $feed = new Feed();
+        new SourceIterator($source);
 
         foreach($this->sources as $source) {
-            $provider = $source->getProvider();
-            $feed->merge($provider->getResult($source->getOptions()));
+            $iterators[] = new SourceIterator($source);
         }
-
-        return new ResultSet($feed->sort());
     }
 
     public function getName()
