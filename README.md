@@ -39,8 +39,7 @@ $socialFeed
         ['query' => 'lanetscouade'],
     ));
 
-
-foreach($socialFeed as $item) {
+foreach(\LimitIterator($socialFeed, 0, 10) as $item) {
     echo $item->getMessage() . PHP_EOL;
 }
 
