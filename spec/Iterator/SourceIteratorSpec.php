@@ -84,6 +84,8 @@ class SourceIteratorSpec extends ObjectBehavior
             'foo' => 'bar'
         ));
 
+        $this->rewind();
+
         $this->current()->shouldReturn($post1);
         $this->valid()->shouldReturn(true);
 

@@ -24,8 +24,8 @@ class SourceIterator implements \Iterator
 
     public function current()
     {
-        if($this->position == 0) {
-            $this->loadNextResultSet();
+        if(!$this->currentResultSet) {
+            return null;
         }
 
         return $this->currentResultSet->getIterator()->current();
@@ -77,5 +77,7 @@ class SourceIterator implements \Iterator
     {
         $this->currentResultSet = null;
         $this->position = 0;
+
+        $this->loadNextResultSet();
     }
 }
