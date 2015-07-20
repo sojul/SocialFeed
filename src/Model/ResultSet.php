@@ -15,8 +15,8 @@ class ResultSet implements ResultSetInterface
      */
     public function __construct(FeedInterface $feed, array $nextResultSetOptions = array())
     {
-        $this->feed = $feed;
-        $this->iterator = $feed;
+        $this->iterator = $feed->getIterator();
+        $this->nextResultSetOptions = $nextResultSetOptions;
     }
 
     public function getNextResultSetOptions()
