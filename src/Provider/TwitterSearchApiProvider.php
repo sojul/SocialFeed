@@ -10,11 +10,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TwitterSearchApiProvider extends AbstractProvider
 {
-    private $twitterApiClient;
+    private $client;
 
-    public function __construct(ClientInterface $twitterApiClient, PostFactoryInterface $postFactory)
+    public function __construct(ClientInterface $client, PostFactoryInterface $postFactory)
     {
-        $this->twitterApiClient = $twitterApiClient;
+        $this->client = $client;
         $this->postFactory = $postFactory;
     }
 
@@ -22,10 +22,12 @@ class TwitterSearchApiProvider extends AbstractProvider
 
         $options = $this->resolveOptions($options);
 
-        $response = $this->twitterApiClient
-            ->get('/1.1/search/tweets.json?q=' . $options['query']);
-
-        $result = $response;
+        $result = $this->client->get('/1.1/search/tweets.json', array(
+            'query' => array(
+                'q'          => $options['query'],
+                'max_id_str' => $options['max_id_str']
+            ))
+        );
 
         $feed = new Feed();
 
@@ -51,5 +53,9 @@ class TwitterSearchApiProvider extends AbstractProvider
 
     protected function configureOptionResolver(OptionsResolver &$resolver) {
         $resolver->setRequired('query');
+
+        $resolver->setDefaults(array(
+            'max_id_str' => null
+        ));
     }
 }

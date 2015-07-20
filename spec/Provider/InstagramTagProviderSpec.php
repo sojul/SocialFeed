@@ -33,7 +33,7 @@ class InstagramTagProviderSpec extends ObjectBehavior
         $postData1 = ['foo' => 'bar'];
         $postData2 = ['foo' => 'baz'];
 
-        $this->client->get(Argument::any())->willReturn([
+        $this->client->get(Argument::any(), Argument::any())->willReturn([
             'data' => array(
                 0 => $postData1,
                 1 => $postData2

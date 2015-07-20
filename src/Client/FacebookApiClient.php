@@ -19,11 +19,11 @@ class FacebookApiClient implements ClientInterface
         $this->clientSecret = $clientSecret;
     }
 
-    public function get($path) {
+    public function get($path, array $options = array()) {
         $client = $this->createGuzzleClient($this->clientKey, $this->clientSecret);
 
         try {
-            return $response = $client->get('/v2.3' . $path)->json();
+            return $response = $client->get('/v2.3' . $path, $options)->json();
         } catch(GuzzleRequestException $e) {
             $message = $e->getMessage();
 

@@ -51,16 +51,24 @@ class SocialFeedSpec extends ObjectBehavior
         $this->rewind();
 
         $this->current()->shouldReturn($post6);
+        $this->valid()->shouldReturn(true);
         $this->next();
         $this->current()->shouldReturn($post5);
+        $this->valid()->shouldReturn(true);
         $this->next();
         $this->current()->shouldReturn($post4);
+        $this->valid()->shouldReturn(true);
         $this->next();
         $this->current()->shouldReturn($post3);
+        $this->valid()->shouldReturn(true);
         $this->next();
         $this->current()->shouldReturn($post2);
+        $this->valid()->shouldReturn(true);
         $this->next();
         $this->current()->shouldReturn($post1);
+        $this->valid()->shouldReturn(true);
+        $this->next();
+        $this->valid()->shouldReturn(false);
     }
 
     private function prepareSourceIteratorDouble(SourceIterator $sourceIterator, \Iterator $posts) {

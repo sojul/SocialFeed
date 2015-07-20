@@ -38,14 +38,14 @@ class FacebookPagePostsProviderSpec extends ObjectBehavior
         $postData1 = ['foo' => 'bar'];
         $postData2 = ['foo' => 'baz'];
 
-        $this->client->get(Argument::any())->willReturn([
+        $this->client->get(Argument::any(), Argument::any())->willReturn([
             'data' => array(
                 0 => $postData1,
                 1 => $postData2
             ),
             'paging' => array(
-                "previous" => "https://graph.facebook.com/foo",
-                "next" => "https://graph.facebook.com/bar"
+                "previous" => "https://graph.facebook.com/page_id/posts?since=1433776347&limit=25&__paging_token=enc_AdBJBmZACKRKhWZCfUEwnRGw8jGfFZCGl2EiYxebr461J81BIsIRwu69lD0DmRZCix9Pj5ULR0SdfOu16UkN5ZAQB9xJl&__previous=1",
+                "next" => "https://graph.facebook.com/page_id/posts?since=1433776347&limit=25&__paging_token=enc_AdBJBmZACKRKhWZCfUEwnRGw8jGfFZCGl2EiYxebr461J81BIsIRwu69lD0DmRZCix9Pj5ULR0SdfOu16UkN5ZAQB9xJl"
             )
         ]);
 

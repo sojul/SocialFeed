@@ -27,7 +27,11 @@ class InstagramTagProvider extends AbstractProvider
 
         $feed = new Feed();
 
-        $response = $this->client->get(sprintf('/v1/tags/%s/media/recent', $options['tag_name']));
+        $response = $this->client->get(sprintf('/v1/tags/%s/media/recent', $options['tag_name']), array(
+            'query' => array(
+                'max_tag_id' => $options['max_tag_id']
+            )
+        ));
 
         foreach($response['data'] as $data) {
             $feed->addPost($this->postFactory->create($data));
@@ -52,5 +56,9 @@ class InstagramTagProvider extends AbstractProvider
 
     public function configureOptionResolver(OptionsResolver &$resolver) {
         $resolver->setRequired('tag_name');
+
+        $resolver->setDefaults(array(
+            'max_tag_id' => null
+        ));
     }
 }

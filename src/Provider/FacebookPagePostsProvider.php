@@ -46,9 +46,14 @@ class FacebookPagePostsProvider extends AbstractProvider
 
         $feed = new Feed();
 
-        $data = $this
-            ->client
-            ->get('/' . $options['page_id'] . '/posts?fields=' . $fieldsString);
+        $data = $this->client->get('/' . $options['page_id'] . '/posts', array(
+            'query' => array(
+                'fields'         => $fieldsString,
+                'since'          => $options['since'],
+                'limit'          => $options['limit'],
+                '__paging_token' => $options['__paging_token']
+            )
+        ));
 
         foreach($data['data'] as $postData) {
             $feed->addPost($this->postFactory->create($postData));
@@ -58,7 +63,12 @@ class FacebookPagePostsProvider extends AbstractProvider
 
         // extract pagination parameters
         if(isset($data['paging']['next'])) {
-            $nextResultOptions['next'] = $this->extractUrlParameters($data['paging']['next']);
+            $parameters = $this->extractUrlParameters($data['paging']['next']);
+            $nextResultOptions = array(
+                'since' => $parameters['since'],
+                'limit' => $parameters['limit'],
+                '__paging_token' => $parameters['__paging_token']
+            );
         }
 
         return new ResultSet($feed, $nextResultOptions);
@@ -71,6 +81,12 @@ class FacebookPagePostsProvider extends AbstractProvider
 
     protected function configureOptionResolver(OptionsResolver &$resolver) {
         $resolver->setRequired('page_id');
+
+        $resolver->setDefaults(array(
+            'since'          => null,
+            'limit'          => null,
+            '__paging_token' => null
+        ));
     }
 
     private function generateFieldsQueryString($fields) {

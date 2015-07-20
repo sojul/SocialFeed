@@ -63,7 +63,7 @@ class SocialFeed implements \Iterator
 
     public function valid()
     {
-        $this->current != null;
+        return $this->current != null;
     }
 
     public function key() {
