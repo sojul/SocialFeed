@@ -6,6 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Lns\SocialFeed\SourceInterface;
 use Lns\SocialFeed\Model\ResultSetInterface;
+use Lns\SocialFeed\Model\PostInterface;
 use Lns\SocialFeed\Provider\ProviderInterface;
 
 class SourceIteratorSpec extends ObjectBehavior
@@ -30,13 +31,44 @@ class SourceIteratorSpec extends ObjectBehavior
     function it_should_iterate_over_source_result_sets(
         ProviderInterface $provider,
         ResultSetInterface $resultSet1,
-        ResultSetInterface $resultSet2
+        \Iterator $resultSet1Iterator,
+        \Iterator $resultSet2Iterator,
+        ResultSetInterface $resultSet2,
+        PostInterface $post1,
+        PostInterface $post2,
+        PostInterface $post3
     )
     {
-        $resultSet1->hasNextResult()->willReturn(true);
-        $resultSet1->getNextResultOptions()->willReturn(array('page' => 2));
-        $resultSet2->hasNextResult()->willReturn(false);
-        $resultSet2->getNextResultOptions()->willReturn(array('page' => 3));
+
+        // first set contains $post1 and has a next set ($resultSet2)
+        $resultSet1->hasNextResultSet()->willReturn(true);
+
+        $resultSet1Iterator->valid()->willReturn(true);
+        $resultSet1Iterator->current()->willReturn($post1);
+
+        $resultSet1Iterator->next()->will(function () use ($resultSet1Iterator) {
+            $resultSet1Iterator->valid()->willReturn(false);
+            $resultSet1Iterator->current()->willReturn(null);
+        });
+
+        $resultSet1->getNextResultSetOptions()->willReturn(array('page' => 2));
+        $resultSet1->getIterator()->willReturn($resultSet1Iterator);
+
+        // second set contains $post2 and $post3
+        $resultSet2Iterator->valid()->willReturn(true);
+        $resultSet2Iterator->current()->willReturn($post2);
+        $resultSet2Iterator->next()->will(function () use ($resultSet2Iterator, $post3) {
+            $resultSet2Iterator->valid()->willReturn(true);
+            $resultSet2Iterator->current()->willReturn($post3);
+            $resultSet2Iterator->next()->will(function () use ($resultSet2Iterator) {
+                $resultSet2Iterator->valid()->willReturn(false);
+                $resultSet2Iterator->current()->willReturn(null);
+            });
+        });
+
+        $resultSet2->hasNextResultSet()->willReturn(false);
+        $resultSet2->getNextResultSetOptions()->willReturn(array('page' => 3));
+        $resultSet2->getIterator()->willReturn($resultSet2Iterator);
 
         $provider->getResult(array(
             'foo' => 'bar'
@@ -52,12 +84,17 @@ class SourceIteratorSpec extends ObjectBehavior
             'foo' => 'bar'
         ));
 
-        $this->current()->shouldReturn($resultSet1);
+        $this->current()->shouldReturn($post1);
         $this->valid()->shouldReturn(true);
 
         $this->next();
 
-        $this->current()->shouldReturn($resultSet2);
+        $this->current()->shouldReturn($post2);
+        $this->valid()->shouldReturn(true);
+
+        $this->next();
+
+        $this->current()->shouldReturn($post3);
         $this->valid()->shouldReturn(true);
 
         $this->next();

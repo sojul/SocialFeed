@@ -2,8 +2,6 @@
 
 namespace Lns\SocialFeed\Model;
 
-use PhpCollection\Map;
-
 class Feed implements \IteratorAggregate, FeedInterface
 {
     protected $feedArray = array();

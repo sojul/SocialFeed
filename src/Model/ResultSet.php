@@ -2,37 +2,34 @@
 
 namespace Lns\SocialFeed\Model;
 
+use Lns\SocialFeed\Iterator\LookaheadIterator;
+
 class ResultSet implements ResultSetInterface
 {
-    protected $feed;
-    protected $nextResultOptions = array();
+    protected $nextResultSetOptions = array();
+    protected $iterator;
 
     /**
      * @param FeedInterface $feed
-     * @param array $nextResultOptions
+     * @param array $nextResultSetOptions
      */
-    public function __construct(FeedInterface $feed, array $nextResultOptions = array())
+    public function __construct(FeedInterface $feed, array $nextResultSetOptions = array())
     {
         $this->feed = $feed;
-        $this->nextResultOptions = $nextResultOptions;
+        $this->iterator = $feed;
     }
 
-    public function getResult()
+    public function getNextResultSetOptions()
     {
-        return $this->feed;
+        return $this->nextResultSetOptions;
     }
 
-    public function getNextResultOptions()
+    public function hasNextResultSet()
     {
-        return $this->nextResultOptions;
-    }
-
-    public function hasNextResult()
-    {
-        return !empty($this->nextResultOptions);
+        return !empty($this->nextResultSetOptions);
     }
 
     public function getIterator() {
-        return $this->feed;
+        return $this->iterator;
     }
 }
