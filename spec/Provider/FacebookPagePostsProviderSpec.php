@@ -49,8 +49,8 @@ class FacebookPagePostsProviderSpec extends ObjectBehavior
             )
         ]);
 
-        $this->factory->createFacebookPostFromApiData($postData1)->willReturn($post1);
-        $this->factory->createFacebookPostFromApiData($postData2)->willReturn($post2);
+        $this->factory->create($postData1)->willReturn($post1);
+        $this->factory->create($postData2)->willReturn($post2);
 
         $this->getResult(array(
             'page_id' => '12334533434'

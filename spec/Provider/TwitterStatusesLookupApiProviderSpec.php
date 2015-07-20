@@ -39,8 +39,8 @@ class TwitterStatusesLookupApiProviderSpec extends ObjectBehavior
             1 => $postData2
         ]);
 
-        $this->factory->createTweetFromApiData($postData1)->willReturn($post1);
-        $this->factory->createTweetFromApiData($postData2)->willReturn($post2);
+        $this->factory->create($postData1)->willReturn($post1);
+        $this->factory->create($postData2)->willReturn($post2);
 
         $this->getResult(array(
             'ids' => array('id1', 'id2')

@@ -30,7 +30,7 @@ class TwitterSearchApiProvider extends AbstractProvider
         $feed = new Feed();
 
         foreach($result['statuses'] as $status) {
-            $feed->addPost($this->postFactory->createTweetFromApiData($status));
+            $feed->addPost($this->postFactory->create($status));
         }
 
         $nextResultOptions = array();

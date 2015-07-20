@@ -51,7 +51,7 @@ class FacebookPagePostsProvider extends AbstractProvider
             ->get('/' . $options['page_id'] . '/posts?fields=' . $fieldsString);
 
         foreach($data['data'] as $postData) {
-            $feed->addPost($this->postFactory->createFacebookPostFromApiData($postData));
+            $feed->addPost($this->postFactory->create($postData));
         }
 
         $nextResultOptions = array();

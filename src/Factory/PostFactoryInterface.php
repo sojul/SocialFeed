@@ -6,7 +6,5 @@ use Facebook\GraphObject;
 
 interface PostFactoryInterface
 {
-    public function createFacebookPostFromApiData(array $data);
-    public function createTweetFromApiData(array $data);
-    public function createInstagramPostFromApiData(array $data);
+    public function create(array $data);
 }

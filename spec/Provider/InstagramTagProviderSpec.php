@@ -48,8 +48,8 @@ class InstagramTagProviderSpec extends ObjectBehavior
             )
         ]);
 
-        $this->factory->createInstagramPostFromApiData($postData1)->willReturn($post1);
-        $this->factory->createInstagramPostFromApiData($postData2)->willReturn($post2);
+        $this->factory->create($postData1)->willReturn($post1);
+        $this->factory->create($postData2)->willReturn($post2);
 
         $this->getResult(array(
             'tag_name' => 'foo'

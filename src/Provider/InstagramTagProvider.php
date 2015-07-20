@@ -30,7 +30,7 @@ class InstagramTagProvider extends AbstractProvider
         $response = $this->client->get(sprintf('/v1/tags/%s/media/recent', $options['tag_name']));
 
         foreach($response['data'] as $data) {
-            $feed->addPost($this->postFactory->createInstagramPostFromApiData($data));
+            $feed->addPost($this->postFactory->create($data));
         };
 
         $nextResultOptions = array();
