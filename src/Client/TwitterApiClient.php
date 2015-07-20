@@ -25,7 +25,7 @@ class TwitterApiClient implements ClientInterface
         try {
             $query_string = http_build_query($options['query']);
 
-            $request = $client->createRequest('GET', '/1.1/search/tweets.json?' . $query_string);
+            $request = $client->createRequest('GET', '/1.1/search/tweets.json?' . $query_string, ['debug' => true]);
 
             return $client->send($request)->json();
         } catch(GuzzleRequestException $e) {
