@@ -15,30 +15,32 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Lns\SocialFeed\Provider\FacebookPagePostsProvider;
 use Lns\SocialFeed\Provider\TwitterSearchApiProvider;
-use Lns\SocialFeed\Provider\ProviderChain;
 use Lns\SocialFeed\Client\TwitterApiClient;
 use Lns\SocialFeed\Client\FacebookApiClient;
-use Lns\SocialFeed\Client\FacebookRequestFactory;
-use Lns\SocialFeed\Factory\PostFactory;
+use Lns\SocialFeed\Factory\FacebookPostFactory;
+use Lns\SocialFeed\Factory\TweetFactory;
+use Lns\SocialFeed\SocialFeed;
 
-$providerChain = new ProviderChain();
-$postFactory = new PostFactory();
+$socialFeed = new SocialFeed();
+$facebookPostFactory = new FacebookPostFactory();
+$tweetFactory = new TweetFactory();
+$instagramPostFactory = new InstagramPostFactory();
 
-$client = new FacebookApiClient('681945715271604', 'e6f5472a5f159d8f235d9cfc14084b36');
-
-$providerChain->addProvider('fb', new FacebookPagePostsProvider($client, $postFactory));
-
-// add twitter provider
+$fbClient = new FacebookApiClient('681945715271604', 'e6f5472a5f159d8f235d9cfc14084b36');
 $twitterClient = new TwitterApiClient('HqSutv9oOk64BqyAn474g', 'EdAzOS0RTuMnIQgQPPIM4gv66fwRlyzx2yfqjz9nHtA');
 
-$providerChain->addProvider('tw', new TwitterSearchApiProvider($twitterClient, $postFactory));
+$socialFeed
+    ->addSource(new Source(
+        new FacebookPagePostsProvider($fbClient, $facebookPostFactory),
+        ['page_id' => '110483805633200']
+    ))
+    ->addSource(new Source(
+        new TwitterSearchApiProvider($twitterClient, $tweetFactory),
+        ['query' => 'lanetscouade'],
+    ));
 
-$feed = $providerChain->getFeed([
-    'fb' => ['page_id' => '110483805633200'],
-    'tw' => ['query' => 'lanetscouade'],
-]);
 
-foreach($feed as $item) {
+foreach($socialFeed as $item) {
     echo $item->getMessage() . PHP_EOL;
 }
 
