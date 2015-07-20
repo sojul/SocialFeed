@@ -45,7 +45,7 @@ class FacebookPagePostsProviderSpec extends ObjectBehavior
             ),
             'paging' => array(
                 "previous" => "https://graph.facebook.com/page_id/posts?since=1433776347&limit=25&__paging_token=enc_AdBJBmZACKRKhWZCfUEwnRGw8jGfFZCGl2EiYxebr461J81BIsIRwu69lD0DmRZCix9Pj5ULR0SdfOu16UkN5ZAQB9xJl&__previous=1",
-                "next" => "https://graph.facebook.com/page_id/posts?since=1433776347&limit=25&__paging_token=enc_AdBJBmZACKRKhWZCfUEwnRGw8jGfFZCGl2EiYxebr461J81BIsIRwu69lD0DmRZCix9Pj5ULR0SdfOu16UkN5ZAQB9xJl"
+                "next" => "https://graph.facebook.com/page_id/posts?until=1433776347&limit=25&__paging_token=enc_AdBJBmZACKRKhWZCfUEwnRGw8jGfFZCGl2EiYxebr461J81BIsIRwu69lD0DmRZCix9Pj5ULR0SdfOu16UkN5ZAQB9xJl"
             )
         ]);
 

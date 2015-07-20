@@ -49,7 +49,7 @@ class FacebookPagePostsProvider extends AbstractProvider
         $data = $this->client->get('/' . $options['page_id'] . '/posts', array(
             'query' => array(
                 'fields'         => $fieldsString,
-                'since'          => $options['since'],
+                'until'          => $options['until'],
                 'limit'          => $options['limit'],
                 '__paging_token' => $options['__paging_token']
             )
@@ -65,7 +65,7 @@ class FacebookPagePostsProvider extends AbstractProvider
         if(isset($data['paging']['next'])) {
             $parameters = $this->extractUrlParameters($data['paging']['next']);
             $nextResultOptions = array(
-                'since' => $parameters['since'],
+                'until' => $parameters['until'],
                 'limit' => $parameters['limit'],
                 '__paging_token' => $parameters['__paging_token']
             );
@@ -83,7 +83,7 @@ class FacebookPagePostsProvider extends AbstractProvider
         $resolver->setRequired('page_id');
 
         $resolver->setDefaults(array(
-            'since'          => null,
+            'until'          => null,
             'limit'          => null,
             '__paging_token' => null
         ));

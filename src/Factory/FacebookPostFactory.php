@@ -54,9 +54,10 @@ class FacebookPostFactory implements PostFactoryInterface
 
     protected function addPostReferences(&$post, $data) {
         $typeMap = array(
-            'user'  => ReferenceType::USER,
-            'page'  => ReferenceType::PAGE,
-            'group' => ReferenceType::GROUP,
+            'user'        => ReferenceType::USER,
+            'page'        => ReferenceType::PAGE,
+            'group'       => ReferenceType::GROUP,
+            'application' => ReferenceType::APPLICATION,
         );
 
         if(!isset($data['message_tags'])) {
