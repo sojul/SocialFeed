@@ -38,7 +38,7 @@ class TwitterSearchApiProviderSpec extends ObjectBehavior
         $this->client->get('/1.1/search/tweets.json', array(
             'query' => array(
                 'q' => 'foo',
-                'since_id' => null
+                'max_id' => null
             )
         ))->willReturn([
             'statuses' => array(

@@ -25,9 +25,9 @@ class TwitterSearchApiProvider extends AbstractProvider
         $result = $this->client->get('/1.1/search/tweets.json', array(
             'query' => array(
                 'q' => $options['query'],
-                'since_id' => $options['since_id'],
-            ), )
-        );
+                'max_id' => $options['max_id'],
+            ),
+        ));
 
         $feed = new Feed();
 
@@ -38,8 +38,11 @@ class TwitterSearchApiProvider extends AbstractProvider
         $nextResultOptions = array();
 
         if (isset($result['search_metadata'])) {
+
+            $parameters = $this->extractUrlParameters($result['search_metadata']['next_results']);
+
             $nextResultOptions = array(
-                'since_id' => $result['search_metadata']['max_id_str'],
+                'max_id' => $parameters['max_id'],
             );
         }
 
@@ -56,7 +59,7 @@ class TwitterSearchApiProvider extends AbstractProvider
         $resolver->setRequired('query');
 
         $resolver->setDefaults(array(
-            'since_id' => null,
+            'max_id' => null,
         ));
     }
 }
