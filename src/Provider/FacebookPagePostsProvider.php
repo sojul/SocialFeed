@@ -4,7 +4,6 @@ namespace Lns\SocialFeed\Provider;
 
 use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Client\ClientInterface;
-
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Lns\SocialFeed\Model\ResultSet;
@@ -20,8 +19,8 @@ class FacebookPagePostsProvider extends AbstractProvider
         $this->postFactory = $postFactory;
     }
 
-    public function getResult(array $options = array()) {
-
+    public function getResult(array $options = array())
+    {
         $options = $this->resolveOptions($options);
 
         $fieldsString = $this->generateFieldsQueryString(array(
@@ -40,34 +39,34 @@ class FacebookPagePostsProvider extends AbstractProvider
                 'name',
                 'id',
                 'picture.type(large)',
-                'link'
-            )
+                'link',
+            ),
         ));
 
         $feed = new Feed();
 
-        $data = $this->client->get('/' . $options['page_id'] . '/posts', array(
+        $data = $this->client->get('/'.$options['page_id'].'/posts', array(
             'query' => array(
-                'fields'         => $fieldsString,
-                'until'          => $options['until'],
-                'limit'          => $options['limit'],
-                '__paging_token' => $options['__paging_token']
-            )
+                'fields' => $fieldsString,
+                'until' => $options['until'],
+                'limit' => $options['limit'],
+                '__paging_token' => $options['__paging_token'],
+            ),
         ));
 
-        foreach($data['data'] as $postData) {
+        foreach ($data['data'] as $postData) {
             $feed->addPost($this->postFactory->create($postData));
         }
 
         $nextResultOptions = array();
 
         // extract pagination parameters
-        if(isset($data['paging']['next'])) {
+        if (isset($data['paging']['next'])) {
             $parameters = $this->extractUrlParameters($data['paging']['next']);
             $nextResultOptions = array(
                 'until' => $parameters['until'],
                 'limit' => $parameters['limit'],
-                '__paging_token' => $parameters['__paging_token']
+                '__paging_token' => $parameters['__paging_token'],
             );
         }
 
@@ -79,23 +78,25 @@ class FacebookPagePostsProvider extends AbstractProvider
         return 'facebook_page';
     }
 
-    protected function configureOptionResolver(OptionsResolver &$resolver) {
+    protected function configureOptionResolver(OptionsResolver &$resolver)
+    {
         $resolver->setRequired('page_id');
 
         $resolver->setDefaults(array(
-            'until'          => null,
-            'limit'          => null,
-            '__paging_token' => null
+            'until' => null,
+            'limit' => null,
+            '__paging_token' => null,
         ));
     }
 
-    private function generateFieldsQueryString($fields) {
+    private function generateFieldsQueryString($fields)
+    {
         $parts = array();
 
-        foreach($fields as $fieldKey => $fieldValue) {
-            $parts[] = is_array($fieldValue) ? $fieldKey . '.fields(' . $this->generateFieldsQueryString($fieldValue) . ')' : $fieldValue;
+        foreach ($fields as $fieldKey => $fieldValue) {
+            $parts[] = is_array($fieldValue) ? $fieldKey.'.fields('.$this->generateFieldsQueryString($fieldValue).')' : $fieldValue;
         }
 
-        return join($parts, ',');
+        return implode($parts, ',');
     }
 }

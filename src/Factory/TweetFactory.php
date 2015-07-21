@@ -11,9 +11,10 @@ use Lns\SocialFeed\Model\ReferenceType;
 class TweetFactory implements PostFactoryInterface
 {
     /**
-     * create
+     * create.
      *
      * @param array $data
+     *
      * @return Tweet $post
      */
     public function create(array $data)
@@ -27,7 +28,7 @@ class TweetFactory implements PostFactoryInterface
         $author->setProfilePicture($media);
         $author->setIdentifier($data['user']['id']);
         $author->setName($data['user']['name']);
-        $author->setLink('https://twitter.com/' . $data['user']['screen_name']);
+        $author->setLink('https://twitter.com/'.$data['user']['screen_name']);
         $author->setUsername($data['user']['screen_name']);
 
         $tweet
@@ -35,7 +36,6 @@ class TweetFactory implements PostFactoryInterface
             ->setMessage($data['text'])
             ->setCreatedAt(new \DateTime($data['created_at']))
             ->setAuthor($author);
-        ;
 
         $this->addTweetReferences($tweet, $data);
         $this->addTweetMedias($tweet, $data);
@@ -43,12 +43,13 @@ class TweetFactory implements PostFactoryInterface
         return $tweet;
     }
 
-    protected function addTweetMedias(&$tweet, $data) {
-        if(!isset($data['entities']['media'])) {
+    protected function addTweetMedias(&$tweet, $data)
+    {
+        if (!isset($data['entities']['media'])) {
             return;
         }
 
-        foreach($data['entities']['media'] as $mediaData) {
+        foreach ($data['entities']['media'] as $mediaData) {
             $media = new Media();
             $media->setUrl($mediaData['media_url']);
             $media->setLink($mediaData['expanded_url']);
@@ -56,17 +57,18 @@ class TweetFactory implements PostFactoryInterface
         }
     }
 
-    protected function addTweetReferences(&$tweet, $data) {
+    protected function addTweetReferences(&$tweet, $data)
+    {
         $typeMap = array(
-            'urls'          => ReferenceType::URL,
+            'urls' => ReferenceType::URL,
             'user_mentions' => ReferenceType::USER,
-            'hashtags'      => ReferenceType::HASHTAG,
-            'video'         => ReferenceType::VIDEO,
-            'media'         => ReferenceType::MEDIA,
+            'hashtags' => ReferenceType::HASHTAG,
+            'video' => ReferenceType::VIDEO,
+            'media' => ReferenceType::MEDIA,
         );
 
-        foreach($data['entities'] as $entityType => $entities) {
-            foreach($entities as $entity) {
+        foreach ($data['entities'] as $entityType => $entities) {
+            foreach ($entities as $entity) {
                 $reference = new Reference();
                 $reference
                     ->setIndices($entity['indices'])
@@ -77,9 +79,9 @@ class TweetFactory implements PostFactoryInterface
             }
         }
 
-        if(isset($data['extended_entities'])) {
-            foreach($data['extended_entities'] as $entities) {
-                foreach($entities as $entity) {
+        if (isset($data['extended_entities'])) {
+            foreach ($data['extended_entities'] as $entities) {
+                foreach ($entities as $entity) {
                     $reference = new Reference();
                     $reference
                         ->setIndices($entity['indices'])

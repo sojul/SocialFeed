@@ -8,26 +8,28 @@ use Lns\SocialFeed\Exception as SocialFeedException;
 
 abstract class AbstractProvider implements ProviderInterface
 {
-    protected function resolveOptions($options) {
+    protected function resolveOptions($options)
+    {
         $resolver = new OptionsResolver();
 
         $this->configureOptionResolver($resolver);
 
         try {
-
             return $resolver->resolve($options);
-
         } catch (OptionsResolverException\MissingOptionsException $e) {
             throw new SocialFeedException\MissingOptionsException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
-    protected function configureOptionResolver(OptionsResolver &$resolver) {
+    protected function configureOptionResolver(OptionsResolver &$resolver)
+    {
     }
 
-    protected function extractUrlParameters($url) {
+    protected function extractUrlParameters($url)
+    {
         $query = parse_url($url, PHP_URL_QUERY);
         parse_str($query, $params);
+
         return $params;
     }
 }

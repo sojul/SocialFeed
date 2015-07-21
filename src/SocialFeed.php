@@ -2,12 +2,8 @@
 
 namespace Lns\SocialFeed;
 
-use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Model\PostInterface;
-use Lns\SocialFeed\Model\ResultSet;
-use Lns\SocialFeed\Provider\ProviderInterface;
 use Lns\SocialFeed\Iterator\SourceIterator;
-use Lns\SocialFeed\Iterator\LookaheadIterator;
 
 class SocialFeed implements \Iterator
 {
@@ -18,11 +14,14 @@ class SocialFeed implements \Iterator
     public function addSource(SourceInterface $source)
     {
         $this->addSourceIterator(new SourceIterator($source));
+
         return $this;
     }
 
-    public function addSourceIterator(SourceIterator $sourceIterator) {
+    public function addSourceIterator(SourceIterator $sourceIterator)
+    {
         $this->sourceIterators[] = $sourceIterator;
+
         return $this;
     }
 
@@ -37,8 +36,8 @@ class SocialFeed implements \Iterator
         $mostRecentPostIterator = null;
         $mostRecentPost = null;
 
-        foreach($this->sourceIterators as $sourceIterator) {
-            if(
+        foreach ($this->sourceIterators as $sourceIterator) {
+            if (
                 !$sourceIterator->valid() ||
                 $mostRecentPost != null && $this->comparePost($sourceIterator->current(), $mostRecentPost)
             ) {
@@ -50,15 +49,16 @@ class SocialFeed implements \Iterator
         }
 
         // move the mostRecentPostIterator to the next element
-        if($mostRecentPostIterator != null) {
+        if ($mostRecentPostIterator != null) {
             $mostRecentPostIterator->next();
         }
 
         $this->current = $mostRecentPost;
-        $this->position++;
+        ++$this->position;
     }
 
-    protected function comparePost(PostInterface $post1, PostInterface $post2) {
+    protected function comparePost(PostInterface $post1, PostInterface $post2)
+    {
         return $post1->getCreatedAt() < $post2->getCreatedAt();
     }
 
@@ -67,15 +67,17 @@ class SocialFeed implements \Iterator
         return $this->current != null;
     }
 
-    public function key() {
+    public function key()
+    {
         return $this->position;
     }
 
-    public function rewind() {
+    public function rewind()
+    {
         $this->position = 0;
         $this->current = null;
 
-        foreach($this->sourceIterators as $sourceIterator) {
+        foreach ($this->sourceIterators as $sourceIterator) {
             $sourceIterator->rewind();
         }
 

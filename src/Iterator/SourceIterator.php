@@ -5,7 +5,7 @@ namespace Lns\SocialFeed\Iterator;
 use Lns\SocialFeed\SourceInterface;
 
 /**
- * Iterate over source posts
+ * Iterate over source posts.
  */
 class SourceIterator implements \Iterator
 {
@@ -13,7 +13,7 @@ class SourceIterator implements \Iterator
     public $position = 0;
 
     /**
-     * __construct
+     * __construct.
      *
      * @param SourceInterface $source
      */
@@ -24,8 +24,8 @@ class SourceIterator implements \Iterator
 
     public function current()
     {
-        if(!$this->currentResultSet) {
-            return null;
+        if (!$this->currentResultSet) {
+            return;
         }
 
         return $this->currentResultSet->getIterator()->current();
@@ -36,10 +36,12 @@ class SourceIterator implements \Iterator
         return $this->position;
     }
 
-    protected function loadNextResultSet() {
-        if($this->currentResultSet && !$this->currentResultSet->hasNextResultSet()) {
+    protected function loadNextResultSet()
+    {
+        if ($this->currentResultSet && !$this->currentResultSet->hasNextResultSet()) {
             $this->currentResultSet = null;
-            $this->position++;
+            ++$this->position;
+
             return false;
         }
 
@@ -48,7 +50,7 @@ class SourceIterator implements \Iterator
         $options = $this->source->getOptions();
 
         // merge options
-        if($this->currentResultSet) {
+        if ($this->currentResultSet) {
             $options = array_merge($options, $this->currentResultSet->getNextResultSetOptions());
         }
 
@@ -61,11 +63,11 @@ class SourceIterator implements \Iterator
     {
         $this->currentResultSet->getIterator()->next();
 
-        if(!$this->currentResultSet->getIterator()->valid()) {
+        if (!$this->currentResultSet->getIterator()->valid()) {
             $this->loadNextResultSet();
         }
 
-        $this->position++;
+        ++$this->position;
     }
 
     public function valid()

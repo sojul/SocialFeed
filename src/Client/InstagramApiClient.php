@@ -15,22 +15,24 @@ class InstagramApiClient implements ClientInterface
         $this->clientSecret = $clientSecret;
     }
 
-    protected function createGuzzleClient($clientId) {
-
+    protected function createGuzzleClient($clientId)
+    {
         $client = new Client([
             'base_url' => 'https://api.instagram.com/',
             'defaults' => [
                 'query' => [
-                    'client_id' => $clientId
-                ]
-            ]
+                    'client_id' => $clientId,
+                ],
+            ],
         ]);
 
         return $client;
     }
 
-    public function get($path, array $options = array()) {
+    public function get($path, array $options = array())
+    {
         $client = $this->createGuzzleClient($this->clientId);
+
         return $client->get($path, $options)->json();
     }
 }

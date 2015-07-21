@@ -8,4 +8,3 @@ interface ResultSetInterface extends \IteratorAggregate
     public function getNextResultSetOptions();
     public function hasNextResultSet();
 }
-

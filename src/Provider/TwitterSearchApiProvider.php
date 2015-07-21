@@ -18,28 +18,28 @@ class TwitterSearchApiProvider extends AbstractProvider
         $this->postFactory = $postFactory;
     }
 
-    public function getResult(array $options = array()) {
-
+    public function getResult(array $options = array())
+    {
         $options = $this->resolveOptions($options);
 
         $result = $this->client->get('/1.1/search/tweets.json', array(
             'query' => array(
-                'q'          => $options['query'],
-                'since_id'   => $options['since_id']
-            ))
+                'q' => $options['query'],
+                'since_id' => $options['since_id'],
+            ), )
         );
 
         $feed = new Feed();
 
-        foreach($result['statuses'] as $status) {
+        foreach ($result['statuses'] as $status) {
             $feed->addPost($this->postFactory->create($status));
         }
 
         $nextResultOptions = array();
 
-        if(isset($result['search_metadata'])) {
+        if (isset($result['search_metadata'])) {
             $nextResultOptions = array(
-                'since_id' => $result['search_metadata']['max_id_str']
+                'since_id' => $result['search_metadata']['max_id_str'],
             );
         }
 
@@ -51,11 +51,12 @@ class TwitterSearchApiProvider extends AbstractProvider
         return 'twitter_search_api';
     }
 
-    protected function configureOptionResolver(OptionsResolver &$resolver) {
+    protected function configureOptionResolver(OptionsResolver &$resolver)
+    {
         $resolver->setRequired('query');
 
         $resolver->setDefaults(array(
-            'since_id' => null
+            'since_id' => null,
         ));
     }
 }

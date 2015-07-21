@@ -22,27 +22,28 @@ class InstagramTagProvider extends AbstractProvider
         $this->postFactory = $postFactory;
     }
 
-    public function getResult(array $options = array()) {
+    public function getResult(array $options = array())
+    {
         $options = $this->resolveOptions($options);
 
         $feed = new Feed();
 
         $response = $this->client->get(sprintf('/v1/tags/%s/media/recent', $options['tag_name']), array(
             'query' => array(
-                'max_tag_id' => $options['max_tag_id']
-            )
+                'max_tag_id' => $options['max_tag_id'],
+            ),
         ));
 
-        foreach($response['data'] as $data) {
+        foreach ($response['data'] as $data) {
             $feed->addPost($this->postFactory->create($data));
         };
 
         $nextResultOptions = array();
 
         // extract pagination parameters
-        if(isset($data['pagination']['next_max_id'])) {
+        if (isset($data['pagination']['next_max_id'])) {
             $nextResultOptions = array(
-                'max_tag_id' => $data['pagination']['next_max_id']
+                'max_tag_id' => $data['pagination']['next_max_id'],
             );
         }
 
@@ -54,11 +55,12 @@ class InstagramTagProvider extends AbstractProvider
         return 'instagram';
     }
 
-    public function configureOptionResolver(OptionsResolver &$resolver) {
+    public function configureOptionResolver(OptionsResolver &$resolver)
+    {
         $resolver->setRequired('tag_name');
 
         $resolver->setDefaults(array(
-            'max_tag_id' => null
+            'max_tag_id' => null,
         ));
     }
 }

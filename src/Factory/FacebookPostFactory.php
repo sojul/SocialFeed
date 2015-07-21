@@ -11,9 +11,10 @@ use Lns\SocialFeed\Model\ReferenceType;
 class FacebookPostFactory implements PostFactoryInterface
 {
     /**
-     * create
+     * create.
      *
      * @param array $data
+     *
      * @return FacebookPost $post
      */
     public function create(array $data)
@@ -40,7 +41,7 @@ class FacebookPostFactory implements PostFactoryInterface
             ->setCreatedAt(new \DateTime($data['created_time']))
             ;
 
-        if(isset($data['full_picture'])) {
+        if (isset($data['full_picture'])) {
             $media = new Media();
             $media->setUrl($data['full_picture']);
             $media->setLink($data['link']);
@@ -52,20 +53,21 @@ class FacebookPostFactory implements PostFactoryInterface
         return $post;
     }
 
-    protected function addPostReferences(&$post, $data) {
+    protected function addPostReferences(&$post, $data)
+    {
         $typeMap = array(
-            'user'        => ReferenceType::USER,
-            'page'        => ReferenceType::PAGE,
-            'group'       => ReferenceType::GROUP,
+            'user' => ReferenceType::USER,
+            'page' => ReferenceType::PAGE,
+            'group' => ReferenceType::GROUP,
             'application' => ReferenceType::APPLICATION,
         );
 
-        if(!isset($data['message_tags'])) {
+        if (!isset($data['message_tags'])) {
             return;
         }
 
-        foreach($data['message_tags'] as $messageTagGroup) {
-            foreach($messageTagGroup as $messageTag) {
+        foreach ($data['message_tags'] as $messageTagGroup) {
+            foreach ($messageTagGroup as $messageTag) {
                 $reference = new Reference();
                 $reference
                     ->setIndices([$messageTag['offset'], $messageTag['offset'] + $messageTag['length']])

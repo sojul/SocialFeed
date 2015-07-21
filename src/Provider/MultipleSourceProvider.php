@@ -11,13 +11,16 @@ class MultipleSourceProvider extends AbstractProvider
     public function addSource(SourceInterface $source)
     {
         $this->sources[] = $source;
+
         return $this;
     }
 
-    public function getResult(array $options = array()) {
+    public function getResult(array $options = array())
+    {
     }
 
-    public function getName() {
+    public function getName()
+    {
         return 'multiple_source_provider';
     }
 }

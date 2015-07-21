@@ -17,6 +17,7 @@ class Media implements MediaInterface
     public function setUrl($url)
     {
         $this->url = $url;
+
         return $this;
     }
 
@@ -28,6 +29,7 @@ class Media implements MediaInterface
     public function setWidth($width)
     {
         $this->width = $width;
+
         return $this;
     }
 
@@ -39,6 +41,7 @@ class Media implements MediaInterface
     public function setHeight($height)
     {
         $this->height = $height;
+
         return $this;
     }
 
@@ -50,6 +53,7 @@ class Media implements MediaInterface
     public function setLink($link)
     {
         $this->link = $link;
+
         return $this;
     }
 }

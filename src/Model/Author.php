@@ -19,6 +19,7 @@ class Author implements AuthorInterface
     public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;
+
         return $this;
     }
 
@@ -30,6 +31,7 @@ class Author implements AuthorInterface
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -41,6 +43,7 @@ class Author implements AuthorInterface
     public function setUsername($username)
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -52,6 +55,7 @@ class Author implements AuthorInterface
     public function setProfilePicture(MediaInterface $profilePicture)
     {
         $this->profilePicture = $profilePicture;
+
         return $this;
     }
 
@@ -63,6 +67,7 @@ class Author implements AuthorInterface
     public function setLink($link)
     {
         $this->link = $link;
+
         return $this;
     }
 
@@ -74,6 +79,7 @@ class Author implements AuthorInterface
     public function setProperty($propertyKey, $propertyValue)
     {
         $this->properties[$propertyKey] = $propertyValue;
+
         return $this;
     }
 }

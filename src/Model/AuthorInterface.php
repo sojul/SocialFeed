@@ -17,4 +17,3 @@ interface AuthorInterface
     public function setProperty($propertyKey, $propertyValue);
     public function getProperty($propertyKey);
 }
-

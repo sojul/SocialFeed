@@ -2,8 +2,6 @@
 
 namespace Lns\SocialFeed\Formatter;
 
-use Lns\SocialFeed\Model\ReferenceType;
-
 abstract class AbstractMessageFormatter implements MessageFormatterInterface
 {
     public function format($message, array $references = array())
@@ -11,7 +9,7 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
         // sort references by start indice
         // for testing issue we need to add @
         // @see https://github.com/phpspec/prophecy/issues/161
-        @uasort($references, function($a, $b) {
+        @uasort($references, function ($a, $b) {
             return ($a->getStartIndice() > $b->getStartIndice());
         });
 
@@ -20,35 +18,36 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
         // build message
         $formattedMessageParts = [];
 
-        foreach($messageParts as $messagePart) {
-            if(is_null($messagePart)) {
+        foreach ($messageParts as $messagePart) {
+            if (is_null($messagePart)) {
                 continue;
             }
 
             $formattedMessageParts[] = $this->formatMessagePart($messagePart);
         }
 
-        return join($formattedMessageParts);
+        return implode($formattedMessageParts);
     }
 
-    protected function formatMessagePart($messagePart) {
+    protected function formatMessagePart($messagePart)
+    {
         $reference = $messagePart['reference'];
 
-        if(!$reference) {
+        if (!$reference) {
             return $this->autoLink($messagePart['text']);
         }
     }
 
-    protected function buildMessageParts($message, $references, $offset = 0) {
-
+    protected function buildMessageParts($message, $references, $offset = 0)
+    {
         $messageParts = [];
 
         // get first reference
         $reference = array_shift($references);
 
-        if(!$reference) {
+        if (!$reference) {
             return [
-                $this->buildMessagePart($message, 0, mb_strlen($message))
+                $this->buildMessagePart($message, 0, mb_strlen($message)),
             ];
         }
 
@@ -67,30 +66,34 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
 
         $message = mb_substr($message, $reference->getEndIndice() - $offset);
 
-        foreach($this->buildMessageParts($message, $references, $reference->getEndIndice()) as $messagePart) {
+        foreach ($this->buildMessageParts($message, $references, $reference->getEndIndice()) as $messagePart) {
             $messageParts[] = $messagePart;
         };
 
         return $messageParts;
     }
 
-    protected function buildMessagePart($message, $start, $end, $reference = null) {
-        if($start == $end) {
+    protected function buildMessagePart($message, $start, $end, $reference = null)
+    {
+        if ($start == $end) {
             return;
         }
 
         return array(
-            'text'      => mb_substr($message, $start, $end - $start, "UTF-8"),
+            'text' => mb_substr($message, $start, $end - $start, 'UTF-8'),
             'reference' => $reference,
         );
     }
 
-    protected function createLinkString($href, $display, $target = "_blank") {
+    protected function createLinkString($href, $display, $target = '_blank')
+    {
         return sprintf('<a href="%s" target="%s">%s</a>', $href, $target, $display);
     }
 
-    protected function autoLink($message) {
+    protected function autoLink($message)
+    {
         $regex = '#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#';
+
         return preg_replace_callback($regex, function ($matches) {
             return $this->createLinkString($matches[0], $matches[0]);
         }, $message);

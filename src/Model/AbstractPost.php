@@ -21,6 +21,7 @@ abstract class AbstractPost implements PostInterface
     public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;
+
         return $this;
     }
 
@@ -32,6 +33,7 @@ abstract class AbstractPost implements PostInterface
     public function setMessage($message)
     {
         $this->message = $message;
+
         return $this;
     }
 
@@ -43,6 +45,7 @@ abstract class AbstractPost implements PostInterface
     public function setAuthor(AuthorInterface $author)
     {
         $this->author = $author;
+
         return $this;
     }
 
@@ -54,21 +57,26 @@ abstract class AbstractPost implements PostInterface
     public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
     public function addMedia(MediaInterface $media)
     {
         $this->medias[] = $media;
+
         return $this;
     }
 
-    public function getMedias() {
+    public function getMedias()
+    {
         return $this->medias;
     }
 
-    public function addReference(ReferenceInterface $reference) {
+    public function addReference(ReferenceInterface $reference)
+    {
         $this->references[] = $reference;
+
         return $this;
     }
 
@@ -77,7 +85,8 @@ abstract class AbstractPost implements PostInterface
         return $this->references;
     }
 
-    public function getUniqueIdentifier() {
-        return $this->getType() . '_' . $this->getIdentifier();
+    public function getUniqueIdentifier()
+    {
+        return $this->getType().'_'.$this->getIdentifier();
     }
 }

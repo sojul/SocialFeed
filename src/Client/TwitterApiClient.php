@@ -19,50 +19,49 @@ class TwitterApiClient implements ClientInterface
         $this->consumerSecret = $consumerSecret;
     }
 
-    public function get($path, array $options = array()) {
+    public function get($path, array $options = array())
+    {
         $client = $this->createGuzzleClient($this->consumerKey, $this->consumerSecret);
 
         try {
             $query_string = http_build_query($options['query']);
 
-            $request = $client->createRequest('GET', '/1.1/search/tweets.json?' . $query_string);
+            $request = $client->createRequest('GET', '/1.1/search/tweets.json?'.$query_string);
 
             return $client->send($request)->json();
-        } catch(GuzzleRequestException $e) {
+        } catch (GuzzleRequestException $e) {
             $message = $e->getMessage();
 
             if ($e->hasResponse()) {
-
                 $responseData = $e->getResponse()->json();
 
                 $messageParts = array();
 
-                foreach($responseData['errors'] as $error) {
+                foreach ($responseData['errors'] as $error) {
                     $messageParts[] = $error['message'];
                 }
 
-                $message = join($messageParts, "\n");
+                $message = implode($messageParts, "\n");
             }
 
             throw new RequestException($message);
         }
     }
 
-    protected function createGuzzleClient($consumerKey, $consumerSecret) {
+    protected function createGuzzleClient($consumerKey, $consumerSecret)
+    {
         $client = new Client([
             'base_url' => 'https://api.twitter.com/',
-            'defaults' => ['auth' => 'oauth']
+            'defaults' => ['auth' => 'oauth'],
         ]);
 
         $oauth = new Oauth1([
-            'consumer_key'    => $consumerKey,
-            'consumer_secret' => $consumerSecret
+            'consumer_key' => $consumerKey,
+            'consumer_secret' => $consumerSecret,
         ]);
 
         $client->getEmitter()->attach($oauth);
 
         return $client;
     }
-
-
 }

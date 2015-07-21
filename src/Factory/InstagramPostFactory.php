@@ -4,17 +4,15 @@ namespace Lns\SocialFeed\Factory;
 
 use Lns\SocialFeed\Model\InstagramPost;
 use Lns\SocialFeed\Model\Author;
-use Lns\SocialFeed\Model\Tweet;
 use Lns\SocialFeed\Model\Media;
-use Lns\SocialFeed\Model\Reference;
-use Lns\SocialFeed\Model\ReferenceType;
 
 class InstagramPostFactory implements PostFactoryInterface
 {
     /**
-     * create
+     * create.
      *
      * @param array $data
+     *
      * @return InstagramPost $post
      */
     public function create(array $data)
@@ -25,7 +23,7 @@ class InstagramPostFactory implements PostFactoryInterface
         $author
             ->setName($data['caption']['from']['full_name'])
             ->setIdentifier($data['caption']['from']['id'])
-            ->setLink('https://instagram.com/' . $data['caption']['from']['username'])
+            ->setLink('https://instagram.com/'.$data['caption']['from']['username'])
             ->setUsername($data['caption']['from']['username'])
         ;
 
@@ -45,7 +43,8 @@ class InstagramPostFactory implements PostFactoryInterface
         return $instagramPost;
     }
 
-    protected function addPostMedias(&$post, $data) {
+    protected function addPostMedias(&$post, $data)
+    {
 
         // we fetch standard_resolution image
         $imageData = $data['images']['standard_resolution'];

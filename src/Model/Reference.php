@@ -11,16 +11,20 @@ class Reference implements ReferenceInterface
     public function setIndices(array $indices)
     {
         $this->indices = $indices;
+
         return $this;
     }
 
-    public function getIndices() {
+    public function getIndices()
+    {
         return $this->indices;
     }
 
-    public function setType($type) {
+    public function setType($type)
+    {
         ReferenceType::assertExists($type);
         $this->type = $type;
+
         return $this;
     }
 
@@ -32,6 +36,7 @@ class Reference implements ReferenceInterface
     public function setData(array $data)
     {
         $this->data = $data;
+
         return $this;
     }
 
@@ -50,7 +55,8 @@ class Reference implements ReferenceInterface
         return isset($this->indices[1]) ? $this->indices[1] : null;
     }
 
-    public function getLength() {
+    public function getLength()
+    {
         $start = $this->getStartIndice();
         $end = $this->getEndIndice();
 

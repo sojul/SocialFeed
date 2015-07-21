@@ -18,18 +18,18 @@ class TwitterStatusesLookupApiProvider extends AbstractProvider
         $this->postFactory = $postFactory;
     }
 
-    public function getResult(array $options = array()) {
-
+    public function getResult(array $options = array())
+    {
         $options = $this->resolveOptions($options);
 
         $response = $this->twitterApiClient
-            ->get('/1.1/statuses/lookup.json?id=' . join($options['ids'], ','));
+            ->get('/1.1/statuses/lookup.json?id='.implode($options['ids'], ','));
 
         $result = $response;
 
         $feed = new Feed();
 
-        foreach($result as $status) {
+        foreach ($result as $status) {
             $feed->addPost($this->postFactory->create($status));
         }
 
@@ -41,7 +41,8 @@ class TwitterStatusesLookupApiProvider extends AbstractProvider
         return 'twitter_status_lookup_api';
     }
 
-    protected function configureOptionResolver(OptionsResolver &$resolver) {
+    protected function configureOptionResolver(OptionsResolver &$resolver)
+    {
         $resolver->setRequired('ids');
     }
 }

@@ -12,40 +12,48 @@ class WebmozartKeyValueStoreAdapter implements StoreInterface
         $this->keyValueStore = $keyValueStore;
     }
 
-    public function set($key, FeedInterface $feed) {
+    public function set($key, FeedInterface $feed)
+    {
         return $this->keyValueStore->set($key, $feed);
     }
 
-    public function get($key) {
+    public function get($key)
+    {
         return $this->keyValueStore->get($key);
     }
 
-    public function getOrFail($key) {
+    public function getOrFail($key)
+    {
         return $this->keyValueStore->getOrFail($key);
     }
 
-    public function getMultiple(array $keys, $default = null) {
+    public function getMultiple(array $keys, $default = null)
+    {
         return $this->keyValueStore->getOrFail($key);
     }
 
-    public function getMultipleOrFail(array $keys) {
+    public function getMultipleOrFail(array $keys)
+    {
         return $this->keyValueStore->getMultipleOrFail($keys);
     }
 
-    public function remove($key) {
+    public function remove($key)
+    {
         return $this->keyValueStore->getMultipleOrFail($keys);
     }
 
-    public function exists($key) {
+    public function exists($key)
+    {
         return $this->keyValueStore->exists($key);
     }
 
-    public function clear() {
+    public function clear()
+    {
         return $this->keyValueStore->exists($key);
     }
 
-    public function keys() {
+    public function keys()
+    {
         return $this->keyValueStore->keys($key);
     }
 }
-

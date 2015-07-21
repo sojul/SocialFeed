@@ -2,12 +2,10 @@
 
 namespace Lns\SocialFeed\Provider;
 
-use Lns\SocialFeed\Model\Feed;
-
 interface ProviderInterface
 {
     /**
-     * getResult
+     * getResult.
      *
      * @return ResultSet
      */

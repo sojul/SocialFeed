@@ -7,32 +7,34 @@ use Lns\SocialFeed\Model\Reference;
 
 class FacebookMessageFormatter extends AbstractMessageFormatter
 {
-    protected function formatMessagePart($messagePart) {
+    protected function formatMessagePart($messagePart)
+    {
         $reference = $messagePart['reference'];
 
-        if(!$reference) {
+        if (!$reference) {
             return $this->autoLink($messagePart['text']);
         }
 
         $data = $reference->getData();
 
-        switch($reference->getType()) {
+        switch ($reference->getType()) {
         case ReferenceType::PAGE:
         case ReferenceType::GROUP:
         case ReferenceType::USER:
-            return $this->createLinkString('https://www.facebook.com/'. $data['id'], $messagePart['text']);
+            return $this->createLinkString('https://www.facebook.com/'.$data['id'], $messagePart['text']);
             break;
         default:
-            return null;
+            return;
             break;
         }
     }
 
-    protected function autoLink($message) {
+    protected function autoLink($message)
+    {
         $message = parent::autoLink($message);
 
-        return preg_replace_callback('/#(\w+)/u', function($matches) {
-            return $this->createLinkString('https://www.facebook.com/hashtag/' . $matches[1], $matches[0]);
+        return preg_replace_callback('/#(\w+)/u', function ($matches) {
+            return $this->createLinkString('https://www.facebook.com/hashtag/'.$matches[1], $matches[0]);
         }, $message);
     }
 }
