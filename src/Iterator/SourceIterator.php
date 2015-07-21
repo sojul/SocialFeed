@@ -38,7 +38,7 @@ class SourceIterator implements \Iterator
 
     protected function loadNextResultSet() {
         if($this->currentResultSet && !$this->currentResultSet->hasNextResultSet()) {
-            $this->currentResultSet = false;
+            $this->currentResultSet = null;
             $this->position++;
             return false;
         }
@@ -70,7 +70,7 @@ class SourceIterator implements \Iterator
 
     public function valid()
     {
-       return ($this->position == 0) || $this->currentResultSet != false;
+        return $this->currentResultSet && $this->currentResultSet->getIterator()->valid();
     }
 
     public function rewind()

@@ -3,6 +3,7 @@
 namespace Lns\SocialFeed;
 
 use Lns\SocialFeed\Model\Feed;
+use Lns\SocialFeed\Model\PostInterface;
 use Lns\SocialFeed\Model\ResultSet;
 use Lns\SocialFeed\Provider\ProviderInterface;
 use Lns\SocialFeed\Iterator\SourceIterator;
@@ -57,7 +58,7 @@ class SocialFeed implements \Iterator
         $this->position++;
     }
 
-    protected function comparePost($post1, $post2) {
+    protected function comparePost(PostInterface $post1, PostInterface $post2) {
         return $post1->getCreatedAt() < $post2->getCreatedAt();
     }
 
