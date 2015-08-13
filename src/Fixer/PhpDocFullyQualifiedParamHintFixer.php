@@ -15,6 +15,9 @@ use Symfony\CS\DocBlock\DocBlock;
 use Symfony\CS\FixerInterface;
 use Symfony\CS\Tokenizer\Tokens;
 
+/**
+ * PhpDocFullyQualifiedParamHintFixer.
+ */
 class PhpDocFullyQualifiedParamHintFixer implements FixerInterface
 {
     private $regex;
@@ -49,6 +52,13 @@ class PhpDocFullyQualifiedParamHintFixer implements FixerInterface
         return $tokens->generateCode();
     }
 
+    /**
+     * resolvePhpDocParamTypes.
+     *
+     * @param $tokens
+     * @param $useDeclarations
+     * @param $namespaceDeclarations
+     */
     private function resolvePhpDocParamTypes($tokens, $useDeclarations, $namespaceDeclarations)
     {
         foreach ($tokens->findGivenKind(T_DOC_COMMENT) as $token) {
@@ -114,6 +124,11 @@ class PhpDocFullyQualifiedParamHintFixer implements FixerInterface
         return 0;
     }
 
+    /**
+     * supports.
+     *
+     * @param SplFileInfo $file
+     */
     public function supports(\SplFileInfo $file)
     {
         return 'php' === pathinfo($file->getFilename(), PATHINFO_EXTENSION);
@@ -137,6 +152,11 @@ class PhpDocFullyQualifiedParamHintFixer implements FixerInterface
         return 'php_doc_fully_qualified_param_hint';
     }
 
+    /**
+     * getNamespaceDeclarations.
+     *
+     * @param Tokens $tokens
+     */
     private function getNamespaceDeclarations(Tokens $tokens)
     {
         $namespaces = array();
@@ -158,6 +178,12 @@ class PhpDocFullyQualifiedParamHintFixer implements FixerInterface
         return $namespaces;
     }
 
+    /**
+     * getNamespaceUseDeclarations.
+     *
+     * @param Tokens $tokens
+     * @param array  $useIndexes
+     */
     private function getNamespaceUseDeclarations(Tokens $tokens, array $useIndexes)
     {
         $uses = array();
@@ -227,6 +253,12 @@ class PhpDocFullyQualifiedParamHintFixer implements FixerInterface
         }
     }
 
+    /**
+     * generateCodeWithoutPartials.
+     *
+     * @param Tokens $tokens
+     * @param array  $partials
+     */
     private function generateCodeWithoutPartials(Tokens $tokens, array $partials)
     {
         $content = '';

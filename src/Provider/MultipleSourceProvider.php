@@ -13,10 +13,18 @@ namespace Lns\SocialFeed\Provider;
 
 use Lns\SocialFeed\SourceInterface;
 
+/**
+ * MultipleSourceProvider.
+ */
 class MultipleSourceProvider extends AbstractProvider
 {
     protected $sources = array();
 
+    /**
+     * addSource.
+     *
+     * @param SourceInterface $source
+     */
     public function addSource(SourceInterface $source)
     {
         $this->sources[] = $source;
@@ -24,6 +32,11 @@ class MultipleSourceProvider extends AbstractProvider
         return $this;
     }
 
+    /**
+     * getResult.
+     *
+     * @param array $options
+     */
     public function getResult(array $options = array())
     {
     }

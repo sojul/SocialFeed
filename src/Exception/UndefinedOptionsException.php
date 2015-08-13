@@ -13,6 +13,9 @@ namespace Lns\SocialFeed\Exception;
 
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException as BaseUndefinedOptionsException;
 
+/**
+ * UndefinedOptionsException.
+ */
 class UndefinedOptionsException extends BaseUndefinedOptionsException
 {
 }

@@ -13,11 +13,20 @@ namespace Lns\SocialFeed;
 
 use Lns\SocialFeed\Provider\ProviderInterface;
 
+/**
+ * Source.
+ */
 class Source implements SourceInterface
 {
     private $provider;
     private $options;
 
+    /**
+     * __construct.
+     *
+     * @param ProviderInterface $provider
+     * @param array             $options
+     */
     public function __construct(ProviderInterface $provider, array $options = array())
     {
         $this->provider = $provider;

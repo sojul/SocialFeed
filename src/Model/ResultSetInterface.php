@@ -13,6 +13,12 @@ namespace Lns\SocialFeed\Model;
 
 interface ResultSetInterface extends \IteratorAggregate
 {
+    /**
+     * __construct.
+     *
+     * @param FeedInterface $feed
+     * @param array         $nextResultSetOptions
+     */
     public function __construct(FeedInterface $feed, array $nextResultSetOptions = array());
     public function getNextResultSetOptions();
     public function hasNextResultSet();

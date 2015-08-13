@@ -13,10 +13,25 @@ namespace Lns\SocialFeed\Model;
 
 interface ReferenceInterface
 {
+    /**
+     * setIndices.
+     *
+     * @param array $indices
+     */
     public function setIndices(array $indices);
     public function getIndices();
+    /**
+     * setType.
+     *
+     * @param $type
+     */
     public function setType($type);
     public function getType();
+    /**
+     * setData.
+     *
+     * @param array $data
+     */
     public function setData(array $data);
     public function getData();
     public function getStartIndice();

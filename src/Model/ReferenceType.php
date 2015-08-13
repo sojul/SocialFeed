@@ -13,6 +13,9 @@ namespace Lns\SocialFeed\Model;
 
 use CommerceGuys\Enum\AbstractEnum;
 
+/**
+ * ReferenceType.
+ */
 class ReferenceType extends AbstractEnum
 {
     const URL = 'url';

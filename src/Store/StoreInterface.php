@@ -15,8 +15,19 @@ use Lns\SocialFeed\Model\FeedInterface;
 
 interface StoreInterface
 {
+    /**
+     * set.
+     *
+     * @param $key
+     * @param FeedInterface $feed
+     */
     public function set($key, FeedInterface $feed);
     public function get($key);
+    /**
+     * remove.
+     *
+     * @param $key
+     */
     public function remove($key);
     public function exists($key);
     public function clear();

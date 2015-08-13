@@ -11,6 +11,9 @@
 
 namespace Lns\SocialFeed\Model;
 
+/**
+ * ResultSet.
+ */
 class ResultSet implements ResultSetInterface
 {
     protected $nextResultSetOptions = array();

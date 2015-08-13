@@ -11,6 +11,9 @@
 
 namespace Lns\SocialFeed\Model;
 
+/**
+ * InstagramPost.
+ */
 class InstagramPost extends AbstractPost implements PostInterface
 {
     public function getType()

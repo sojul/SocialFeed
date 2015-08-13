@@ -17,6 +17,9 @@ use Lns\SocialFeed\Model\Media;
 use Lns\SocialFeed\Model\Reference;
 use Lns\SocialFeed\Model\ReferenceType;
 
+/**
+ * FacebookPostFactory.
+ */
 class FacebookPostFactory implements PostFactoryInterface
 {
     /**
@@ -62,6 +65,12 @@ class FacebookPostFactory implements PostFactoryInterface
         return $post;
     }
 
+    /**
+     * addPostReferences.
+     *
+     * @param $post
+     * @param $data
+     */
     protected function addPostReferences(&$post, $data)
     {
         $typeMap = array(

@@ -17,6 +17,9 @@ use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Model\ResultSet;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * InstagramTagProvider.
+ */
 class InstagramTagProvider extends AbstractProvider
 {
     private $client;
@@ -25,12 +28,23 @@ class InstagramTagProvider extends AbstractProvider
 
     private $tagName;
 
+    /**
+     * __construct.
+     *
+     * @param ClientInterface      $client
+     * @param PostFactoryInterface $postFactory
+     */
     public function __construct(ClientInterface $client, PostFactoryInterface $postFactory)
     {
         $this->client = $client;
         $this->postFactory = $postFactory;
     }
 
+    /**
+     * getResult.
+     *
+     * @param array $options
+     */
     public function getResult(array $options = array())
     {
         $options = $this->resolveOptions($options);
@@ -64,6 +78,11 @@ class InstagramTagProvider extends AbstractProvider
         return 'instagram';
     }
 
+    /**
+     * configureOptionResolver.
+     *
+     * @param OptionsResolver $resolver
+     */
     public function configureOptionResolver(OptionsResolver &$resolver)
     {
         $resolver->setRequired('tag_name');

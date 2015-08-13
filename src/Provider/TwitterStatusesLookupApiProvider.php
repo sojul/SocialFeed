@@ -17,16 +17,30 @@ use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Model\ResultSet;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * TwitterStatusesLookupApiProvider.
+ */
 class TwitterStatusesLookupApiProvider extends AbstractProvider
 {
     private $twitterApiClient;
 
+    /**
+     * __construct.
+     *
+     * @param ClientInterface      $twitterApiClient
+     * @param PostFactoryInterface $postFactory
+     */
     public function __construct(ClientInterface $twitterApiClient, PostFactoryInterface $postFactory)
     {
         $this->twitterApiClient = $twitterApiClient;
         $this->postFactory = $postFactory;
     }
 
+    /**
+     * getResult.
+     *
+     * @param array $options
+     */
     public function getResult(array $options = array())
     {
         $options = $this->resolveOptions($options);
@@ -50,6 +64,11 @@ class TwitterStatusesLookupApiProvider extends AbstractProvider
         return 'twitter_status_lookup_api';
     }
 
+    /**
+     * configureOptionResolver.
+     *
+     * @param OptionsResolver $resolver
+     */
     protected function configureOptionResolver(OptionsResolver &$resolver)
     {
         $resolver->setRequired('ids');

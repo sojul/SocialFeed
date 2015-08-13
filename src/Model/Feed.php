@@ -11,6 +11,9 @@
 
 namespace Lns\SocialFeed\Model;
 
+/**
+ * Feed.
+ */
 class Feed implements \IteratorAggregate, FeedInterface
 {
     protected $feedArray = array();
@@ -61,6 +64,11 @@ class Feed implements \IteratorAggregate, FeedInterface
         return new \ArrayIterator($this->feedArray);
     }
 
+    /**
+     * merge.
+     *
+     * @param FeedInterface $feed
+     */
     public function merge(FeedInterface $feed)
     {
         foreach ($feed as $post) {

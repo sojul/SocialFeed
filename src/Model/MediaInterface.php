@@ -16,9 +16,24 @@ interface MediaInterface
     public function getUrl();
     public function getWidth();
     public function getHeight();
+    /**
+     * setUrl.
+     *
+     * @param $url
+     */
     public function setUrl($url);
     public function setWidth($width);
+    /**
+     * setHeight.
+     *
+     * @param $height
+     */
     public function setHeight($height);
     public function getLink();
+    /**
+     * setLink.
+     *
+     * @param $link
+     */
     public function setLink($link);
 }

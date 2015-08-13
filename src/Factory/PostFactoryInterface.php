@@ -13,5 +13,10 @@ namespace Lns\SocialFeed\Factory;
 
 interface PostFactoryInterface
 {
+    /**
+     * create.
+     *
+     * @param array $data
+     */
     public function create(array $data);
 }

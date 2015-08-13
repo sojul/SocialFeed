@@ -13,8 +13,16 @@ namespace Lns\SocialFeed\Formatter;
 
 use Lns\SocialFeed\Model\ReferenceType;
 
+/**
+ * TweetMessageFormatter.
+ */
 class TweetMessageFormatter extends AbstractMessageFormatter
 {
+    /**
+     * formatMessagePart.
+     *
+     * @param $messagePart
+     */
     protected function formatMessagePart($messagePart)
     {
         $reference = $messagePart['reference'];

@@ -11,6 +11,9 @@
 
 namespace Lns\SocialFeed\Model;
 
+/**
+ * Author.
+ */
 class Author implements AuthorInterface
 {
     protected $identifier;
@@ -25,6 +28,11 @@ class Author implements AuthorInterface
         return $this->identifier;
     }
 
+    /**
+     * setIdentifier.
+     *
+     * @param $identifier
+     */
     public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;
@@ -37,6 +45,11 @@ class Author implements AuthorInterface
         return $this->name;
     }
 
+    /**
+     * setName.
+     *
+     * @param $name
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -49,6 +62,11 @@ class Author implements AuthorInterface
         return $this->username;
     }
 
+    /**
+     * setUsername.
+     *
+     * @param $username
+     */
     public function setUsername($username)
     {
         $this->username = $username;
@@ -61,6 +79,11 @@ class Author implements AuthorInterface
         return $this->profilePicture;
     }
 
+    /**
+     * setProfilePicture.
+     *
+     * @param MediaInterface $profilePicture
+     */
     public function setProfilePicture(MediaInterface $profilePicture)
     {
         $this->profilePicture = $profilePicture;
@@ -73,6 +96,11 @@ class Author implements AuthorInterface
         return $this->link;
     }
 
+    /**
+     * setLink.
+     *
+     * @param $link
+     */
     public function setLink($link)
     {
         $this->link = $link;
@@ -80,11 +108,22 @@ class Author implements AuthorInterface
         return $this;
     }
 
+    /**
+     * getProperty.
+     *
+     * @param $propertyKey
+     */
     public function getProperty($propertyKey)
     {
         return isset($this->properties[$propertyKey]) ? $this->properties[$propertyKey] : null;
     }
 
+    /**
+     * setProperty.
+     *
+     * @param $propertyKey
+     * @param $propertyValue
+     */
     public function setProperty($propertyKey, $propertyValue)
     {
         $this->properties[$propertyKey] = $propertyValue;

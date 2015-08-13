@@ -16,18 +16,33 @@ use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use Lns\SocialFeed\Exception\RequestException;
 
+/**
+ * TwitterApiClient.
+ */
 class TwitterApiClient implements ClientInterface
 {
     private $client;
     private $consumerKey;
     private $consumerSecret;
 
+    /**
+     * __construct.
+     *
+     * @param $consumerKey
+     * @param $consumerSecret
+     */
     public function __construct($consumerKey, $consumerSecret)
     {
         $this->consumerKey = $consumerKey;
         $this->consumerSecret = $consumerSecret;
     }
 
+    /**
+     * get.
+     *
+     * @param $path
+     * @param array $options
+     */
     public function get($path, array $options = array())
     {
         $client = $this->createGuzzleClient($this->consumerKey, $this->consumerSecret);
@@ -57,6 +72,12 @@ class TwitterApiClient implements ClientInterface
         }
     }
 
+    /**
+     * createGuzzleClient.
+     *
+     * @param $consumerKey
+     * @param $consumerSecret
+     */
     protected function createGuzzleClient($consumerKey, $consumerSecret)
     {
         $client = new Client(array(

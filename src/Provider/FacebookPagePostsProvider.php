@@ -17,17 +17,31 @@ use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Model\ResultSet;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * FacebookPagePostsProvider.
+ */
 class FacebookPagePostsProvider extends AbstractProvider
 {
     private $client;
     private $postFactory;
 
+    /**
+     * __construct.
+     *
+     * @param ClientInterface      $client
+     * @param PostFactoryInterface $postFactory
+     */
     public function __construct(ClientInterface $client, PostFactoryInterface $postFactory)
     {
         $this->client = $client;
         $this->postFactory = $postFactory;
     }
 
+    /**
+     * getResult.
+     *
+     * @param array $options
+     */
     public function getResult(array $options = array())
     {
         $options = $this->resolveOptions($options);
@@ -87,6 +101,11 @@ class FacebookPagePostsProvider extends AbstractProvider
         return 'facebook_page';
     }
 
+    /**
+     * configureOptionResolver.
+     *
+     * @param OptionsResolver $resolver
+     */
     protected function configureOptionResolver(OptionsResolver &$resolver)
     {
         $resolver->setRequired('page_id');
@@ -98,6 +117,11 @@ class FacebookPagePostsProvider extends AbstractProvider
         ));
     }
 
+    /**
+     * generateFieldsQueryString.
+     *
+     * @param $fields
+     */
     private function generateFieldsQueryString($fields)
     {
         $parts = array();

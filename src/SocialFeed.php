@@ -14,12 +14,20 @@ namespace Lns\SocialFeed;
 use Lns\SocialFeed\Iterator\SourceIterator;
 use Lns\SocialFeed\Model\PostInterface;
 
+/**
+ * SocialFeed.
+ */
 class SocialFeed implements \Iterator
 {
     protected $sourceIterators = array();
     protected $current = null;
     protected $position = 0;
 
+    /**
+     * addSource.
+     *
+     * @param SourceInterface $source
+     */
     public function addSource(SourceInterface $source)
     {
         $this->addSourceIterator(new SourceIterator($source));
@@ -27,6 +35,11 @@ class SocialFeed implements \Iterator
         return $this;
     }
 
+    /**
+     * addSourceIterator.
+     *
+     * @param SourceIterator $sourceIterator
+     */
     public function addSourceIterator(SourceIterator $sourceIterator)
     {
         $this->sourceIterators[] = $sourceIterator;
@@ -66,6 +79,12 @@ class SocialFeed implements \Iterator
         ++$this->position;
     }
 
+    /**
+     * comparePost.
+     *
+     * @param PostInterface $post1
+     * @param PostInterface $post2
+     */
     protected function comparePost(PostInterface $post1, PostInterface $post2)
     {
         return $post1->getCreatedAt() < $post2->getCreatedAt();

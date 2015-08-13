@@ -11,6 +11,9 @@
 
 namespace Lns\SocialFeed\Model;
 
+/**
+ * Tweet.
+ */
 class Tweet extends AbstractPost implements PostInterface
 {
     public function getType()

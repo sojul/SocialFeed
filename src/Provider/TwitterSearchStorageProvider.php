@@ -11,6 +11,9 @@
 
 namespace Lns\SocialFeed\Provider;
 
+/**
+ * TwitterSearchStorageProvider.
+ */
 class TwitterSearchStorageProvider
 {
 }

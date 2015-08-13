@@ -17,16 +17,30 @@ use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Model\ResultSet;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * TwitterSearchApiProvider.
+ */
 class TwitterSearchApiProvider extends AbstractProvider
 {
     private $client;
 
+    /**
+     * __construct.
+     *
+     * @param ClientInterface      $client
+     * @param PostFactoryInterface $postFactory
+     */
     public function __construct(ClientInterface $client, PostFactoryInterface $postFactory)
     {
         $this->client = $client;
         $this->postFactory = $postFactory;
     }
 
+    /**
+     * getResult.
+     *
+     * @param array $options
+     */
     public function getResult(array $options = array())
     {
         $options = $this->resolveOptions($options);
@@ -62,6 +76,11 @@ class TwitterSearchApiProvider extends AbstractProvider
         return 'twitter_search_api';
     }
 
+    /**
+     * configureOptionResolver.
+     *
+     * @param OptionsResolver $resolver
+     */
     protected function configureOptionResolver(OptionsResolver &$resolver)
     {
         $resolver->setRequired('query');

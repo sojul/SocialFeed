@@ -11,6 +11,9 @@
 
 namespace Lns\SocialFeed\Model;
 
+/**
+ * AbstractPost.
+ */
 abstract class AbstractPost implements PostInterface
 {
     protected $identifier;
@@ -27,6 +30,11 @@ abstract class AbstractPost implements PostInterface
         return $this->identifier;
     }
 
+    /**
+     * setIdentifier.
+     *
+     * @param $identifier
+     */
     public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;
@@ -39,6 +47,11 @@ abstract class AbstractPost implements PostInterface
         return $this->message;
     }
 
+    /**
+     * setMessage.
+     *
+     * @param $message
+     */
     public function setMessage($message)
     {
         $this->message = $message;
@@ -51,6 +64,11 @@ abstract class AbstractPost implements PostInterface
         return $this->author;
     }
 
+    /**
+     * setAuthor.
+     *
+     * @param AuthorInterface $author
+     */
     public function setAuthor(AuthorInterface $author)
     {
         $this->author = $author;
@@ -63,6 +81,11 @@ abstract class AbstractPost implements PostInterface
         return $this->createdAt;
     }
 
+    /**
+     * setCreatedAt.
+     *
+     * @param DateTime $createdAt
+     */
     public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
@@ -70,6 +93,11 @@ abstract class AbstractPost implements PostInterface
         return $this;
     }
 
+    /**
+     * addMedia.
+     *
+     * @param MediaInterface $media
+     */
     public function addMedia(MediaInterface $media)
     {
         $this->medias[] = $media;
@@ -82,6 +110,11 @@ abstract class AbstractPost implements PostInterface
         return $this->medias;
     }
 
+    /**
+     * addReference.
+     *
+     * @param ReferenceInterface $reference
+     */
     public function addReference(ReferenceInterface $reference)
     {
         $this->references[] = $reference;

@@ -11,8 +11,17 @@
 
 namespace Lns\SocialFeed\Formatter;
 
+/**
+ * AbstractMessageFormatter.
+ */
 abstract class AbstractMessageFormatter implements MessageFormatterInterface
 {
+    /**
+     * format.
+     *
+     * @param $message
+     * @param array $references
+     */
     public function format($message, array $references = array())
     {
         // sort references by start indice
@@ -38,6 +47,11 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
         return implode($formattedMessageParts);
     }
 
+    /**
+     * formatMessagePart.
+     *
+     * @param $messagePart
+     */
     protected function formatMessagePart($messagePart)
     {
         $reference = $messagePart['reference'];
@@ -47,6 +61,13 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
         }
     }
 
+    /**
+     * buildMessageParts.
+     *
+     * @param $message
+     * @param $references
+     * @param $offset
+     */
     protected function buildMessageParts($message, $references, $offset = 0)
     {
         $messageParts = array();
@@ -82,6 +103,14 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
         return $messageParts;
     }
 
+    /**
+     * buildMessagePart.
+     *
+     * @param $message
+     * @param $start
+     * @param $end
+     * @param $reference
+     */
     protected function buildMessagePart($message, $start, $end, $reference = null)
     {
         if ($start === $end) {
@@ -94,11 +123,23 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
         );
     }
 
+    /**
+     * createLinkString.
+     *
+     * @param $href
+     * @param $display
+     * @param $target
+     */
     protected function createLinkString($href, $display, $target = '_blank')
     {
         return sprintf('<a href="%s" target="%s">%s</a>', $href, $target, $display);
     }
 
+    /**
+     * autoLink.
+     *
+     * @param $message
+     */
     protected function autoLink($message)
     {
         $regex = '#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#';

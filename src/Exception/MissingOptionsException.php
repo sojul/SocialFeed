@@ -13,6 +13,9 @@ namespace Lns\SocialFeed\Exception;
 
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException as BaseMissingOptionsException;
 
+/**
+ * MissingOptionsException.
+ */
 class MissingOptionsException extends BaseMissingOptionsException
 {
 }

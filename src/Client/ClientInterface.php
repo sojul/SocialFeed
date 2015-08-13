@@ -13,5 +13,11 @@ namespace Lns\SocialFeed\Client;
 
 interface ClientInterface
 {
+    /**
+     * get.
+     *
+     * @param $path
+     * @param array $options
+     */
     public function get($path, array $options = array());
 }

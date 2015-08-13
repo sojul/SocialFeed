@@ -15,18 +15,33 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 use Lns\SocialFeed\Exception\RequestException;
 
+/**
+ * FacebookApiClient.
+ */
 class FacebookApiClient implements ClientInterface
 {
     private $client;
     private $clientKey;
     private $clientSecret;
 
+    /**
+     * __construct.
+     *
+     * @param $clientKey
+     * @param $clientSecret
+     */
     public function __construct($clientKey, $clientSecret)
     {
         $this->clientKey = $clientKey;
         $this->clientSecret = $clientSecret;
     }
 
+    /**
+     * get.
+     *
+     * @param $path
+     * @param array $options
+     */
     public function get($path, array $options = array())
     {
         $client = $this->createGuzzleClient($this->clientKey, $this->clientSecret);
@@ -45,6 +60,12 @@ class FacebookApiClient implements ClientInterface
         }
     }
 
+    /**
+     * createGuzzleClient.
+     *
+     * @param $clientKey
+     * @param $clientSecret
+     */
     protected function createGuzzleClient($clientKey, $clientSecret)
     {
         $client = new Client(array(

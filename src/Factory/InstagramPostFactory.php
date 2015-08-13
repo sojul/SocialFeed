@@ -15,6 +15,9 @@ use Lns\SocialFeed\Model\Author;
 use Lns\SocialFeed\Model\InstagramPost;
 use Lns\SocialFeed\Model\Media;
 
+/**
+ * InstagramPostFactory.
+ */
 class InstagramPostFactory implements PostFactoryInterface
 {
     /**
@@ -52,6 +55,12 @@ class InstagramPostFactory implements PostFactoryInterface
         return $instagramPost;
     }
 
+    /**
+     * addPostMedias.
+     *
+     * @param $post
+     * @param $data
+     */
     protected function addPostMedias(&$post, $data)
     {
 

@@ -11,6 +11,9 @@
 
 namespace Lns\SocialFeed\Model;
 
+/**
+ * FacebookPost.
+ */
 class FacebookPost extends AbstractPost implements PostInterface
 {
     public function getType()

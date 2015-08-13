@@ -11,12 +11,20 @@
 
 namespace Lns\SocialFeed\Model;
 
+/**
+ * Reference.
+ */
 class Reference implements ReferenceInterface
 {
     protected $indices = array();
     protected $type;
     protected $data = array();
 
+    /**
+     * setIndices.
+     *
+     * @param array $indices
+     */
     public function setIndices(array $indices)
     {
         $this->indices = $indices;
@@ -29,6 +37,11 @@ class Reference implements ReferenceInterface
         return $this->indices;
     }
 
+    /**
+     * setType.
+     *
+     * @param $type
+     */
     public function setType($type)
     {
         ReferenceType::assertExists($type);
@@ -42,6 +55,11 @@ class Reference implements ReferenceInterface
         return $this->type;
     }
 
+    /**
+     * setData.
+     *
+     * @param array $data
+     */
     public function setData(array $data)
     {
         $this->data = $data;

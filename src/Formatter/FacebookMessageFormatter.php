@@ -14,8 +14,16 @@ namespace Lns\SocialFeed\Formatter;
 use Lns\SocialFeed\Model\Reference;
 use Lns\SocialFeed\Model\ReferenceType;
 
+/**
+ * FacebookMessageFormatter.
+ */
 class FacebookMessageFormatter extends AbstractMessageFormatter
 {
+    /**
+     * formatMessagePart.
+     *
+     * @param $messagePart
+     */
     protected function formatMessagePart($messagePart)
     {
         $reference = $messagePart['reference'];
@@ -38,6 +46,11 @@ class FacebookMessageFormatter extends AbstractMessageFormatter
         }
     }
 
+    /**
+     * autoLink.
+     *
+     * @param $message
+     */
     protected function autoLink($message)
     {
         $message = parent::autoLink($message);

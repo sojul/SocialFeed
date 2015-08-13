@@ -17,6 +17,9 @@ use Lns\SocialFeed\Model\Reference;
 use Lns\SocialFeed\Model\ReferenceType;
 use Lns\SocialFeed\Model\Tweet;
 
+/**
+ * TweetFactory.
+ */
 class TweetFactory implements PostFactoryInterface
 {
     /**
@@ -52,6 +55,12 @@ class TweetFactory implements PostFactoryInterface
         return $tweet;
     }
 
+    /**
+     * addTweetMedias.
+     *
+     * @param $tweet
+     * @param $data
+     */
     protected function addTweetMedias(&$tweet, $data)
     {
         if (!isset($data['entities']['media'])) {
@@ -66,6 +75,12 @@ class TweetFactory implements PostFactoryInterface
         }
     }
 
+    /**
+     * addTweetReferences.
+     *
+     * @param $tweet
+     * @param $data
+     */
     protected function addTweetReferences(&$tweet, $data)
     {
         $typeMap = array(

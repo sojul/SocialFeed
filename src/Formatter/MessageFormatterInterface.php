@@ -13,5 +13,11 @@ namespace Lns\SocialFeed\Formatter;
 
 interface MessageFormatterInterface
 {
+    /**
+     * format.
+     *
+     * @param $message
+     * @param array $references
+     */
     public function format($message, array $references = array());
 }

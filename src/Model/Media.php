@@ -11,6 +11,9 @@
 
 namespace Lns\SocialFeed\Model;
 
+/**
+ * Media.
+ */
 class Media implements MediaInterface
 {
     protected $url;
@@ -23,6 +26,11 @@ class Media implements MediaInterface
         return $this->url;
     }
 
+    /**
+     * setUrl.
+     *
+     * @param $url
+     */
     public function setUrl($url)
     {
         $this->url = $url;
@@ -35,6 +43,11 @@ class Media implements MediaInterface
         return $this->width;
     }
 
+    /**
+     * setWidth.
+     *
+     * @param $width
+     */
     public function setWidth($width)
     {
         $this->width = $width;
@@ -47,6 +60,11 @@ class Media implements MediaInterface
         return $this->height;
     }
 
+    /**
+     * setHeight.
+     *
+     * @param $height
+     */
     public function setHeight($height)
     {
         $this->height = $height;
@@ -59,6 +77,11 @@ class Media implements MediaInterface
         return $this->link;
     }
 
+    /**
+     * setLink.
+     *
+     * @param $link
+     */
     public function setLink($link)
     {
         $this->link = $link;

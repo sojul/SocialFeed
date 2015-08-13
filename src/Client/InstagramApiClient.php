@@ -13,17 +13,31 @@ namespace Lns\SocialFeed\Client;
 
 use GuzzleHttp\Client;
 
+/**
+ * InstagramApiClient.
+ */
 class InstagramApiClient implements ClientInterface
 {
     private $clientId;
     private $clientSecret;
 
+    /**
+     * __construct.
+     *
+     * @param $clientId
+     * @param $clientSecret
+     */
     public function __construct($clientId, $clientSecret)
     {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
     }
 
+    /**
+     * createGuzzleClient.
+     *
+     * @param $clientId
+     */
     protected function createGuzzleClient($clientId)
     {
         $client = new Client(array(
@@ -38,6 +52,12 @@ class InstagramApiClient implements ClientInterface
         return $client;
     }
 
+    /**
+     * get.
+     *
+     * @param $path
+     * @param array $options
+     */
     public function get($path, array $options = array())
     {
         $client = $this->createGuzzleClient($this->clientId);

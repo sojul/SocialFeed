@@ -11,8 +11,16 @@
 
 namespace Lns\SocialFeed\Formatter;
 
+/**
+ * InstagramMessageFormatter.
+ */
 class InstagramMessageFormatter extends AbstractMessageFormatter
 {
+    /**
+     * autoLink.
+     *
+     * @param $message
+     */
     protected function autoLink($message)
     {
         $message = parent::autoLink($message);

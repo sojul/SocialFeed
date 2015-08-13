@@ -15,8 +15,16 @@ use Lns\SocialFeed\Exception as SocialFeedException;
 use Symfony\Component\OptionsResolver\Exception as OptionsResolverException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * AbstractProvider.
+ */
 abstract class AbstractProvider implements ProviderInterface
 {
+    /**
+     * resolveOptions.
+     *
+     * @param $options
+     */
     protected function resolveOptions($options)
     {
         $resolver = new OptionsResolver();
@@ -30,10 +38,20 @@ abstract class AbstractProvider implements ProviderInterface
         }
     }
 
+    /**
+     * configureOptionResolver.
+     *
+     * @param OptionsResolver $resolver
+     */
     protected function configureOptionResolver(OptionsResolver &$resolver)
     {
     }
 
+    /**
+     * extractUrlParameters.
+     *
+     * @param $url
+     */
     protected function extractUrlParameters($url)
     {
         $query = parse_url($url, PHP_URL_QUERY);

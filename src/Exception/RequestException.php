@@ -11,6 +11,9 @@
 
 namespace Lns\SocialFeed\Exception;
 
+/**
+ * RequestException.
+ */
 class RequestException extends \RuntimeException
 {
 }
