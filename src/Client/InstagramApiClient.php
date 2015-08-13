@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Social Feed Util.
+ *
+ * (c) LaNetscouade <contact@lanetscouade.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Lns\SocialFeed\Client;
 
 use GuzzleHttp\Client;
@@ -17,14 +26,14 @@ class InstagramApiClient implements ClientInterface
 
     protected function createGuzzleClient($clientId)
     {
-        $client = new Client([
+        $client = new Client(array(
             'base_url' => 'https://api.instagram.com/',
-            'defaults' => [
-                'query' => [
+            'defaults' => array(
+                'query' => array(
                     'client_id' => $clientId,
-                ],
-            ],
-        ]);
+                ),
+            ),
+        ));
 
         return $client;
     }

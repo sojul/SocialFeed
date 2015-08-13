@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * This file is part of the Social Feed Util.
+ *
+ * (c) LaNetscouade <contact@lanetscouade.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Lns\SocialFeed;
 
-use Lns\SocialFeed\Model\PostInterface;
 use Lns\SocialFeed\Iterator\SourceIterator;
+use Lns\SocialFeed\Model\PostInterface;
 
 class SocialFeed implements \Iterator
 {
@@ -39,7 +48,7 @@ class SocialFeed implements \Iterator
         foreach ($this->sourceIterators as $sourceIterator) {
             if (
                 !$sourceIterator->valid() ||
-                $mostRecentPost != null && $this->comparePost($sourceIterator->current(), $mostRecentPost)
+                $mostRecentPost !== null && $this->comparePost($sourceIterator->current(), $mostRecentPost)
             ) {
                 continue;
             }
@@ -49,7 +58,7 @@ class SocialFeed implements \Iterator
         }
 
         // move the mostRecentPostIterator to the next element
-        if ($mostRecentPostIterator != null) {
+        if ($mostRecentPostIterator !== null) {
             $mostRecentPostIterator->next();
         }
 
@@ -64,7 +73,7 @@ class SocialFeed implements \Iterator
 
     public function valid()
     {
-        return $this->current != null;
+        return $this->current !== null;
     }
 
     public function key()

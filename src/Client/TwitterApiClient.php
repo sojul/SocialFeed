@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is part of the Social Feed Util.
+ *
+ * (c) LaNetscouade <contact@lanetscouade.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Lns\SocialFeed\Client;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
+use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use Lns\SocialFeed\Exception\RequestException;
 
 class TwitterApiClient implements ClientInterface
@@ -50,15 +59,15 @@ class TwitterApiClient implements ClientInterface
 
     protected function createGuzzleClient($consumerKey, $consumerSecret)
     {
-        $client = new Client([
+        $client = new Client(array(
             'base_url' => 'https://api.twitter.com/',
-            'defaults' => ['auth' => 'oauth'],
-        ]);
+            'defaults' => array('auth' => 'oauth'),
+        ));
 
-        $oauth = new Oauth1([
+        $oauth = new Oauth1(array(
             'consumer_key' => $consumerKey,
             'consumer_secret' => $consumerSecret,
-        ]);
+        ));
 
         $client->getEmitter()->attach($oauth);
 

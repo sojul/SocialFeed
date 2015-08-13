@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of the Social Feed Util.
+ *
+ * (c) LaNetscouade <contact@lanetscouade.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Lns\SocialFeed\Factory;
 
 use Lns\SocialFeed\Model\Author;
-use Lns\SocialFeed\Model\Tweet;
 use Lns\SocialFeed\Model\Media;
 use Lns\SocialFeed\Model\Reference;
 use Lns\SocialFeed\Model\ReferenceType;
+use Lns\SocialFeed\Model\Tweet;
 
 class TweetFactory implements PostFactoryInterface
 {

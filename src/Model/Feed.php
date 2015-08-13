@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Social Feed Util.
+ *
+ * (c) LaNetscouade <contact@lanetscouade.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Lns\SocialFeed\Model;
 
 class Feed implements \IteratorAggregate, FeedInterface
@@ -41,11 +50,11 @@ class Feed implements \IteratorAggregate, FeedInterface
      */
     public function contains(PostInterface $item)
     {
-        return in_array($item->getUniqueIdentifier(), array_keys($this->feedArray));
+        return in_array($item->getUniqueIdentifier(), array_keys($this->feedArray), true);
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function getIterator()
     {

@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * This file is part of the Social Feed Util.
+ *
+ * (c) LaNetscouade <contact@lanetscouade.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Lns\SocialFeed\Store;
 
-use Webmozart\KeyValueStore\Api\KeyValueStore;
 use Lns\SocialFeed\Model\FeedInterface;
+use Webmozart\KeyValueStore\Api\KeyValueStore;
 
 class WebmozartKeyValueStoreAdapter implements StoreInterface
 {

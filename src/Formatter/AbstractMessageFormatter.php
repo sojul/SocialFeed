@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Social Feed Util.
+ *
+ * (c) LaNetscouade <contact@lanetscouade.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Lns\SocialFeed\Formatter;
 
 abstract class AbstractMessageFormatter implements MessageFormatterInterface
@@ -16,7 +25,7 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
         $messageParts = $this->buildMessageParts($message, $references);
 
         // build message
-        $formattedMessageParts = [];
+        $formattedMessageParts = array();
 
         foreach ($messageParts as $messagePart) {
             if (is_null($messagePart)) {
@@ -40,15 +49,15 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
 
     protected function buildMessageParts($message, $references, $offset = 0)
     {
-        $messageParts = [];
+        $messageParts = array();
 
         // get first reference
         $reference = array_shift($references);
 
         if (!$reference) {
-            return [
+            return array(
                 $this->buildMessagePart($message, 0, mb_strlen($message)),
-            ];
+            );
         }
 
         $messageParts[] = $this->buildMessagePart(
@@ -75,7 +84,7 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
 
     protected function buildMessagePart($message, $start, $end, $reference = null)
     {
-        if ($start == $end) {
+        if ($start === $end) {
             return;
         }
 

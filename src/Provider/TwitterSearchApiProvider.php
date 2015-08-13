@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the Social Feed Util.
+ *
+ * (c) LaNetscouade <contact@lanetscouade.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Lns\SocialFeed\Provider;
 
-use Lns\SocialFeed\Model\Feed;
-use Lns\SocialFeed\Model\ResultSet;
 use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
+use Lns\SocialFeed\Model\Feed;
+use Lns\SocialFeed\Model\ResultSet;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TwitterSearchApiProvider extends AbstractProvider
@@ -38,7 +47,6 @@ class TwitterSearchApiProvider extends AbstractProvider
         $nextResultOptions = array();
 
         if (isset($result['search_metadata'])) {
-
             $parameters = $this->extractUrlParameters($result['search_metadata']['next_results']);
 
             $nextResultOptions = array(

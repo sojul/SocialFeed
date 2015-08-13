@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * This file is part of the Social Feed Util.
+ *
+ * (c) LaNetscouade <contact@lanetscouade.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Lns\SocialFeed\Factory;
 
-use Lns\SocialFeed\Model\FacebookPost;
 use Lns\SocialFeed\Model\Author;
+use Lns\SocialFeed\Model\FacebookPost;
 use Lns\SocialFeed\Model\Media;
 use Lns\SocialFeed\Model\Reference;
 use Lns\SocialFeed\Model\ReferenceType;
@@ -70,7 +79,7 @@ class FacebookPostFactory implements PostFactoryInterface
             foreach ($messageTagGroup as $messageTag) {
                 $reference = new Reference();
                 $reference
-                    ->setIndices([$messageTag['offset'], $messageTag['offset'] + $messageTag['length']])
+                    ->setIndices(array($messageTag['offset'], $messageTag['offset'] + $messageTag['length']))
                     ->setType($typeMap[$messageTag['type']])
                     ->setData($messageTag);
 
