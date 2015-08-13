@@ -28,7 +28,13 @@ class FeedSpec extends ObjectBehavior
         $this->sort()->shouldReturn($this);
     }
 
-    function it_should_be_possible_to_add_a_post_to_feed(PostInterface $post1, PostInterface $post2)
+    /**
+     * it_should_be_possible_to_add_a_post_to_feed
+     *
+     * @param Lns\SocialFeed\Model\PostInterface $post1
+     * @param Lns\SocialFeed\Model\PostInterface $post2
+     */
+    function it_should_be_possible_to_add_a_post_to_feed($post1, $post2)
     {
         $post1->getUniqueIdentifier()->willReturn('id1');
         $post2->getUniqueIdentifier()->willReturn('id2');
@@ -42,7 +48,12 @@ class FeedSpec extends ObjectBehavior
         $iterator = $this->getIterator();
     }
 
-    function it_can_merge_with_another_feed(FeedInterface $otherFeed) {
+    /**
+     * it_can_merge_with_another_feed
+     *
+     * @param Lns\SocialFeed\Model\FeedInterface $otherFeed
+     */
+    function it_can_merge_with_another_feed($otherFeed) {
 
         $this->merge($otherFeed)->shouldHaveType('Lns\SocialFeed\Model\FeedInterface');
     }

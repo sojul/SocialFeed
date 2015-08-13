@@ -19,7 +19,12 @@ class MultipleSourceProviderSpec extends ObjectBehavior
         $this->shouldHaveType('Lns\SocialFeed\Provider\ProviderInterface');
     }
 
-    function it_should_accept_new_source(SourceInterface $source) {
+    /**
+     * it_should_accept_new_source
+     *
+     * @param Lns\SocialFeed\SourceInterface $source
+     */
+    function it_should_accept_new_source($source) {
         $this->addSource($source)->shouldReturn($this);
     }
 

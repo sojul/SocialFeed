@@ -13,7 +13,12 @@ class SourceIteratorSpec extends ObjectBehavior
 {
     protected $source;
 
-    function let(SourceInterface $source) {
+    /**
+     * let
+     *
+     * @param Lns\SocialFeed\SourceInterface $source
+     */
+    function let($source) {
         $this->source = $source;
         $this->beConstructedWith($this->source);
     }
@@ -28,15 +33,27 @@ class SourceIteratorSpec extends ObjectBehavior
         $this->shouldHaveType('\Iterator');
     }
 
+    /**
+     * it_should_iterate_over_source_result_sets
+     *
+     * @param Lns\SocialFeed\Provider\ProviderInterface $provider
+     * @param Lns\SocialFeed\Model\ResultSetInterface $resultSet1
+     * @param \Iterator $resultSet1Iterator
+     * @param \Iterator $resultSet2Iterator
+     * @param Lns\SocialFeed\Model\ResultSetInterface $resultSet2
+     * @param Lns\SocialFeed\Model\PostInterface $post1
+     * @param Lns\SocialFeed\Model\PostInterface $post2
+     * @param Lns\SocialFeed\Model\PostInterface $post3
+     */
     function it_should_iterate_over_source_result_sets(
-        ProviderInterface $provider,
-        ResultSetInterface $resultSet1,
-        \Iterator $resultSet1Iterator,
-        \Iterator $resultSet2Iterator,
-        ResultSetInterface $resultSet2,
-        PostInterface $post1,
-        PostInterface $post2,
-        PostInterface $post3
+        $provider,
+        $resultSet1,
+        $resultSet1Iterator,
+        $resultSet2Iterator,
+        $resultSet2,
+        $post1,
+        $post2,
+        $post3
     )
     {
 

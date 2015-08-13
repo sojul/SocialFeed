@@ -13,7 +13,13 @@ class TwitterStatusesLookupApiProviderSpec extends ObjectBehavior
     protected $client;
     protected $factory;
 
-    function let(ClientInterface $client, PostFactoryInterface $factory) {
+    /**
+     * let
+     *
+     * @param Lns\SocialFeed\Client\ClientInterface $client
+     * @param Lns\SocialFeed\Factory\PostFactoryInterface $factory
+     */
+    function let($client, $factory) {
         $this->client = $client;
         $this->factory = $factory;
         $this->beConstructedWith($client, $factory);
@@ -29,7 +35,13 @@ class TwitterStatusesLookupApiProviderSpec extends ObjectBehavior
         $this->shouldImplement('Lns\SocialFeed\Provider\ProviderInterface');
     }
 
-    function it_should_return_feed(PostInterface $post1, PostInterface $post2) {
+    /**
+     * it_should_return_feed
+     *
+     * @param Lns\SocialFeed\Model\PostInterface $post1
+     * @param Lns\SocialFeed\Model\PostInterface $post2
+     */
+    function it_should_return_feed($post1, $post2) {
 
         $postData1 = ['foo' => 'bar'];
         $postData2 = ['foo' => 'baz'];

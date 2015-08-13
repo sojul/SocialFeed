@@ -8,7 +8,12 @@ use Webmozart\KeyValueStore\Api\KeyValueStore;
 
 class WebmozartKeyValueStoreAdapterSpec extends ObjectBehavior
 {
-    function let(KeyValueStore $keyValueStore) {
+    /**
+     * let
+     *
+     * @param Webmozart\KeyValueStore\Api\KeyValueStore $keyValueStore
+     */
+    function let($keyValueStore) {
         $this->beConstructedWith($keyValueStore);
     }
 

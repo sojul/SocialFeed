@@ -8,7 +8,12 @@ use Lns\SocialFeed\Provider\ProviderInterface;
 
 class SourceSpec extends ObjectBehavior
 {
-    function let(ProviderInterface $provider) {
+    /**
+     * let
+     *
+     * @param Lns\SocialFeed\Provider\ProviderInterface $provider
+     */
+    function let($provider) {
         $this->beConstructedWith($provider, []);
     }
 

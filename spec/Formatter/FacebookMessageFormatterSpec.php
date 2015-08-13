@@ -18,7 +18,13 @@ class FacebookMessageFormatterSpec extends ObjectBehavior
         $this->shouldImplement('Lns\SocialFeed\Formatter\MessageFormatterInterface');
     }
 
-    function it_should_replace_input_message_references_by_reference_html_link(ReferenceInterface $reference1, ReferenceInterface $reference2) {
+    /**
+     * it_should_replace_input_message_references_by_reference_html_link
+     *
+     * @param Lns\SocialFeed\Model\ReferenceInterface $reference1
+     * @param Lns\SocialFeed\Model\ReferenceInterface $reference2
+     */
+    function it_should_replace_input_message_references_by_reference_html_link($reference1, $reference2) {
         $reference1->getStartIndice()->willReturn(5);
         $reference1->getEndIndice()->willReturn(10);
         $reference1->getType()->willReturn(ReferenceType::USER);

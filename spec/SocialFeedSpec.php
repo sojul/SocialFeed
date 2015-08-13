@@ -21,16 +21,29 @@ class SocialFeedSpec extends ObjectBehavior
         $this->shouldImplement('\Iterator');
     }
 
+    /**
+     * it_should_iterate_over_source_posts
+     *
+     * @param Lns\SocialFeed\Iterator\SourceIterator $sourceIterator1
+     * @param Lns\SocialFeed\Iterator\SourceIterator $sourceIterator2
+     * @param Lns\SocialFeed\Iterator\SourceIterator $sourceIterator3
+     * @param Lns\SocialFeed\Model\PostInterface $post1
+     * @param Lns\SocialFeed\Model\PostInterface $post2
+     * @param Lns\SocialFeed\Model\PostInterface $post3
+     * @param Lns\SocialFeed\Model\PostInterface $post4
+     * @param Lns\SocialFeed\Model\PostInterface $post5
+     * @param Lns\SocialFeed\Model\PostInterface $post6
+     */
     function it_should_iterate_over_source_posts(
-        SourceIterator $sourceIterator1,
-        SourceIterator $sourceIterator2,
-        SourceIterator $sourceIterator3,
-        PostInterface $post1,
-        PostInterface $post2,
-        PostInterface $post3,
-        PostInterface $post4,
-        PostInterface $post5,
-        PostInterface $post6
+        $sourceIterator1,
+        $sourceIterator2,
+        $sourceIterator3,
+        $post1,
+        $post2,
+        $post3,
+        $post4,
+        $post5,
+        $post6
     ) {
 
         $post1->getCreatedAt()->willReturn(new \DateTime('2015-01-01'));
@@ -71,7 +84,13 @@ class SocialFeedSpec extends ObjectBehavior
         $this->valid()->shouldReturn(false);
     }
 
-    private function prepareSourceIteratorDouble(SourceIterator $sourceIterator, \Iterator $posts) {
+    /**
+     * prepareSourceIteratorDouble
+     *
+     * @param Lns\SocialFeed\Iterator\SourceIterator $sourceIterator
+     * @param \Iterator $posts
+     */
+    private function prepareSourceIteratorDouble($sourceIterator, $posts) {
         $sourceIterator->rewind()->will(function() use($sourceIterator, $posts) {
             $posts->rewind();
             $sourceIterator->current()->will(function() use($posts) {

@@ -13,7 +13,13 @@ class InstagramTagProviderSpec extends ObjectBehavior
     protected $client;
     protected $factory;
 
-    function let(ClientInterface $client, PostFactoryInterface $factory) {
+    /**
+     * let
+     *
+     * @param Lns\SocialFeed\Client\ClientInterface $client
+     * @param Lns\SocialFeed\Factory\PostFactoryInterface $factory
+     */
+    function let($client, $factory) {
         $this->factory = $factory;
         $this->client = $client;
         $this->beConstructedWith($client, $factory);
@@ -28,7 +34,13 @@ class InstagramTagProviderSpec extends ObjectBehavior
         $this->shouldHaveType('Lns\SocialFeed\Provider\ProviderInterface');
     }
 
-    function it_should_return_feed(PostInterface $post1, PostInterface $post2) {
+    /**
+     * it_should_return_feed
+     *
+     * @param Lns\SocialFeed\Model\PostInterface $post1
+     * @param Lns\SocialFeed\Model\PostInterface $post2
+     */
+    function it_should_return_feed($post1, $post2) {
 
         $postData1 = ['foo' => 'bar'];
         $postData2 = ['foo' => 'baz'];
