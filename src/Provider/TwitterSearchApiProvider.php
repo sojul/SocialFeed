@@ -37,49 +37,30 @@ class TwitterSearchApiProvider extends AbstractProvider
     }
 
     /**
-     * getResult.
-     *
-     * @param array $options
+     * {@inheritdoc}
      */
-    public function getResult(array $options = array())
+    public function get(array $parameters = array())
     {
-        $options = $this->resolveOptions($options);
+        $parameters = $this->resolveParameters($parameters);
 
-        $result = $this->client->get('/1.1/search/tweets.json', array(
+        $response = $this->client->get('/1.1/search/tweets.json', array(
             'query' => array(
-                'q' => $options['query'],
-                'max_id' => $options['max_id'],
+                'q' => $parameters['query'],
+                'max_id' => $parameters['max_id'],
             ),
         ));
 
-        $feed = new Feed();
+        $feed = $this->getFeed($response);
 
-        foreach ($result['statuses'] as $status) {
-            $feed->addPost($this->postFactory->create($status));
-        }
-
-        $nextResultOptions = array();
-
-        if (isset($result['search_metadata'])) {
-            $parameters = $this->extractUrlParameters($result['search_metadata']['next_results']);
-
-            $nextResultOptions = array(
-                'max_id' => $parameters['max_id'],
-            );
-        }
-
-        return new ResultSet($feed, $nextResultOptions);
-    }
-
-    public function getName()
-    {
-        return 'twitter_search_api';
+        return new ResultSet(
+            $this->getFeed($response),
+            $parameters,
+            $this->getNextPaginationParameters($response)
+        );
     }
 
     /**
-     * configureOptionResolver.
-     *
-     * @param OptionsResolver $resolver
+     * {@inheritdoc}
      */
     protected function configureOptionResolver(OptionsResolver &$resolver)
     {
@@ -88,5 +69,37 @@ class TwitterSearchApiProvider extends AbstractProvider
         $resolver->setDefaults(array(
             'max_id' => null,
         ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'twitter_search_api';
+    }
+
+    protected function getNextPaginationParameters($response)
+    {
+        if (!isset($result['search_metadata'])) {
+            return array();
+        }
+
+        $parameters = $this->extractUrlParameters($response['search_metadata']['next_results']);
+
+        return array(
+            'max_id' => $parameters['max_id'],
+        );
+    }
+
+    protected function getFeed($response)
+    {
+        $feed = new Feed();
+
+        foreach ($response['statuses'] as $postData) {
+            $feed->addPost($this->postFactory->create($postData));
+        }
+
+        return $feed;
     }
 }

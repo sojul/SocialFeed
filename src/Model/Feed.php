@@ -78,6 +78,22 @@ class Feed implements \IteratorAggregate, FeedInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function first()
+    {
+        array_values($this->feedArray)[0];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function last()
+    {
+        array_pop(array_values($this->feedArray));
+    }
+
     public function sort()
     {
         uasort($this->feedArray, function ($a, $b) {

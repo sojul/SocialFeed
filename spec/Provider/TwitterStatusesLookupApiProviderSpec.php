@@ -54,7 +54,7 @@ class TwitterStatusesLookupApiProviderSpec extends ObjectBehavior
         $this->factory->create($postData1)->willReturn($post1);
         $this->factory->create($postData2)->willReturn($post2);
 
-        $this->getResult(array(
+        $this->get(array(
             'ids' => array('id1', 'id2')
         ))->shouldHaveType('Lns\SocialFeed\Model\ResultSet');
     }

@@ -11,13 +11,32 @@
 
 namespace Lns\SocialFeed\Provider;
 
+use Lns\SocialFeed\Model\ResultSetInterface;
+
 interface ProviderInterface
 {
     /**
      * getResult.
      *
-     * @return ResultSet
+     * @param array $parameters
+     *
+     * @return ResultSetInterface
      */
-    public function getResult(array $options = array());
+    public function get(array $parameters = array());
+
+    /**
+     * Return next result set from a result set.
+     *
+     * @param ResultSetInterface $resultSetInterface
+     *
+     * @return ResultSetInterface
+     */
+    public function next(ResultSetInterface $resultSet);
+
+    /**
+     * getName.
+     *
+     * @return string
+     */
     public function getName();
 }

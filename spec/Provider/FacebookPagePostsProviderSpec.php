@@ -36,7 +36,7 @@ class FacebookPagePostsProviderSpec extends ObjectBehavior
     }
 
     function it_should_return_an_exection_if_page_id_option_is_not_set() {
-        $this->shouldThrow('Lns\SocialFeed\Exception\MissingOptionsException')->duringGetResult();
+        $this->shouldThrow('Lns\SocialFeed\Exception\MissingOptionsException')->duringGet();
     }
 
     /**
@@ -64,7 +64,7 @@ class FacebookPagePostsProviderSpec extends ObjectBehavior
         $this->factory->create($postData1)->willReturn($post1);
         $this->factory->create($postData2)->willReturn($post2);
 
-        $this->getResult(array(
+        $this->get(array(
             'page_id' => '12334533434'
         ))->shouldHaveType('Lns\SocialFeed\Model\ResultSet');
     }

@@ -23,10 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class InstagramTagProvider extends AbstractProvider
 {
     private $client;
-
     private $postFactory;
-
-    private $tagName;
 
     /**
      * __construct.
@@ -41,47 +38,37 @@ class InstagramTagProvider extends AbstractProvider
     }
 
     /**
-     * getResult.
-     *
-     * @param array $options
+     * {@inheritdoc}
      */
-    public function getResult(array $options = array())
+    public function get(array $parameters = array())
     {
-        $options = $this->resolveOptions($options);
+        $parameters = $this->resolveParameters($parameters);
 
-        $feed = new Feed();
-
-        $response = $this->client->get(sprintf('/v1/tags/%s/media/recent', $options['tag_name']), array(
+        $response = $this->client->get(sprintf('/v1/tags/%s/media/recent', $parameters['tag_name']), array(
             'query' => array(
-                'max_tag_id' => $options['max_tag_id'],
+                'max_tag_id' => $parameters['max_tag_id'],
             ),
         ));
 
-        foreach ($response['data'] as $data) {
-            $feed->addPost($this->postFactory->create($data));
-        };
-
         $nextResultOptions = array();
 
-        // extract pagination parameters
-        if (isset($data['pagination']['next_max_id'])) {
-            $nextResultOptions = array(
-                'max_tag_id' => $data['pagination']['next_max_id'],
-            );
-        }
-
-        return new ResultSet($feed, $nextResultOptions);
+        return new ResultSet(
+            $this->getFeed($response),
+            $parameters,
+            $this->getNextPaginationParameters($response)
+        );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'instagram';
     }
 
     /**
-     * configureOptionResolver.
-     *
-     * @param OptionsResolver $resolver
+     * {@inheritdoc}
      */
     public function configureOptionResolver(OptionsResolver &$resolver)
     {
@@ -90,5 +77,27 @@ class InstagramTagProvider extends AbstractProvider
         $resolver->setDefaults(array(
             'max_tag_id' => null,
         ));
+    }
+
+    protected function getFeed($response)
+    {
+        $feed = new Feed();
+
+        foreach ($response['data'] as $postData) {
+            $feed->addPost($this->postFactory->create($postData));
+        }
+
+        return $feed;
+    }
+
+    protected function getNextPaginationParameters($response)
+    {
+        if (!isset($response['pagination']['next_max_id'])) {
+            return;
+        }
+
+        return array(
+            'max_tag_id' => $response['pagination']['next_max_id'],
+        );
     }
 }

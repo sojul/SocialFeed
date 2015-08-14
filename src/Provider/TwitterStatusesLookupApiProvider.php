@@ -37,37 +37,34 @@ class TwitterStatusesLookupApiProvider extends AbstractProvider
     }
 
     /**
-     * getResult.
-     *
-     * @param array $options
+     * {@inheritdoc}
      */
-    public function getResult(array $options = array())
+    public function get(array $parameters = array())
     {
-        $options = $this->resolveOptions($options);
+        $parameters = $this->resolveParameters($parameters);
 
         $response = $this->twitterApiClient
-            ->get('/1.1/statuses/lookup.json?id='.implode($options['ids'], ','));
-
-        $result = $response;
+            ->get('/1.1/statuses/lookup.json?id='.implode($parameters['ids'], ','));
 
         $feed = new Feed();
 
-        foreach ($result as $status) {
+        foreach ($response as $status) {
             $feed->addPost($this->postFactory->create($status));
         }
 
-        return new ResultSet($feed);
+        return new ResultSet($feed, $parameters, array());
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'twitter_status_lookup_api';
     }
 
     /**
-     * configureOptionResolver.
-     *
-     * @param OptionsResolver $resolver
+     * {@inheritdoc}
      */
     protected function configureOptionResolver(OptionsResolver &$resolver)
     {

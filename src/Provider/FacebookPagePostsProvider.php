@@ -38,73 +38,50 @@ class FacebookPagePostsProvider extends AbstractProvider
     }
 
     /**
-     * getResult.
-     *
-     * @param array $options
+     * {@inheritdoc}
      */
-    public function getResult(array $options = array())
+    public function get(array $parameters = array())
     {
-        $options = $this->resolveOptions($options);
+        $parameters = $this->resolveParameters($parameters);
 
-        $fieldsString = $this->generateFieldsQueryString(array(
-            'actions',
-            'caption',
-            'created_time',
-            'id',
-            'likes',
-            'link',
-            'message',
-            'message_tags',
-            'full_picture',
-            'shares',
-            'type',
-            'from' => array(
-                'name',
-                'id',
-                'picture.type(large)',
-                'link',
-            ),
-        ));
-
-        $feed = new Feed();
-
-        $data = $this->client->get('/'.$options['page_id'].'/posts', array(
+        $response = $this->client->get('/'.$parameters['page_id'].'/posts', array(
             'query' => array(
-                'fields' => $fieldsString,
-                'until' => $options['until'],
-                'limit' => $options['limit'],
-                '__paging_token' => $options['__paging_token'],
-            ),
-        ));
-
-        foreach ($data['data'] as $postData) {
-            $feed->addPost($this->postFactory->create($postData));
-        }
-
-        $nextResultOptions = array();
-
-        // extract pagination parameters
-        if (isset($data['paging']['next'])) {
-            $parameters = $this->extractUrlParameters($data['paging']['next']);
-            $nextResultOptions = array(
+                'fields' => $this->generateFieldsQueryString(array(
+                    'actions',
+                    'caption',
+                    'created_time',
+                    'id',
+                    'likes',
+                    'link',
+                    'message',
+                    'message_tags',
+                    'full_picture',
+                    'shares',
+                    'type',
+                    'from' => array(
+                        'name',
+                        'id',
+                        'picture.type(large)',
+                        'link',
+                    ),
+                )),
                 'until' => $parameters['until'],
                 'limit' => $parameters['limit'],
                 '__paging_token' => $parameters['__paging_token'],
-            );
-        }
+            ),
+        ));
 
-        return new ResultSet($feed, $nextResultOptions);
-    }
+        $feed = $this->getFeed($response);
 
-    public function getName()
-    {
-        return 'facebook_page';
+        return new ResultSet(
+            $feed,
+            $parameters,
+            $this->getNextPaginationParameters($response)
+        );
     }
 
     /**
-     * configureOptionResolver.
-     *
-     * @param OptionsResolver $resolver
+     * {@inheritdoc}
      */
     protected function configureOptionResolver(OptionsResolver &$resolver)
     {
@@ -118,10 +95,39 @@ class FacebookPagePostsProvider extends AbstractProvider
     }
 
     /**
-     * generateFieldsQueryString.
-     *
-     * @param $fields
+     * {@inheritdoc}
      */
+    public function getName()
+    {
+        return 'facebook_page';
+    }
+
+    protected function getFeed($response)
+    {
+        $feed = new Feed();
+
+        foreach ($response['data'] as $postData) {
+            $feed->addPost($this->postFactory->create($postData));
+        }
+
+        return $feed;
+    }
+
+    protected function getNextPaginationParameters($response)
+    {
+        if (!isset($data['paging']['next'])) {
+            return array();
+        }
+
+        $parameters = $this->extractUrlParameters($data['paging']['next']);
+
+        return array(
+            'until' => $parameters['until'],
+            'limit' => $parameters['limit'],
+            '__paging_token' => $parameters['__paging_token'],
+        );
+    }
+
     private function generateFieldsQueryString($fields)
     {
         $parts = array();

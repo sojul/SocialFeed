@@ -16,31 +16,66 @@ namespace Lns\SocialFeed\Model;
  */
 class ResultSet implements ResultSetInterface
 {
-    protected $nextResultSetOptions = array();
+    /**
+     * iterator.
+     *
+     * @var \Iterator
+     */
     protected $iterator;
 
     /**
-     * @param FeedInterface $feed
-     * @param array         $nextResultSetOptions
+     * nextRequestParameters.
+     *
+     * @var array
      */
-    public function __construct(FeedInterface $feed, array $nextResultSetOptions = array())
+    protected $requestParameters;
+
+    /**
+     * nextPaginationParameters.
+     *
+     * @var array
+     */
+    protected $nextPaginationParameters;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(FeedInterface $feed, array $requestParameters, array $nextPaginationParameters = array())
     {
         $this->iterator = $feed->getIterator();
-        $this->nextResultSetOptions = $nextResultSetOptions;
+        $this->requestParameters = $requestParameters;
+        $this->nextPaginationParameters = $nextPaginationParameters;
     }
 
-    public function getNextResultSetOptions()
+    /**
+     * {@inheritdoc}
+     */
+    public function getNextPaginationParameters()
     {
-        return $this->nextResultSetOptions;
+        return $this->nextPaginationParameters;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function hasNextResultSet()
     {
-        return !empty($this->nextResultSetOptions);
+        return !empty($this->nextPaginationParameters);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getIterator()
     {
         return $this->iterator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequestParameters()
+    {
+        return $this->requestParameters;
     }
 }

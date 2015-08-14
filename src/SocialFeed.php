@@ -111,4 +111,14 @@ class SocialFeed implements \Iterator
 
         $this->next();
     }
+
+    /**
+     * Get sourceIterators.
+     *
+     * @return sourceIterators.
+     */
+    public function getSourceIterators()
+    {
+        return $this->sourceIterators;
+    }
 }

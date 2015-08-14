@@ -13,4 +13,35 @@ namespace Lns\SocialFeed\Model;
 
 interface FeedInterface
 {
+    /**
+     * addPost.
+     *
+     * @param PostInterface $post
+     *
+     * @return self
+     */
+    public function addPost(PostInterface $post);
+
+    /**
+     * getPost.
+     *
+     * @param string|int $identifier
+     *
+     * @return PostInterface $post
+     */
+    public function getPost($identifier);
+
+    /**
+     * first.
+     *
+     * @return PostInterface $post
+     */
+    public function first();
+
+    /**
+     * last.
+     *
+     * @return PostInterface $post
+     */
+    public function last();
 }

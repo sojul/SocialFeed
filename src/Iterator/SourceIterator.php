@@ -20,6 +20,7 @@ class SourceIterator implements \Iterator
 {
     public $currentResultSet = null;
     public $position = 0;
+    public $previous;
 
     /**
      * __construct.
@@ -40,6 +41,11 @@ class SourceIterator implements \Iterator
         return $this->currentResultSet->getIterator()->current();
     }
 
+    public function getPrevious()
+    {
+        return $previous;
+    }
+
     public function key()
     {
         return $this->position;
@@ -56,20 +62,15 @@ class SourceIterator implements \Iterator
 
         $provider = $this->source->getProvider();
 
-        $options = $this->source->getOptions();
-
-        // merge options
-        if ($this->currentResultSet) {
-            $options = array_merge($options, $this->currentResultSet->getNextResultSetOptions());
-        }
-
-        $this->currentResultSet = $provider->getResult($options);
+        $this->currentResultSet = $provider->next($this->currentResultSet);
 
         return true;
     }
 
     public function next()
     {
+        $this->previous = $this->current();
+
         $this->currentResultSet->getIterator()->next();
 
         if (!$this->currentResultSet->getIterator()->valid()) {
@@ -86,9 +87,10 @@ class SourceIterator implements \Iterator
 
     public function rewind()
     {
+        $this->previous = null;
         $this->currentResultSet = null;
         $this->position = 0;
 
-        $this->loadNextResultSet();
+        $this->currentResultSet = $this->source->getProvider()->get($this->source->getOptions());
     }
 }

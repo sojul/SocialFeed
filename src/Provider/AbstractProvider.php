@@ -12,6 +12,7 @@
 namespace Lns\SocialFeed\Provider;
 
 use Lns\SocialFeed\Exception as SocialFeedException;
+use Lns\SocialFeed\Model\ResultSetInterface;
 use Symfony\Component\OptionsResolver\Exception as OptionsResolverException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,30 +22,29 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 abstract class AbstractProvider implements ProviderInterface
 {
     /**
-     * resolveOptions.
+     * resolveParameters.
      *
-     * @param $options
+     * @param $parameters
      */
-    protected function resolveOptions($options)
+    protected function resolveParameters($parameters)
     {
         $resolver = new OptionsResolver();
 
         $this->configureOptionResolver($resolver);
 
         try {
-            return $resolver->resolve($options);
+            return $resolver->resolve($parameters);
         } catch (OptionsResolverException\MissingOptionsException $e) {
             throw new SocialFeedException\MissingOptionsException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
     /**
-     * configureOptionResolver.
-     *
-     * @param OptionsResolver $resolver
+     * {@inheritdoc}
      */
-    protected function configureOptionResolver(OptionsResolver &$resolver)
+    public function next(ResultSetInterface $resultSet)
     {
+        return $this->get($resultSet->getRequestParameters() + $resultSet->getNextPaginationParameters());
     }
 
     /**

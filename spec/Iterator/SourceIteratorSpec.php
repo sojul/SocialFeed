@@ -68,7 +68,6 @@ class SourceIteratorSpec extends ObjectBehavior
             $resultSet1Iterator->current()->willReturn(null);
         });
 
-        $resultSet1->getNextResultSetOptions()->willReturn(array('page' => 2));
         $resultSet1->getIterator()->willReturn($resultSet1Iterator);
 
         // second set contains $post2 and $post3
@@ -84,17 +83,14 @@ class SourceIteratorSpec extends ObjectBehavior
         });
 
         $resultSet2->hasNextResultSet()->willReturn(false);
-        $resultSet2->getNextResultSetOptions()->willReturn(array('page' => 3));
         $resultSet2->getIterator()->willReturn($resultSet2Iterator);
 
-        $provider->getResult(array(
+        $provider->get(array(
             'foo' => 'bar'
         ))->willReturn($resultSet1);
 
-        $provider->getResult(array(
-            'foo' => 'bar',
-            'page' => 2
-        ))->willReturn($resultSet2);
+        $provider->next($resultSet1)->willReturn($resultSet2);
+        $provider->next($resultSet2)->willReturn(false);
 
         $this->source->getProvider()->willReturn($provider);
         $this->source->getOptions()->willReturn(array(

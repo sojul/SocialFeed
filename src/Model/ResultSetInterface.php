@@ -17,9 +17,29 @@ interface ResultSetInterface extends \IteratorAggregate
      * __construct.
      *
      * @param FeedInterface $feed
-     * @param array         $nextResultSetOptions
+     * @param array         $requestParameters        request parameters generating this feed
+     * @param array         $nextPaginationParameters
      */
-    public function __construct(FeedInterface $feed, array $nextResultSetOptions = array());
-    public function getNextResultSetOptions();
+    public function __construct(FeedInterface $feed, array $requestParameters, array $nextPaginationParameters = array());
+
+    /**
+     * getRequestParameters.
+     *
+     * @return array
+     */
+    public function getRequestParameters();
+
+    /**
+     * getNextPaginationParameters.
+     *
+     * @return array
+     */
+    public function getNextPaginationParameters();
+
+    /**
+     * hasNextResultSet.
+     *
+     * @return bool
+     */
     public function hasNextResultSet();
 }
