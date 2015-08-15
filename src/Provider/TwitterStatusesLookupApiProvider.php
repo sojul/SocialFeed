@@ -52,7 +52,7 @@ class TwitterStatusesLookupApiProvider extends AbstractProvider
             $feed->addPost($this->postFactory->create($status));
         }
 
-        return new ResultSet($feed, $parameters, array());
+        return new ResultSet($feed, $parameters);
     }
 
     /**

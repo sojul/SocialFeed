@@ -11,16 +11,18 @@
 
 namespace Lns\SocialFeed\Model;
 
+use Lns\SocialFeed\Model\Pagination\TokenInterface;
+
 interface ResultSetInterface extends \IteratorAggregate
 {
     /**
      * __construct.
      *
-     * @param FeedInterface $feed
-     * @param array         $requestParameters        request parameters generating this feed
-     * @param array         $nextPaginationParameters
+     * @param FeedInterface  $feed
+     * @param array          $requestParameters        request parameters generating this feed
+     * @param TokenInterface $nextPaginationToken
      */
-    public function __construct(FeedInterface $feed, array $requestParameters, array $nextPaginationParameters = array());
+    public function __construct(FeedInterface $feed, array $requestParameters, TokenInterface $nextPaginationToken = null);
 
     /**
      * getRequestParameters.
@@ -32,9 +34,9 @@ interface ResultSetInterface extends \IteratorAggregate
     /**
      * getNextPaginationParameters.
      *
-     * @return array
+     * @return TokenInterface
      */
-    public function getNextPaginationParameters();
+    public function getNextPaginationToken();
 
     /**
      * hasNextResultSet.

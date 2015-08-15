@@ -11,6 +11,8 @@
 
 namespace Lns\SocialFeed\Model;
 
+use Lns\SocialFeed\Model\Pagination\TokenInterface;
+
 /**
  * ResultSet.
  */
@@ -31,28 +33,28 @@ class ResultSet implements ResultSetInterface
     protected $requestParameters;
 
     /**
-     * nextPaginationParameters.
+     * nextPaginationToken.
      *
-     * @var array
+     * @var TokenInterface
      */
-    protected $nextPaginationParameters;
+    protected $nextPaginationToken;
 
     /**
      * {@inheritdoc}
      */
-    public function __construct(FeedInterface $feed, array $requestParameters, array $nextPaginationParameters = array())
+    public function __construct(FeedInterface $feed, array $requestParameters, TokenInterface $nextPaginationToken = null)
     {
         $this->iterator = $feed->getIterator();
         $this->requestParameters = $requestParameters;
-        $this->nextPaginationParameters = $nextPaginationParameters;
+        $this->nextPaginationToken = $nextPaginationToken;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getNextPaginationParameters()
+    public function getNextPaginationToken()
     {
-        return $this->nextPaginationParameters;
+        return $this->nextPaginationToken;
     }
 
     /**
@@ -60,7 +62,7 @@ class ResultSet implements ResultSetInterface
      */
     public function hasNextResultSet()
     {
-        return !empty($this->nextPaginationParameters);
+        return $this->nextPaginationToken;
     }
 
     /**

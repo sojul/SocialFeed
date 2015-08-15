@@ -15,6 +15,7 @@ use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Model\ResultSet;
+use Lns\SocialFeed\Model\Pagination\Token;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -55,7 +56,7 @@ class InstagramTagProvider extends AbstractProvider
         return new ResultSet(
             $this->getFeed($response),
             $parameters,
-            $this->getNextPaginationParameters($response)
+            $this->getNextPaginationToken($response)
         );
     }
 
@@ -90,14 +91,14 @@ class InstagramTagProvider extends AbstractProvider
         return $feed;
     }
 
-    protected function getNextPaginationParameters($response)
+    protected function getNextPaginationToken($response)
     {
         if (!isset($response['pagination']['next_max_id'])) {
             return;
         }
 
-        return array(
+        return new Token(array(
             'max_tag_id' => $response['pagination']['next_max_id'],
-        );
+        ));
     }
 }

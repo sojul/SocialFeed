@@ -15,6 +15,7 @@ use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Model\ResultSet;
+use Lns\SocialFeed\Model\Pagination\Token;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -55,7 +56,7 @@ class TwitterSearchApiProvider extends AbstractProvider
         return new ResultSet(
             $this->getFeed($response),
             $parameters,
-            $this->getNextPaginationParameters($response)
+            $this->getNextPaginationToken($response)
         );
     }
 
@@ -79,17 +80,17 @@ class TwitterSearchApiProvider extends AbstractProvider
         return 'twitter_search_api';
     }
 
-    protected function getNextPaginationParameters($response)
+    protected function getNextPaginationToken($response)
     {
         if (!isset($result['search_metadata'])) {
-            return array();
+            return;
         }
 
         $parameters = $this->extractUrlParameters($response['search_metadata']['next_results']);
 
-        return array(
+        return new Token(array(
             'max_id' => $parameters['max_id'],
-        );
+        ));
     }
 
     protected function getFeed($response)

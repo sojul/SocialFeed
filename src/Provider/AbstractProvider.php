@@ -44,7 +44,11 @@ abstract class AbstractProvider implements ProviderInterface
      */
     public function next(ResultSetInterface $resultSet)
     {
-        return $this->get($resultSet->getRequestParameters() + $resultSet->getNextPaginationParameters());
+        if(!$resultSet->hasNextResultSet()) {
+            return;
+        }
+
+        return $this->get($resultSet->getRequestParameters() + $resultSet->getNextPaginationToken()->getParameters());
     }
 
     /**

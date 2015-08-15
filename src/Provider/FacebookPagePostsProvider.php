@@ -15,6 +15,7 @@ use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\Feed;
 use Lns\SocialFeed\Model\ResultSet;
+use Lns\SocialFeed\Model\Pagination\Token;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -76,7 +77,7 @@ class FacebookPagePostsProvider extends AbstractProvider
         return new ResultSet(
             $feed,
             $parameters,
-            $this->getNextPaginationParameters($response)
+            $this->getNextPaginationToken($response)
         );
     }
 
@@ -113,19 +114,19 @@ class FacebookPagePostsProvider extends AbstractProvider
         return $feed;
     }
 
-    protected function getNextPaginationParameters($response)
+    protected function getNextPaginationToken($response)
     {
         if (!isset($data['paging']['next'])) {
-            return array();
+            return null;
         }
 
         $parameters = $this->extractUrlParameters($data['paging']['next']);
 
-        return array(
+        return new Token(array(
             'until' => $parameters['until'],
             'limit' => $parameters['limit'],
             '__paging_token' => $parameters['__paging_token'],
-        );
+        ));
     }
 
     private function generateFieldsQueryString($fields)
