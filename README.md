@@ -37,7 +37,7 @@ $socialFeed
     ))
     ->addSource(new Source(
         new TwitterSearchApiProvider($twitterClient, $tweetFactory),
-        ['query' => 'lanetscouade'],
+        ['query' => 'lanetscouade']
     ));
 
 foreach(new \LimitIterator($socialFeed, 0, 10) as $item) {
