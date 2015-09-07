@@ -47,10 +47,10 @@ class TwitterSearchApiProviderSpec extends ObjectBehavior
         $postData1 = ['foo' => 'bar'];
         $postData2 = ['foo' => 'baz'];
 
-        $this->client->get('/1.1/search/tweets.json', array(
+        $this->client->get('/search/tweets.json', array(
             'query' => array(
                 'q' => 'foo',
-                'max_id' => null
+                'max_id' => ''
             )
         ))->willReturn([
             'statuses' => array(
