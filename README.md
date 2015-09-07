@@ -20,6 +20,7 @@ use Lns\SocialFeed\Client\FacebookApiClient;
 use Lns\SocialFeed\Factory\FacebookPostFactory;
 use Lns\SocialFeed\Factory\TweetFactory;
 use Lns\SocialFeed\SocialFeed;
+use Lns\SocialFeed\Source;
 
 $socialFeed = new SocialFeed();
 $facebookPostFactory = new FacebookPostFactory();
@@ -36,10 +37,10 @@ $socialFeed
     ))
     ->addSource(new Source(
         new TwitterSearchApiProvider($twitterClient, $tweetFactory),
-        ['query' => 'lanetscouade'],
+        ['query' => 'lanetscouade']
     ));
 
-foreach(\LimitIterator($socialFeed, 0, 10) as $item) {
+foreach(new \LimitIterator($socialFeed, 0, 10) as $item) {
     echo $item->getMessage() . PHP_EOL;
 }
 
