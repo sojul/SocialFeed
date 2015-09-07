@@ -18,9 +18,9 @@ use Lns\SocialFeed\Model\ResultSet;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * TwitterStatusesLookupApiProvider.
+ * TwitterStatusesUserTimelineApiProvider.
  */
-class TwitterStatusesLookupApiProvider extends AbstractProvider
+class TwitterStatusesUserTimelineApiProvider extends AbstractProvider
 {
     private $twitterApiClient;
 
@@ -44,9 +44,9 @@ class TwitterStatusesLookupApiProvider extends AbstractProvider
         $parameters = $this->resolveParameters($parameters);
 
         $response = $this->twitterApiClient
-            ->get('/statuses/lookup.json', array(
+            ->get('/statuses/user_timeline.json', array(
                 'query' => array(
-                  'id' => implode($parameters['ids'], ','),
+                    'screen_name' => $parameters['screen_name'],
                 ),
             ));
 
@@ -64,7 +64,7 @@ class TwitterStatusesLookupApiProvider extends AbstractProvider
      */
     public function getName()
     {
-        return 'twitter_status_lookup_api';
+        return 'twitter_status_user_timeline_api';
     }
 
     /**
@@ -72,6 +72,6 @@ class TwitterStatusesLookupApiProvider extends AbstractProvider
      */
     protected function configureOptionResolver(OptionsResolver &$resolver)
     {
-        $resolver->setRequired('ids');
+        $resolver->setRequired('screen_name');
     }
 }

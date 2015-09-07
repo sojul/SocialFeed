@@ -89,6 +89,7 @@ class TweetFactory implements PostFactoryInterface
             'hashtags' => ReferenceType::HASHTAG,
             'video' => ReferenceType::VIDEO,
             'media' => ReferenceType::MEDIA,
+            'photo' => ReferenceType::MEDIA,
         );
 
         foreach ($data['entities'] as $entityType => $entities) {
