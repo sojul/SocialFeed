@@ -46,7 +46,11 @@ class TwitterStatusesLookupApiProviderSpec extends ObjectBehavior
         $postData1 = ['foo' => 'bar'];
         $postData2 = ['foo' => 'baz'];
 
-        $this->client->get('/1.1/statuses/lookup.json?id=id1,id2')->willReturn([
+        $this->client->get('/statuses/lookup.json', array(
+            'query' => array(
+              'id' => 'id1,id2',
+            ),
+          ))->willReturn([
             0 => $postData1,
             1 => $postData2
         ]);

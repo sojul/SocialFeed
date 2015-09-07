@@ -48,11 +48,7 @@ class TwitterApiClient implements ClientInterface
         $client = $this->createGuzzleClient($this->consumerKey, $this->consumerSecret);
 
         try {
-            $query_string = http_build_query($options['query']);
-
-            $request = $client->createRequest('GET', '/1.1/search/tweets.json?'.$query_string);
-
-            return $client->send($request)->json();
+            return $client->get('/1.1'.$path, $options)->json();
         } catch (GuzzleRequestException $e) {
             $message = $e->getMessage();
 
@@ -81,7 +77,7 @@ class TwitterApiClient implements ClientInterface
     protected function createGuzzleClient($consumerKey, $consumerSecret)
     {
         $client = new Client(array(
-            'base_url' => 'https://api.twitter.com/',
+            'base_url' => 'https://api.twitter.com',
             'defaults' => array('auth' => 'oauth'),
         ));
 

@@ -23,17 +23,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TwitterSearchApiProvider extends AbstractProvider
 {
-    private $client;
+    private $twitterApiClient;
 
     /**
      * __construct.
      *
-     * @param ClientInterface      $client
+     * @param ClientInterface      $twitterApiClient
      * @param PostFactoryInterface $postFactory
      */
-    public function __construct(ClientInterface $client, PostFactoryInterface $postFactory)
+    public function __construct(ClientInterface $twitterApiClient, PostFactoryInterface $postFactory)
     {
-        $this->client = $client;
+        $this->twitterApiClient = $twitterApiClient;
         $this->postFactory = $postFactory;
     }
 
@@ -44,14 +44,12 @@ class TwitterSearchApiProvider extends AbstractProvider
     {
         $parameters = $this->resolveParameters($parameters);
 
-        $response = $this->client->get('/1.1/search/tweets.json', array(
+        $response = $this->twitterApiClient->get('/search/tweets.json', array(
             'query' => array(
                 'q' => $parameters['query'],
                 'max_id' => $parameters['max_id'],
             ),
         ));
-
-        $feed = $this->getFeed($response);
 
         return new ResultSet(
             $this->getFeed($response),
@@ -68,7 +66,7 @@ class TwitterSearchApiProvider extends AbstractProvider
         $resolver->setRequired('query');
 
         $resolver->setDefaults(array(
-            'max_id' => null,
+            'max_id' => '',
         ));
     }
 
@@ -97,8 +95,8 @@ class TwitterSearchApiProvider extends AbstractProvider
     {
         $feed = new Feed();
 
-        foreach ($response['statuses'] as $postData) {
-            $feed->addPost($this->postFactory->create($postData));
+        foreach ($response['statuses'] as $status) {
+            $feed->addPost($this->postFactory->create($status));
         }
 
         return $feed;
