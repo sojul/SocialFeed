@@ -9,6 +9,8 @@
  * with this source code in the file LICENSE.
  */
 
+namespace Lns\SocialFeed\Provider;
+
 use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\Feed;
