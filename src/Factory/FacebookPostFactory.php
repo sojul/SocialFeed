@@ -85,7 +85,8 @@ class FacebookPostFactory implements PostFactoryInterface
         }
 
         foreach ($data['message_tags'] as $messageTagGroup) {
-            foreach ($messageTagGroup as $messageTag) {
+            if(isset($messageTagGroup['offset'])) {
+                $messageTag = $messageTagGroup;
                 $reference = new Reference();
                 $reference
                     ->setIndices(array($messageTag['offset'], $messageTag['offset'] + $messageTag['length']))
@@ -93,6 +94,16 @@ class FacebookPostFactory implements PostFactoryInterface
                     ->setData($messageTag);
 
                 $post->addReference($reference);
+            } else {
+                foreach ($messageTagGroup as $messageTag) {
+                    $reference = new Reference();
+                    $reference
+                        ->setIndices(array($messageTag['offset'], $messageTag['offset'] + $messageTag['length']))
+                        ->setType($typeMap[$messageTag['type']])
+                        ->setData($messageTag);
+
+                    $post->addReference($reference);
+                }
             }
         }
     }
