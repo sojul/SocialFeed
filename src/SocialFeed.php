@@ -75,11 +75,6 @@ class SocialFeed implements \Iterator
             $mostRecentPostIterator->next();
         }
 
-        // ignore mostRecentPost if it's the current post (duplicate)
-        if ($this->current && $mostRecentPost && $this->current->getUniqueIdentifier() == $mostRecentPost->getUniqueIdentifier()) {
-            return $this->next();
-        }
-
         $this->current = $mostRecentPost;
         ++$this->position;
     }
