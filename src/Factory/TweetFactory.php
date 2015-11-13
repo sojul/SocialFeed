@@ -90,6 +90,7 @@ class TweetFactory implements PostFactoryInterface
             'video' => ReferenceType::VIDEO,
             'media' => ReferenceType::MEDIA,
             'photo' => ReferenceType::MEDIA,
+            'animated_gif' => ReferenceType::MEDIA,
         );
 
         foreach ($data['entities'] as $entityType => $entities) {
