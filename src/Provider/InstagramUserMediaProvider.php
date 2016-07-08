@@ -65,7 +65,7 @@ class InstagramUserMediaProvider extends AbstractProvider
      */
     public function getName()
     {
-        return 'instagram';
+        return 'instagram_user_media';
     }
 
     /**
