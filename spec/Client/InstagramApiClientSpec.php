@@ -8,7 +8,7 @@ use Prophecy\Argument;
 class InstagramApiClientSpec extends ObjectBehavior
 {
     function let() {
-        $this->beConstructedWith('client_id', 'client_secret');
+        $this->beConstructedWith('accessToken');
     }
 
     function it_is_initializable()

@@ -16,40 +16,34 @@ use GuzzleHttp\Client;
 /**
  * InstagramApiClient.
  */
-class InstagramApiClient implements ClientInterface
+class InstagramApiClient extends AbstractClient implements ClientInterface
 {
-    private $clientId;
-    private $clientSecret;
+    private $accessToken;
 
     /**
      * __construct.
      *
-     * @param $clientId
+     * @param $accessToken
      * @param $clientSecret
      */
-    public function __construct($clientId, $clientSecret)
+    public function __construct($accessToken)
     {
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
+        $this->accessToken = $accessToken;
     }
 
     /**
      * createGuzzleClient.
      *
-     * @param $clientId
+     * @param $accesToken
      */
-    protected function createGuzzleClient($clientId)
+    protected function createGuzzleClient($accessToken)
     {
-        $client = new Client(array(
-            'base_url' => 'https://api.instagram.com/',
-            'defaults' => array(
-                'query' => array(
-                    'client_id' => $clientId,
-                ),
+        return new Client(array(
+            'base_uri' => 'https://api.instagram.com/',
+            'query' => array(
+                'access_token' => $accessToken,
             ),
         ));
-
-        return $client;
     }
 
     /**
@@ -60,8 +54,11 @@ class InstagramApiClient implements ClientInterface
      */
     public function get($path, array $options = array())
     {
-        $client = $this->createGuzzleClient($this->clientId);
+        $client = $this->createGuzzleClient($this->accessToken);
 
-        return $client->get($path, $options)->json();
+        $options = $this->applyDefaultClientQuery($client, $options);
+
+        return json_decode($client->get($path, $options)->getBody(), true);
     }
+
 }

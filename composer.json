@@ -2,16 +2,20 @@
     "name": "lns/social-feed",
     "description": "A PHP lib to fetch and mix content from various social networks",
     "require": {
-        "guzzlehttp/guzzle": "^5.0",
-        "phpcollection/phpcollection": "^0.4.0",
-        "guzzlehttp/oauth-subscriber": "^0.2.0",
-        "symfony/options-resolver": "^2.7",
+        "guzzlehttp/guzzle": "~6.0",
+        "phpcollection/phpcollection": "~0.4",
+        "guzzlehttp/oauth-subscriber": "~0.2",
+        "symfony/options-resolver": "~3.0",
         "commerceguys/enum": "^1.0",
-        "webmozart/key-value-store": "@beta"
+        "webmozart/key-value-store": "@beta",
+        "symfony/var-dumper": "^3.1",
+        "league/oauth2-instagram": "^0.2.2",
+        "webmozart/json": "^1.2"
     },
     "require-dev": {
-        "phpspec/phpspec": "^2.2",
-        "memio/spec-gen": "~0.3"
+        "phpspec/phpspec": "~2.2",
+        "memio/spec-gen": "~0.4",
+        "silex/silex": "~2.0"
     },
     "license": "MIT",
     "authors": [

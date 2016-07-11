@@ -18,7 +18,7 @@ use Lns\SocialFeed\Exception\RequestException;
 /**
  * FacebookApiClient.
  */
-class FacebookApiClient implements ClientInterface
+class FacebookApiClient extends AbstractClient implements ClientInterface
 {
     private $client;
     private $clientKey;
@@ -46,13 +46,15 @@ class FacebookApiClient implements ClientInterface
     {
         $client = $this->createGuzzleClient($this->clientKey, $this->clientSecret);
 
+        $options = $this->applyDefaultClientQuery($client, $options);
+
         try {
-            return $response = $client->get('/v2.3'.$path, $options)->json();
+            return $response = json_decode($client->get('/v2.3'.$path, $options)->getBody(), true);
         } catch (GuzzleRequestException $e) {
             $message = $e->getMessage();
 
             if ($e->hasResponse()) {
-                $responseData = $e->getResponse()->json();
+                $responseData = json_decode($e->getResponse()->getBody(), true);
                 $message = $responseData['error']['code'].' - '.$responseData['error']['message'];
             }
 
@@ -69,11 +71,9 @@ class FacebookApiClient implements ClientInterface
     protected function createGuzzleClient($clientKey, $clientSecret)
     {
         $client = new Client(array(
-            'base_url' => 'https://graph.facebook.com',
-            'defaults' => array(
-                'query' => array(
-                    'access_token' => $clientKey.'|'.$clientSecret,
-                ),
+            'base_uri' => 'https://graph.facebook.com',
+            'query' => array(
+                'access_token' => $clientKey.'|'.$clientSecret,
             ),
         ));
 
