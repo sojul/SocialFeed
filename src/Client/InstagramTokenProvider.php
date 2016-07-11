@@ -85,4 +85,8 @@ class InstagramTokenProvider
 
         return $token;
     }
+
+    public function getStore() {
+        return $this->store;
+    }
 }
