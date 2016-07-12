@@ -44,7 +44,7 @@ abstract class AbstractProvider implements ProviderInterface
      */
     public function next(ResultSetInterface $resultSet)
     {
-        if(!$resultSet->hasNextResultSet()) {
+        if (!$resultSet->hasNextResultSet()) {
             return;
         }
 

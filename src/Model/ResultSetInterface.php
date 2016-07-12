@@ -19,7 +19,7 @@ interface ResultSetInterface extends \IteratorAggregate
      * __construct.
      *
      * @param FeedInterface  $feed
-     * @param array          $requestParameters        request parameters generating this feed
+     * @param array          $requestParameters   request parameters generating this feed
      * @param TokenInterface $nextPaginationToken
      */
     public function __construct(FeedInterface $feed, array $requestParameters, TokenInterface $nextPaginationToken = null);

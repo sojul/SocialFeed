@@ -60,5 +60,4 @@ class InstagramApiClient extends AbstractClient implements ClientInterface
 
         return json_decode($client->get($path, $options)->getBody(), true);
     }
-
 }

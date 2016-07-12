@@ -14,8 +14,8 @@ namespace Lns\SocialFeed\Provider;
 use Lns\SocialFeed\Client\ClientInterface;
 use Lns\SocialFeed\Factory\PostFactoryInterface;
 use Lns\SocialFeed\Model\Feed;
-use Lns\SocialFeed\Model\ResultSet;
 use Lns\SocialFeed\Model\Pagination\Token;
+use Lns\SocialFeed\Model\ResultSet;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -117,7 +117,7 @@ class FacebookPagePostsProvider extends AbstractProvider
     protected function getNextPaginationToken($response)
     {
         if (!isset($data['paging']['next'])) {
-            return null;
+            return;
         }
 
         $parameters = $this->extractUrlParameters($data['paging']['next']);

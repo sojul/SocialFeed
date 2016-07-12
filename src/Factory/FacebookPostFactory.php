@@ -85,7 +85,7 @@ class FacebookPostFactory implements PostFactoryInterface
         }
 
         foreach ($data['message_tags'] as $messageTagGroup) {
-            if(isset($messageTagGroup['offset'])) {
+            if (isset($messageTagGroup['offset'])) {
                 $messageTag = $messageTagGroup;
                 $reference = new Reference();
                 $reference

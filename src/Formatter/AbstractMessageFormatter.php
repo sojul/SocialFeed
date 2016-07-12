@@ -28,7 +28,7 @@ abstract class AbstractMessageFormatter implements MessageFormatterInterface
         // for testing issue we need to add @
         // @see https://github.com/phpspec/prophecy/issues/161
         @uasort($references, function ($a, $b) {
-            return ($a->getStartIndice() > $b->getStartIndice());
+            return $a->getStartIndice() > $b->getStartIndice();
         });
 
         $messageParts = $this->buildMessageParts($message, $references);
