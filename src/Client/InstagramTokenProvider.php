@@ -21,6 +21,7 @@ class InstagramTokenProvider
     private $redirectUri;
     private $provider;
     private $store;
+    private $code;
 
     public function __construct(
         $clientId,
@@ -58,7 +59,7 @@ class InstagramTokenProvider
      */
     public function setCode($code)
     {
-        $this->store->set('code', $code);
+        $this->code = $code;
 
         return $this;
     }
@@ -74,14 +75,12 @@ class InstagramTokenProvider
             }
         }
 
-        $code = $this->store->get('code');
-
-        if (!$code) {
+        if (!$this->code) {
             new \RuntimeException('please try authorize the app using getAuthorizationUrl method');
         }
 
         $token = $this->provider->getAccessToken('authorization_code', array(
-            'code' => $code,
+            'code' => $this->code,
         ))->getToken();
 
         $this->store->set('token', $token);
