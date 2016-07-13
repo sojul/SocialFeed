@@ -14,6 +14,7 @@ namespace Lns\SocialFeed\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
+use GuzzleHttp\HandlerStack;
 use Lns\SocialFeed\Exception\RequestException;
 
 /**
@@ -47,7 +48,7 @@ class TwitterApiClient extends AbstractClient implements ClientInterface
     {
         $client = $this->createGuzzleClient($this->consumerKey, $this->consumerSecret);
 
-        $options = $this->applyDefaultClientQuery($client, $options);
+        $options['auth'] = 'oauth';
 
         try {
             return json_decode($client->get('/1.1'.$path, $options)->getBody(), true);
@@ -55,7 +56,7 @@ class TwitterApiClient extends AbstractClient implements ClientInterface
             $message = $e->getMessage();
 
             if ($e->hasResponse()) {
-                $responseData = $e->getResponse()->json();
+                $responseData = json_decode($e->getResponse()->getBody(), true);
 
                 $messageParts = array();
 
@@ -67,6 +68,8 @@ class TwitterApiClient extends AbstractClient implements ClientInterface
             }
 
             throw new RequestException($message);
+        } catch(\InvalidArgumentException $e) {
+            dump($e);
         }
     }
 
@@ -78,17 +81,19 @@ class TwitterApiClient extends AbstractClient implements ClientInterface
      */
     protected function createGuzzleClient($consumerKey, $consumerSecret)
     {
-        $client = new Client(array(
-            'base_uri' => 'https://api.twitter.com',
-            'auth' => 'oauth',
-        ));
+        $stack = HandlerStack::create();
 
-        $oauth = new Oauth1(array(
-            'consumer_key' => $consumerKey,
+        $middleware = new Oauth1([
+            'consumer_key'    => $consumerKey,
             'consumer_secret' => $consumerSecret,
-        ));
+        ]);
 
-        $client->getEmitter()->attach($oauth);
+        $stack->push($middleware);
+
+        $client = new Client([
+            'base_uri' => 'https://api.twitter.com/1.1/',
+            'handler' => $stack
+        ]);
 
         return $client;
     }
