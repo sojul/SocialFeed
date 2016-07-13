@@ -19,7 +19,7 @@ use Lns\SocialFeed\Exception\RequestException;
 /**
  * TwitterApiClient.
  */
-class TwitterApiClient implements ClientInterface
+class TwitterApiClient extends AbstractClient implements ClientInterface
 {
     private $client;
     private $consumerKey;
@@ -46,6 +46,8 @@ class TwitterApiClient implements ClientInterface
     public function get($path, array $options = array())
     {
         $client = $this->createGuzzleClient($this->consumerKey, $this->consumerSecret);
+
+        $options = $this->applyDefaultClientQuery($client, $options);
 
         try {
             return json_decode($client->get('/1.1'.$path, $options)->getBody(), true);
