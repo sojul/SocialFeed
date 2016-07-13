@@ -68,8 +68,6 @@ class TwitterApiClient extends AbstractClient implements ClientInterface
             }
 
             throw new RequestException($message);
-        } catch(\InvalidArgumentException $e) {
-            dump($e);
         }
     }
 
