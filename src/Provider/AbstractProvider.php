@@ -48,7 +48,9 @@ abstract class AbstractProvider implements ProviderInterface
             return;
         }
 
-        return $this->get($resultSet->getRequestParameters() + $resultSet->getNextPaginationToken()->getParameters());
+        $parameters = array_merge($resultSet->getRequestParameters(), $resultSet->getNextPaginationToken()->getParameters());
+
+        return $this->get($parameters);
     }
 
     /**
